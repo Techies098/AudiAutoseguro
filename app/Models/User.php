@@ -12,7 +12,7 @@ use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
 {
-    use HasApiTokens;
+    // use HasApiTokens; TODO: Esto me salia error de por si solo, revisar
     use HasFactory;
     use HasProfilePhoto;
     use Notifiable;
@@ -62,4 +62,22 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    //Relaciones
+    public function administrador()
+    {
+        return $this->hasOne(Administrador::class);
+    }
+
+    public function cliente()
+    {
+        return $this->hasOne(Cliente::class);
+    }
+
+    public function perito()
+    {
+        return $this->hasOne(Perito::class);
+    }
+
+
 }
