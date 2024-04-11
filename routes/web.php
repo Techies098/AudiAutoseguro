@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -15,3 +16,10 @@ Route::middleware([
         return view('dashboard');
     })->name('dashboard');
 });
+
+
+Route::resource('/administrador/usuarios', UserController::class)
+    ->parameters(['usuarios' => 'user'])
+    ->names('administrador/usuarios')
+    ->middleware('auth:sanctum', 'verified');
+
