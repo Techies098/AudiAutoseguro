@@ -9,7 +9,7 @@ class AdministradorController extends Controller
 {
     public function index()
     {
-        //
+        // return view('administrador.usuarios.index');
     }
 
     public function create()
