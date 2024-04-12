@@ -1,31 +1,32 @@
 <div class="col">
     <div class="mb-3">
-        <label for="name" class="form-label">Nombre *</label>
-        <input type="text" class="form-control" id="name" name="name" value="{{ old('name', $user->name) }}">
-        @error('name')
+        <label for="placa" class="form-label">Placa *</label>
+        <input type="text" class="form-control" id="placa" placa="placa"
+            value="{{ old('placa', $vehiculos->placa) }}">
+        @error('placa')
             <div class="alert alert-danger">{{ $message }}</div>
         @enderror
     </div>
     <div class="mb-3">
-        <label for="telefono" class="form-label">Telefono</label>
-        <input type="number" class="form-control" id="telefono" name="telefono"
-            value="{{ old('telefono', $user->telefono) }}">
-        @error('telefono')
+        <label for="clase" class="form-label">Clase</label>
+        <input type="number" class="form-control" id="clase" clase="clase"
+            value="{{ old('clase', $vehiculos->clase) }}">
+        @error('clase')
             <div class="alert alert-danger">{{ $message }}</div>
         @enderror
     </div>
     <div class="mb-3">
-        <label for="direccion" class="form-label">Direccion</label>
-        <input type="text" class="form-control" id="direccion" name="direccion"
-            value="{{ old('direccion', $user->direccion) }}">
-        @error('direccion')
+        <label for="marca" class="form-label">marca</label>
+        <input type="text" class="form-control" id="marca" marca="marca"
+            value="{{ old('marca', $vehiculos->marca) }}">
+        @error('marca')
             <div class="alert alert-danger">{{ $message }}</div>
         @enderror
     </div>
     <div class="mb-3">
         <label for="fecha_nacimiento" class="form-label">Fecha de nacimiento</label>
         <input type="date" class="form-control" id="fecha_nacimiento" name="fecha_nacimiento"
-            value="{{ old('fecha_nacimiento', $user->fecha_nacimiento) }}">
+            value="{{ old('fecha_nacimiento', $vehiculos->fecha_nacimiento) }}">
         @error('fecha_nacimiento')
             <div class="alert alert-danger">{{ $message }}</div>
         @enderror
@@ -33,7 +34,7 @@
     <div class="mb-3">
         <label for="email" class="form-label">Email *</label>
         <input type="email" class="form-control" id="email" name="email" required
-            value="{{ old('email', $user->email) }}">
+            value="{{ old('email', $vehiculos->email) }}">
         @error('email')
             <div class="alert alert-danger">{{ $message }}</div>
         @enderror
