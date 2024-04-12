@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <a href="{{ route('administrador/vehiculos.create') }}" class="btn btn-primary float-right col-sm-2 ">Nuevo
-            usuario</a>
+            vehiculo</a>
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
             {{ __('Lista de vehiculos') }}
         </h2>

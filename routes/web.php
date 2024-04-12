@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\VehiculoController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -23,3 +24,7 @@ Route::resource('/administrador/usuarios', UserController::class)
     ->names('administrador/usuarios')
     ->middleware('auth:sanctum', 'verified');
 
+Route::resource('/administrador/vehiculos', VehiculoController::class)
+    ->parameters(['vehiculos' => 'vehiculo'])
+    ->names('administrador/vehiculos')
+    ->middleware('auth:sanctum', 'verified');

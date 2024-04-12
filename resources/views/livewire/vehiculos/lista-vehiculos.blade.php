@@ -34,12 +34,13 @@
             <tbody>
                 @foreach ($vehiculos as $fila => $vehiculo)
                     <tr>
-                        <td>{{ $vehiculo->id_cliete }}</td>
+                        <td>{{ $vehiculo->id_cliente }}</td>
                         <td>{{ $vehiculo->placa }} </td>
                         <td>{{ $vehiculo->clase }} </td>
                         <td>{{ $vehiculo->marca }} </td>
                         <td>{{ $vehiculo->modelo }} </td>
                         <td>{{ $vehiculo->anio }} </td>
+                        <td>{{ $vehiculo->color }} </td>
                         <td>{{ $vehiculo->nro_asientos }} </td>
                         <td>
                             <a href="{{ route('administrador/vehiculos.edit', $vehiculo) }}"
