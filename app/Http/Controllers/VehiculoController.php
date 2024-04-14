@@ -23,14 +23,15 @@ class VehiculoController extends Controller
      */
     public function create()
     {
-        $clientes = Cliente::all();
-        $usuarios = User::select('id', 'name')->get();
-        //dd($usuarios);
+        $clientes = User::select(
+            'clientes.id',
+            'users.name',
+        )->join('clientes', 'clientes.user_id', '=', 'users.id')->get();
+        //dd($clientes);
 
         return view('administrador.vehiculos.create', [
             'vehiculo' => new Vehiculo(),
-            'clientes' => $clientes,
-            'usuarios' => $usuarios
+            'clientes' => $clientes
         ]);
     }
 
@@ -69,7 +70,13 @@ class VehiculoController extends Controller
      */
     public function edit(Vehiculo $vehiculo)
     {
-        $clientes = Cliente::all();
+        //$clientes = Cliente::all();
+
+        $clientes = User::select(
+            'clientes.id',
+            'users.name',
+        )->join('clientes', 'clientes.user_id', '=', 'users.id')->get();
+
         return view('administrador.vehiculos.edit', [
             'vehiculo' => $vehiculo,
             'clientes' => $clientes
