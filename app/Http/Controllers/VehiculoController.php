@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Cliente;
 use App\Http\Controllers\Controller;
+use App\Models\User;
 use App\Models\Vehiculo;
 use Illuminate\Http\Request;
 
@@ -23,9 +24,13 @@ class VehiculoController extends Controller
     public function create()
     {
         $clientes = Cliente::all();
+        $usuarios = User::select('id', 'name')->get();
+        //dd($usuarios);
+
         return view('administrador.vehiculos.create', [
             'vehiculo' => new Vehiculo(),
-            'clientes' => $clientes
+            'clientes' => $clientes,
+            'usuarios' => $usuarios
         ]);
     }
 
@@ -48,7 +53,7 @@ class VehiculoController extends Controller
         $vehiculo = Vehiculo::create($request->all());
 
         return redirect()->route('administrador/vehiculos.index')
-            ->with('msj_ok', 'Creado: vehiculo con placa: ' . $vehiculo->placa);
+            ->with('msj_ok', 'Creado vehiculo con placa: ' . $vehiculo->placa);
     }
 
     /**
@@ -64,9 +69,10 @@ class VehiculoController extends Controller
      */
     public function edit(Vehiculo $vehiculo)
     {
-
+        $clientes = Cliente::all();
         return view('administrador.vehiculos.edit', [
-            'vehiculo' => $vehiculo
+            'vehiculo' => $vehiculo,
+            'clientes' => $clientes
         ]);
     }
 

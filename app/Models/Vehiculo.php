@@ -19,4 +19,10 @@ class Vehiculo extends Model
         'color',
         'nro_asientos'
     ];
+
+    //Relaciones
+    public function cliente()
+    {
+        return $this->hasMay(Cliente::class);
+    }
 }
