@@ -1,10 +1,10 @@
 <div class="col">
     <div class="mb-3">
-        <label for="id_cliente" class="form-label">Cliente *</label>
-        <select name="id_cliente" id="id_cliente" class="form-control">
+        <label for="cliente_id" class="form-label">Cliente *</label>
+        <select name="cliente_id" id="cliente_id" class="form-control">
             @foreach ($clientes as $cliente)
                 <option value="{{ $cliente->id }}"
-                    {{ old('id_cliente', $vehiculo->id_cliente) == $cliente->id ? 'selected' : '' }}>
+                    {{ old('cliente_id', $vehiculo->cliente_id) == $cliente->id ? 'selected' : '' }}>
                     {{ $cliente->id }} - {{ $cliente->name }}
                 </option>
             @endforeach

@@ -1,12 +1,12 @@
 <div>
     {{-- Knowing others is intelligence; knowing yourself is true wisdom. --}}
     <div class="container">
-        <div class="row mb-3">
+        <div class="mb-3 row">
             <div class="col-sm-3 col-md-3">
                 <input wire:model="buscar" wire:keydown.enter="buscarVehiculos" type="search" class="form-control"
                     placeholder="vehiculo">
             </div>
-            <div class="d-grid col-sm-2 col-md-2 mx-auto">
+            <div class="mx-auto d-grid col-sm-2 col-md-2">
                 <button wire:click= "buscarVehiculos" class="btn btn-secondary" type="button">
                     Buscar
                 </button>
@@ -34,7 +34,7 @@
             <tbody>
                 @foreach ($vehiculos as $fila => $vehiculo)
                     <tr>
-                        <td>{{ $vehiculo->id_cliente }}</td>
+                        <td>{{ $vehiculo->cliente_id }}</td>
                         <td>{{ $vehiculo->placa }} </td>
                         <td>{{ $vehiculo->clase }} </td>
                         <td>{{ $vehiculo->marca }} </td>

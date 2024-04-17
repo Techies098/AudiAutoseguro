@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('vehiculos', function (Blueprint $table) {
             $table->id();
 
-            $table->unsignedBigInteger('id_cliente');
+            $table->unsignedBigInteger('cliente_id');
             $table->string('placa')->unique();
             $table->string('clase');
             $table->string('marca');
@@ -22,7 +22,7 @@ return new class extends Migration
             $table->string('anio');
             $table->string('color');
             $table->string('nro_asientos');
-            $table->foreign('id_cliente')->references('id')->on('clientes');
+            $table->foreign('cliente_id')->references('id')->on('clientes');
 
             $table->timestamps();
         });

@@ -16,8 +16,8 @@ class Cliente extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function vehiculo()
+    public function vehiculos()
     {
-        return $this->belongsTo(Vehiculo::class);
+        return $this->hasMany(Vehiculo::class);
     }
 }
