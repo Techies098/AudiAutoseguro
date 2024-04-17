@@ -1,9 +1,10 @@
 <?php
 
-use App\Http\Controllers\UserController;
-use App\Http\Controllers\VehiculoController;
-use App\Http\Controllers\ClausulaController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\ClienteController;
+use App\Http\Controllers\ClausulaController;
+use App\Http\Controllers\VehiculoController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -33,4 +34,9 @@ Route::resource('/administrador/vehiculos', VehiculoController::class)
 Route::resource('/administrador/clausulas', ClausulaController::class)
     ->parameters(['clausulas' => 'clausula'])
     ->names('administrador/clausulas')
+    ->middleware('auth:sanctum', 'verified');
+
+Route::resource('/administrador/clientes', ClienteController::class)
+    ->parameters(['clientes' => 'cliente'])
+    ->names('personal/clientes')
     ->middleware('auth:sanctum', 'verified');

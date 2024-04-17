@@ -9,14 +9,14 @@ class ClienteController extends Controller
 {
     public function index()
     {
-        //
+        return view('personal.clientes.index');
     }
 
     public function create()
     {
         //
     }
-    
+
     public function store(Request $request)
     {
         //

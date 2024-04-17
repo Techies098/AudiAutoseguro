@@ -41,7 +41,7 @@ class VehiculoController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'id_cliente' => 'required',
+            'cliente_id' => 'required',
             'placa' => 'max:10',
             'clase' => 'max:30',
             'marca' => 'max:30',
@@ -89,7 +89,7 @@ class VehiculoController extends Controller
     public function update(Request $request, Vehiculo $vehiculo)
     {
         $request->validate([
-            'id_cliente' => 'required',
+            'cliente_id' => 'required',
             'placa' => 'max:10',
             'clase' => 'max:30',
             'marca' => 'max:30',

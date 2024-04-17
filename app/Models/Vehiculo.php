@@ -10,7 +10,7 @@ class Vehiculo extends Model
     use HasFactory;
 
     protected $fillable = [
-        'id_cliente',
+        'cliente_id',
         'placa',
         'clase',
         'marca',
@@ -23,6 +23,6 @@ class Vehiculo extends Model
     //Relaciones
     public function cliente()
     {
-        return $this->hasMay(Cliente::class);
+        return $this->hasOne(Cliente::class);
     }
 }
