@@ -13,7 +13,7 @@ class VehiculoSeeder extends Seeder
      */
     public function run(): void
     {
-        Vehiculo::factory()->create([
+        Vehiculo::create([
             'cliente_id' => '1',
             'placa' => '876-HAD',
             'clase' => 'vagoneta',
@@ -23,7 +23,7 @@ class VehiculoSeeder extends Seeder
             'color' => 'verde',
             'nro_asientos' => '5'
         ]);
-        Vehiculo::factory()->create([
+        Vehiculo::create([
             'cliente_id' => '2',
             'placa' => '1867-SHN',
             'clase' => 'vagoneta',
@@ -33,7 +33,7 @@ class VehiculoSeeder extends Seeder
             'color' => 'guindo',
             'nro_asientos' => '5'
         ]);
-        Vehiculo::factory()->create([
+        Vehiculo::create([
             'cliente_id' => '2',
             'placa' => '3876-FAK',
             'clase' => 'vagoneta',
