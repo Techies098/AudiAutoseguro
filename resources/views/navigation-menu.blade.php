@@ -16,6 +16,39 @@
                         {{ __('Dashboard') }}
                     </x-nav-link>
                 </div>
+<<<<<<< Updated upstream
+=======
+                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                    <x-nav-link href="{{ route('administrador/coberturas.index') }}" :active="request()->routeIs('administrador/coberturas.index')">
+                        {{ __('Coberturas') }}
+                    </x-nav-link>
+                </div>
+                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                    <x-nav-link href="{{ route('administrador/seguros.index') }}" :active="request()->routeIs('administrador/seguros.index')">
+                        {{ __('Seguros') }}
+                    </x-nav-link>
+                </div>
+                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                    <x-nav-link href="{{ route('administrador/usuarios.index') }}" :active="request()->routeIs('administrador/usuarios.index')">
+                        {{ __('Usuarios') }}
+                    </x-nav-link>
+                </div>
+                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                    <x-nav-link href="{{ route('administrador/vehiculos.index') }}" :active="request()->routeIs('administrador/vehiculos.index')">
+                        {{ __('Vehiculos') }}
+                    </x-nav-link>
+                </div>
+                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                    <x-nav-link href="{{ route('administrador/clausulas.index') }}" :active="request()->routeIs('administrador/clausulas.index')">
+                        {{ __('Clausulas') }}
+                    </x-nav-link>
+                </div>
+                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                    <x-nav-link href="{{ route('personal/clientes.index') }}" :active="request()->routeIs('administrador/clientes.index')">
+                        {{ __('Clientes') }}
+                    </x-nav-link>
+                </div>
+>>>>>>> Stashed changes
             </div>
 
             <div class="hidden sm:flex sm:items-center sm:ms-6">
