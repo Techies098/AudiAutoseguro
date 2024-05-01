@@ -5,6 +5,8 @@ namespace App\Observers;
 use App\Models\UserLog;
 use App\Models\Vehiculo;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\Request;
+
 
 class VehiculoObserver
 {
@@ -13,11 +15,13 @@ class VehiculoObserver
      */
     public function created(Vehiculo $vehiculo): void
     {
+        $request = Request::capture();
         if (Auth::check()) {
             // Solo si hay un usuario autenticado, registra la acción en user_logs
             $userLogData = [
                 'user_id' => Auth::id(),
                 'action' => 'Vehiculo Creado: '. $vehiculo->placa,
+                'client_ip' => $request->ip(),
             ];
             UserLog::create($userLogData);
         }
@@ -28,9 +32,11 @@ class VehiculoObserver
      */
     public function updated(Vehiculo $vehiculo): void
     {
+        $request = Request::capture();
         $userLogData = [
             'user_id' => Auth::id(),
             'action' => 'Vehiculo Actualizado: '. $vehiculo->placa,
+            'client_ip' => $request->ip(),
         ];
         UserLog::create($userLogData);
     }
@@ -40,9 +46,11 @@ class VehiculoObserver
      */
     public function deleted(Vehiculo $vehiculo): void
     {
+        $request = Request::capture();
         $userLogData = [
             'user_id' => Auth::id(),
             'action' => 'Vehiculo borrado: '. $vehiculo->placa,
+            'client_ip' => $request->ip(),
         ];
         UserLog::create($userLogData);
     }
@@ -52,9 +60,11 @@ class VehiculoObserver
      */
     public function restored(Vehiculo $vehiculo): void
     {
+        $request = Request::capture();
         $userLogData = [
             'user_id' => Auth::id(),
             'action' => 'Vehiculo restaurado: '. $vehiculo->placa,
+            'client_ip' => $request->ip(),
         ];
         UserLog::create($userLogData);
     }
@@ -64,9 +74,11 @@ class VehiculoObserver
      */
     public function forceDeleted(Vehiculo $vehiculo): void
     {
+        $request = Request::capture();
         $userLogData = [
             'user_id' => Auth::id(),
             'action' => 'Vehiculo borrado forzoso: '. $vehiculo->placa,
+            'client_ip' => $request->ip(),
         ];
         UserLog::create($userLogData);
     }

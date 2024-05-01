@@ -11,6 +11,7 @@ class UserLog extends Model
     protected $fillable = [
         'user_id',
         'action',
+        'client_ip',
     ];
 
     public function user()

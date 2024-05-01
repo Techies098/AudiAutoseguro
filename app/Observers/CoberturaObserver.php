@@ -4,6 +4,7 @@ namespace App\Observers;
 
 use App\Models\UserLog;
 use App\Models\Cobertura;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class CoberturaObserver
@@ -13,11 +14,13 @@ class CoberturaObserver
      */
     public function created(Cobertura $cobertura): void
     {
+        $request = Request::capture();
         if (Auth::check()) {
             // Solo si hay un usuario autenticado, registra la acción en user_logs
             $userLogData = [
                 'user_id' => Auth::id(),
                 'action' => 'cobertura Creada, id: '. $cobertura->id,
+                'client_ip' => $request->ip(),
             ];
             UserLog::create($userLogData);
         }
@@ -28,9 +31,11 @@ class CoberturaObserver
      */
     public function updated(Cobertura $cobertura): void
     {
+        $request = Request::capture();
         $userLogData = [
             'user_id' => Auth::id(),
             'action' => 'cobertura actualizada, id: '. $cobertura->id,
+            'client_ip' => $request->ip(),
         ];
         UserLog::create($userLogData);
     }
@@ -40,9 +45,11 @@ class CoberturaObserver
      */
     public function deleted(Cobertura $cobertura): void
     {
+        $request = Request::capture();
         $userLogData = [
             'user_id' => Auth::id(),
             'action' => 'cobertura borrada, id: '. $cobertura->id,
+            'client_ip' => $request->ip(),
         ];
         UserLog::create($userLogData);
     }
