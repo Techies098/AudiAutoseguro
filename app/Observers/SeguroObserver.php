@@ -17,7 +17,7 @@ class SeguroObserver
             // Solo si hay un usuario autenticado, registra la acción en user_logs
             $userLogData = [
                 'user_id' => Auth::id(),
-                'action' => 'Seguro Creado: '. $seguro->placa,
+                'action' => 'Seguro Creado: '. $seguro->nombre,
             ];
             UserLog::create($userLogData);
         }
@@ -30,7 +30,7 @@ class SeguroObserver
     {
         $userLogData = [
             'user_id' => Auth::id(),
-            'action' => 'Seguro actualizado: '. $seguro->placa,
+            'action' => 'Seguro actualizado: '. $seguro->nombre,
         ];
         UserLog::create($userLogData);
     }
@@ -42,7 +42,7 @@ class SeguroObserver
     {
         $userLogData = [
             'user_id' => Auth::id(),
-            'action' => 'Seguro borrado: '. $seguro->placa,
+            'action' => 'Seguro borrado: '. $seguro->nombre,
         ];
         UserLog::create($userLogData);
     }
