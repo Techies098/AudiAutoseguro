@@ -18,6 +18,11 @@ class VehiculoController extends Controller
         return view('administrador.vehiculos.index');
     }
 
+    public function reportev()
+    {
+        return view('reporte.vehiculos.reportev');
+    }
+
     /**
      * Show the form for creating a new resource.
      */
