@@ -14,6 +14,7 @@ class Clausula extends Model
     ];
     //relacion de muchos a muchos
     public function seguros(){
-    return $this->belongsToMany('App\Models\Seguro');
+      return $this->belongsToMany('App\Models\Seguro');
     }
+
 }

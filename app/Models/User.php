@@ -9,6 +9,8 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Fortify\TwoFactorAuthenticatable;
 use Laravel\Jetstream\HasProfilePhoto;
 use Laravel\Sanctum\HasApiTokens;
+use Spatie\Permission\Models\Role;
+use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable
 {
@@ -17,6 +19,7 @@ class User extends Authenticatable
     use HasProfilePhoto;
     use Notifiable;
     use TwoFactorAuthenticatable;
+    use HasRoles;
 
     /**
      * The attributes that are mass assignable.
@@ -25,9 +28,13 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'name',
+        'telefono',
+        'direccion',
         'email',
-        'password',
+        'password'
     ];
+
+    // protected $guard_name = 'web';
 
     /**
      * The attributes that should be hidden for serialization.
@@ -61,5 +68,32 @@ class User extends Authenticatable
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    //Relaciones
+    public function administrador()
+    {
+        return $this->hasOne(Administrador::class);
+    }
+
+    public function cliente()
+    {
+        return $this->hasOne(Cliente::class);
+    }
+
+    public function perito()
+    {
+        return $this->hasOne(Perito::class);
+    }
+
+    public function vendedor()
+    {
+        return $this->hasOne(Vendedor::class);
+    }
+
+    //Relacion con roles:
+    public function roles()
+    {
+        return $this->belongsToMany(Role::class, 'model_has_roles', 'model_id', 'role_id');
     }
 }

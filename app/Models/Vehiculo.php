@@ -28,5 +28,6 @@ class Vehiculo extends Model
         //relacion de muchos a muchos
         public function seguros(){
             return $this->belongsToMany('App\Models\Seguro');
-            }
+        }
+
 }

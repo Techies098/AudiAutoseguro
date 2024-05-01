@@ -1,8 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-<<<<<<< Updated upstream
-=======
+
 use App\Http\Controllers\CoberturaController;
 use App\Http\Controllers\SeguroController;
 use App\Models\Seguro;
@@ -10,7 +9,6 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\ClienteController;
 use App\Http\Controllers\ClausulaController;
 use App\Http\Controllers\VehiculoController;
->>>>>>> Stashed changes
 
 Route::get('/', function () {
     return view('welcome');
@@ -23,10 +21,8 @@ Route::middleware([
 ])->group(function () {
     Route::get('/dashboard', function () {
         return view('dashboard');
-    })->name('dashboard');
+    })->name('dashboard')->middleware('auth:sanctum', 'verified');
 });
-<<<<<<< Updated upstream
-=======
 
 
 Route::resource('/administrador/usuarios', UserController::class)
@@ -49,34 +45,12 @@ Route::resource('/administrador/clientes', ClienteController::class)
     ->names('personal/clientes')
     ->middleware('auth:sanctum', 'verified');
 
-    Route::resource('/administrador/coberturas', CoberturaController::class)
+Route::resource('/administrador/coberturas', CoberturaController::class)
     ->parameters(['coberturas' => 'cobertura'])
     ->names('administrador/coberturas')
     ->middleware('auth:sanctum', 'verified');
 
-    Route::resource('/administrador/seguros', SeguroController::class)
+Route::resource('/administrador/seguros', SeguroController::class)
     ->parameters(['seguros' => 'seguro'])
     ->names('administrador/seguros')
     ->middleware('auth:sanctum', 'verified');
-
-
-Route::resource('/administrador/usuarios', UserController::class)
-    ->parameters(['usuarios' => 'user'])
-    ->names('administrador/usuarios')
-    ->middleware('auth:sanctum', 'verified');
-
-Route::resource('/administrador/vehiculos', VehiculoController::class)
-    ->parameters(['vehiculos' => 'vehiculo'])
-    ->names('administrador/vehiculos')
-    ->middleware('auth:sanctum', 'verified');
-
-Route::resource('/administrador/clausulas', ClausulaController::class)
-    ->parameters(['clausulas' => 'clausula'])
-    ->names('administrador/clausulas')
-    ->middleware('auth:sanctum', 'verified');
-
-Route::resource('/administrador/clientes', ClienteController::class)
-    ->parameters(['clientes' => 'cliente'])
-    ->names('personal/clientes')
-    ->middleware('auth:sanctum', 'verified');
->>>>>>> Stashed changes
