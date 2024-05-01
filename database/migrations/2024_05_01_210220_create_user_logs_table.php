@@ -6,13 +6,16 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
+    /**
+     * Run the migrations.
+     */
     public function up()
     {
-        Schema::create('userlogs', function (Blueprint $table) {
+        Schema::create('user_logs', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id');
             $table->string('action');
-            $table->timestamp('datetime');
+            $table->timestamps();
             $table->foreign('user_id')->references('id')->on('users');
         });
     }
@@ -22,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('userlogs');
+        Schema::dropIfExists('user_logs');
     }
 };
