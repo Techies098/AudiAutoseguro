@@ -9,6 +9,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\ClienteController;
 use App\Http\Controllers\ClausulaController;
 use App\Http\Controllers\VehiculoController;
+use App\Livewire\Vehiculos\ListaVehiculos;
 
 Route::get('/', function () {
     return view('welcome');
@@ -22,6 +23,9 @@ Route::middleware([
     Route::get('/dashboard', function () {
         return view('dashboard');
     })->name('dashboard')->middleware('auth:sanctum', 'verified');
+
+    Route::get('/administrador/reporte-vehiculo', [VehiculoController::class, 'reportev'])->name('reporte-vehiculo');
+    Route::get('/administrador/pdf-vehiculo', [ListaVehiculos::class, 'generarReporte'])->name('pdf-vehiculo');
 });
 
 

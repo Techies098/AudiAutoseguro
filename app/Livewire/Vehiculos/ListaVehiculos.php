@@ -3,6 +3,7 @@
 namespace App\Livewire\Vehiculos;
 
 use App\Models\Vehiculo;
+use Barryvdh\DomPDF\Facade\Pdf as PDF;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -14,12 +15,12 @@ class ListaVehiculos extends Component
 
     public function render()
     {
-        $vehiculos = $this->buscar ? $this->buscarVehiculo() : $this->obtenerVehiculos();
+        $vehiculos = $this->buscar ? $this->buscarVehiculos() : $this->obtenerVehiculos();
 
         return view('livewire.vehiculos.lista-vehiculos', compact('vehiculos'));
     }
 
-    public function buscarVehiculo()
+    public function buscarVehiculos()
     {
         $this->validate([
             'buscar' => 'required|string|min:1'
@@ -36,7 +37,13 @@ class ListaVehiculos extends Component
             ->paginate(25);
     }
 
+    public function generarReporte()
+    {
+        $vehiculos = Vehiculo::all();
+        $pdf = PDF::loadView('reporte.vehiculos.pdf-result', compact('vehiculos'));
 
+        return $pdf->stream();
+    }
 
 
     /*public function render()
