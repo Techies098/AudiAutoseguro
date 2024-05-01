@@ -39,13 +39,11 @@ class UserObserver
      */
     public function restored(User $user): void
     {
-        {
-            $userLogData = [
-                'user_id' => Auth::id(),
-                'action' => 'Usuario restaurado : '. $user->id . $user->name ,
-            ];
-            UserLog::create($userLogData);
-        }
+        $userLogData = [
+            'user_id' => Auth::id(),
+            'action' => 'Usuario restaurado : '. $user->id . $user->name ,
+        ];
+        UserLog::create($userLogData);
     }
 
     /**
@@ -53,12 +51,10 @@ class UserObserver
      */
     public function forceDeleted(User $user): void
     {
-        {
-            $userLogData = [
-                'user_id' => Auth::id(),
-                'action' => 'borrado forzado de : '. $user->id . $user->name ,
-            ];
-            UserLog::create($userLogData);
-        }
+        $userLogData = [
+            'user_id' => Auth::id(),
+            'action' => 'borrado forzado de : '. $user->id . $user->name ,
+        ];
+        UserLog::create($userLogData);
     }
 }
