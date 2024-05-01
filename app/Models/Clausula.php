@@ -12,4 +12,9 @@ class Clausula extends Model
     protected $fillable = [
         'detalle'
     ];
+    //relacion de muchos a muchos
+    public function seguros(){
+      return $this->belongsToMany('App\Models\Seguro');
+    }
+
 }

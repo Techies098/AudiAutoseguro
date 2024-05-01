@@ -1,6 +1,10 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+
+use App\Http\Controllers\CoberturaController;
+use App\Http\Controllers\SeguroController;
+use App\Models\Seguro;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\ClienteController;
 use App\Http\Controllers\ClausulaController;
@@ -39,4 +43,14 @@ Route::resource('/administrador/clausulas', ClausulaController::class)
 Route::resource('/administrador/clientes', ClienteController::class)
     ->parameters(['clientes' => 'cliente'])
     ->names('personal/clientes')
+    ->middleware('auth:sanctum', 'verified');
+
+Route::resource('/administrador/coberturas', CoberturaController::class)
+    ->parameters(['coberturas' => 'cobertura'])
+    ->names('administrador/coberturas')
+    ->middleware('auth:sanctum', 'verified');
+
+Route::resource('/administrador/seguros', SeguroController::class)
+    ->parameters(['seguros' => 'seguro'])
+    ->names('administrador/seguros')
     ->middleware('auth:sanctum', 'verified');
