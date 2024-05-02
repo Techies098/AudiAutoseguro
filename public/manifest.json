@@ -1,7 +1,7 @@
 {
     "short_name": "Autoseguro",
     "name": "Autoseguro",
-    "start_url": "index.php",
+    "start_url": "/",
     "background_color": "#3498db",
     "theme_color": "#3498db",
     "display": "standalone",
