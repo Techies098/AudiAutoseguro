@@ -15,6 +15,19 @@
         @vite(['resources/sass/app.scss', 'resources/js/app.js'])
         @vite(['resources/css/app.css', 'resources/js/app.js'])
 
+        <script>
+            if( navigator.serviceWorker){
+                navigator.serviceWorker.register('/sw.js')
+                    // .then((registration) => {
+                    //     console.log('SW-Registrado');
+                    // }).catch((error) =>{
+                    //     console.log('SW-Registro fallido: ', error);
+                    // })
+            }
+        </script>
+        <link rel="manifest" href="manifest.json">
+        <meta name="theme-color" content="#3498db">
+
         <!-- Styles -->
         @livewireStyles
     </head>

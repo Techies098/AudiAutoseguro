@@ -10,9 +10,10 @@ use App\Http\Controllers\ClienteController;
 use App\Http\Controllers\ClausulaController;
 use App\Http\Controllers\VehiculoController;
 
-Route::get('/', function () {
-    return view('welcome');
-});
+
+// Route::get('/', function () {
+//     return view('welcome');
+// });
 
 Route::middleware([
     'auth:sanctum',
@@ -23,6 +24,10 @@ Route::middleware([
         return view('dashboard');
     })->name('dashboard')->middleware('auth:sanctum', 'verified');
 });
+
+Route::get('/', function () {
+    return view('inicio');
+})->name('inicio');
 
 
 Route::resource('/administrador/usuarios', UserController::class)
