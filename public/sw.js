@@ -1,5 +1,3 @@
-importScripts('my_js/sw-utils.js');
-
 const DYNAMIC_CACHE = 'dynamic-v1';
 
 

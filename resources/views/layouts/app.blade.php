@@ -25,7 +25,8 @@
                     // })
             }
         </script>
-        <link rel="manifest" href="manifest.json">
+        {{-- <link rel="manifest" href="http://localhost:8000/manifest.json"> --}}
+        <link rel="manifest" href="{{ env('APP_URL') }}/manifest.json">
         <meta name="theme-color" content="#3498db">
 
         <!-- Styles -->
