@@ -9,9 +9,9 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
                 <div class="container p-6 text-gray-900">
-                    <form action="{{ route('administrador/seguro.update', $seguro) }}" method="POST">
+                    <form action="{{ route('administrador/seguros.update', $seguro) }}" method="POST">
                         @csrf @method('PUT')
-                        @include('administrador.seguro.form-fields')
+                        @include('administrador.seguros.form-fields')
                     </form>
                 </div>
             </div>
