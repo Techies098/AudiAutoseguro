@@ -1,7 +1,5 @@
 <?php
-
 use App\Models\Seguro;
-
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\SeguroController;
@@ -10,7 +8,7 @@ use App\Http\Controllers\BitacoraController;
 use App\Http\Controllers\ClausulaController;
 use App\Http\Controllers\VehiculoController;
 use App\Http\Controllers\CoberturaController;
-
+use App\Livewire\Vehiculos\ListaVehiculos;
 Route::get('/', function () {
     return view('welcome');
 });
@@ -23,9 +21,10 @@ Route::middleware([
     Route::get('/dashboard', function () {
         return view('dashboard');
     })->name('dashboard')->middleware('auth:sanctum', 'verified');
+
+    Route::get('/administrador/reporte-vehiculo', [VehiculoController::class, 'reportev'])->name('reporte-vehiculo');
+    Route::get('/administrador/pdf-vehiculo', [ListaVehiculos::class, 'generarReporte'])->name('pdf-vehiculo');
 });
-
-
 Route::resource('/administrador/usuarios', UserController::class)
     ->parameters(['usuarios' => 'user'])
     ->names('administrador/usuarios')
