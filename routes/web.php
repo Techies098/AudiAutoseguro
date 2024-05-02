@@ -31,7 +31,7 @@ Route::get('/', function () {
 
     Route::get('/administrador/reporte-vehiculo', [VehiculoController::class, 'reportev'])->name('reporte-vehiculo');
     Route::get('/administrador/pdf-vehiculo', [ListaVehiculos::class, 'generarReporte'])->name('pdf-vehiculo');
-});
+
 Route::resource('/administrador/usuarios', UserController::class)
     ->parameters(['usuarios' => 'user'])
     ->names('administrador/usuarios')
