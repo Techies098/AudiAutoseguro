@@ -1,14 +1,15 @@
 <?php
 
-use Illuminate\Support\Facades\Route;
-
-use App\Http\Controllers\CoberturaController;
-use App\Http\Controllers\SeguroController;
 use App\Models\Seguro;
+
+use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\SeguroController;
 use App\Http\Controllers\ClienteController;
+use App\Http\Controllers\BitacoraController;
 use App\Http\Controllers\ClausulaController;
 use App\Http\Controllers\VehiculoController;
+use App\Http\Controllers\CoberturaController;
 
 Route::get('/', function () {
     return view('welcome');
@@ -53,4 +54,9 @@ Route::resource('/administrador/coberturas', CoberturaController::class)
 Route::resource('/administrador/seguros', SeguroController::class)
     ->parameters(['seguros' => 'seguro'])
     ->names('administrador/seguros')
+    ->middleware('auth:sanctum', 'verified');
+
+Route::resource('/administrador/bitacoras', BitacoraController::class)
+    ->parameters(['bitacoras' => 'bitacora'])
+    ->names('administrador.bitacoras')
     ->middleware('auth:sanctum', 'verified');
