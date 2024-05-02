@@ -49,13 +49,15 @@
                     </x-nav-link>
                 </div>
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                    <x-nav-link href="{{ route('administrador.bitacoras.index') }}" :active="request()->routeIs('administrador.bitacoras.index')">
+                        {{ __('Bitacora') }}
+                    </x-nav-link>
+                </div>
                     <x-nav-link href="{{ route('reporte-vehiculo') }}" :active="request()->routeIs('reporte/vehiculos.reportev')">
                         {{ __('Reporte Vehiculo') }}
                     </x-nav-link>
                 </div>
-
             </div>
-
             <div class="hidden sm:flex sm:items-center sm:ms-6">
                 {{-- <!-- Teams Dropdown -->reporte-vehiculo
                 @if (Laravel\Jetstream\Jetstream::hasTeamFeatures())
