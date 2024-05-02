@@ -15,7 +15,7 @@ class UserObserver
         // Solo si hay un usuario autenticado, registra la acción en user_logs
         $userLogData = [
             'user_id' => Auth::id(),
-            'action' => 'Usuario Creado: ' . $user->id . ' ' . $user->name,
+            'action' => 'Usuario Creado, id: ' . $user->id . ': ' . $user->name,
             'client_ip' => $request->ip(),
         ];
         UserLog::create($userLogData);
@@ -26,7 +26,7 @@ class UserObserver
         $request = Request::capture();
         $userLogData = [
             'user_id' => Auth::id(),
-            'action' => 'Usuario Actualizado : '. $user->id . $user->name ,
+            'action' => 'Usuario Actualizado,id : '. $user->id .':'. $user->name ,
             'client_ip' => $request->ip(),
         ];
         UserLog::create($userLogData);

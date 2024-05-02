@@ -20,7 +20,7 @@ class VehiculoObserver
             // Solo si hay un usuario autenticado, registra la acción en user_logs
             $userLogData = [
                 'user_id' => Auth::id(),
-                'action' => 'Vehiculo Creado: '. $vehiculo->placa,
+                'action' => 'Vehiculo Creado, placa: '. $vehiculo->placa,
                 'client_ip' => $request->ip(),
             ];
             UserLog::create($userLogData);
@@ -35,7 +35,7 @@ class VehiculoObserver
         $request = Request::capture();
         $userLogData = [
             'user_id' => Auth::id(),
-            'action' => 'Vehiculo Actualizado: '. $vehiculo->placa,
+            'action' => 'Vehiculo Actualizado, placa: '. $vehiculo->placa,
             'client_ip' => $request->ip(),
         ];
         UserLog::create($userLogData);
@@ -49,7 +49,7 @@ class VehiculoObserver
         $request = Request::capture();
         $userLogData = [
             'user_id' => Auth::id(),
-            'action' => 'Vehiculo borrado: '. $vehiculo->placa,
+            'action' => 'Vehiculo borrado:, placa '. $vehiculo->placa,
             'client_ip' => $request->ip(),
         ];
         UserLog::create($userLogData);

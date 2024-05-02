@@ -8,6 +8,7 @@
         <table class="table table-striped">
             <thead>
                 <tr>
+                    <th scope="col">U_Id</th>
                     <th scope="col">Usuario</th>
                     <th scope="col">Cliente IP</th>
                     <th scope="col">Accion</th>
@@ -19,6 +20,7 @@
                 @foreach ($userLogs as $fila => $userLog)
                     <tr>
                         <td>{{ $userLog->user_id }}</td>
+                        <td>{{ $userLog->user->name }}</td>
                         <td>{{ $userLog->client_ip }} </td>
                         <td>{{ $userLog->action }} </td>
                         <td>{{ $userLog->created_at }} </td>
