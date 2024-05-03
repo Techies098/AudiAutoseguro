@@ -16,7 +16,7 @@ class ListaVehiculosrep extends Component
     public function render()
     {
         $vehiculos = $this->buscar ? $this->buscarVehiculos() : $this->obtenerVehiculos();
-
+        //dd($vehiculos);
         return view('livewire.vehiculosrep.lista-vehiculosrep', compact('vehiculos'));
     }
 

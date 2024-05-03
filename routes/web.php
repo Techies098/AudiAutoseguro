@@ -1,4 +1,5 @@
 <?php
+
 use App\Models\Seguro;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
@@ -8,7 +9,7 @@ use App\Http\Controllers\BitacoraController;
 use App\Http\Controllers\ClausulaController;
 use App\Http\Controllers\VehiculoController;
 use App\Http\Controllers\CoberturaController;
-use App\Livewire\Vehiculos\ListaVehiculos;
+use App\Livewire\Vehiculosrep\ListaVehiculosrep;
 
 // Route::get('/', function () {
 //     return view('welcome');
@@ -27,10 +28,6 @@ Route::middleware([
 Route::get('/', function () {
     return view('inicio');
 })->name('inicio');
-
-
-    Route::get('/administrador/reporte-vehiculo', [VehiculoController::class, 'reportev'])->name('reporte-vehiculo');
-    Route::get('/administrador/pdf-vehiculo', [ListaVehiculos::class, 'generarReporte'])->name('pdf-vehiculo');
 
 Route::resource('/administrador/usuarios', UserController::class)
     ->parameters(['usuarios' => 'user'])
@@ -66,3 +63,9 @@ Route::resource('/administrador/bitacoras', BitacoraController::class)
     ->parameters(['bitacoras' => 'bitacora'])
     ->names('administrador.bitacoras')
     ->middleware('auth:sanctum', 'verified');
+
+/*-----------------------Reportes------------------*/
+
+Route::get('/administrador/reporte-vehiculo', [VehiculoController::class, 'reportev'])->name('reporte-vehiculo');
+//Route::get('/administrador/pdf-vehiculo', [ListaVehiculos::class, 'generarReporte'])->name('pdf-vehiculo');
+Route::get('/administrador/pdf-vehiculo', [ListaVehiculosrep::class, 'generarReporte'])->name('pdf-vehiculo');
