@@ -1,24 +1,24 @@
 <div>
     {{-- Knowing others is intelligence; knowing yourself is true wisdom. --}}
     <div class="container">
-        <form class="row g-3">
+        <form class="row g-3" action="{{ route('pdf-vehiculo') }}" method="POST" target="_blank">
+            @csrf
             <!--<div class="col-md-6">
                 <label class="form-label">Cliente:</label>
                 <input wire:model="name" type="text" class="form-control" placeholder="Nombre completo">
             </div>-->
             <div class="col-md-3">
                 <label for="fechaIni" class="form-label">Desde fecha:</label>
-                <input wire:model="fechaIni" type="date" class="form-control" id="fechaIni">
+                <input wire:model="fechaIni" class="form-control" type="date" name="fechaIni" id="fechaIni">
             </div>
             <div class="col-md-3">
-                <label for="fechaIni" class="form-label">Hasta Fecha:</label>
-                <input wire:model="fechaFin" type="date" class="form-control" id="fechaIni">
+                <label for="fechaFin" class="form-label">Hasta Fecha:</label>
+                <input wire:model="fechaFin" class="form-control" type="date" name="fechaFin" id="fechaFin">
             </div>
             <div>
                 <div class="col-12">
                     <button wire:click="buscarVehiculosr" class="btn btn-primary col-sm-2" type="button">Ver</button>
-                    <a href="{{ route('pdf-vehiculo') }}" class="btn btn-warning ms-4 col-sm-2" target="_blank">Generar
-                        Reporte</a>
+                    <button class="btn btn-warning ms-4 col-sm-2" type="submit">Generar reporte</button>
                 </div>
 
             </div>

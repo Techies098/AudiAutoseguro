@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Models\User;
 use App\Models\Vehiculo;
 use Illuminate\Http\Request;
+use Barryvdh\DomPDF\Facade\Pdf as PDF;
 
 class VehiculoController extends Controller
 {
@@ -21,6 +22,24 @@ class VehiculoController extends Controller
     public function reportev()
     {
         return view('reporte.vehiculos.reportev');
+    }
+
+    public function generarReporte(Request $request)
+    {
+        $fechaIni = $request->input('fechaIni');
+        $fechaFin = $request->input('fechaFin');
+
+        $vehiculos = Vehiculo::query();
+
+        if (!is_null($fechaIni) && !is_null($fechaFin)) {
+            $vehiculos->whereDate('created_at', '>=', $fechaIni)
+                ->whereDate('created_at', '<=', $fechaFin);
+        }
+
+        $vehiculos = $vehiculos->get();
+
+        $pdf = PDF::loadView('reporte.vehiculos.pdf-result', compact('vehiculos'));
+        return $pdf->stream();
     }
 
     /**

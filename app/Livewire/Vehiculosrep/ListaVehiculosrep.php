@@ -3,7 +3,7 @@
 namespace App\Livewire\Vehiculosrep;
 
 use App\Models\Vehiculo;
-use Barryvdh\DomPDF\Facade\Pdf as PDF;
+//use Barryvdh\DomPDF\Facade\Pdf as PDF;
 use Livewire\Component;
 use Livewire\WithPagination;
 
@@ -28,19 +28,6 @@ class ListaVehiculosrep extends Component
             ->paginate(25);
     }
 
-    public function generarReporte()
-    {
-        if (is_null($this->fechaIni) || is_null($this->fechaFin)) {
-            $vehiculos = Vehiculo::all();
-        } else {
-            $vehiculos = Vehiculo::whereDate($this->fecha, '>=', $this->fechaIni)
-                ->whereDate($this->fecha, '<=', $this->fechaFin)
-                ->get();
-        }
-        $pdf = PDF::loadView('reporte.vehiculos.pdf-result', compact('vehiculos'));
-        return $pdf->stream();
-    }
-
     public function buscarVehiculosr()
     {
         $this->validate([
@@ -53,4 +40,17 @@ class ListaVehiculosrep extends Component
             ->whereDate($this->fecha, '<=', trim($this->fechaFin))
             ->get();
     }
+
+    /*public function generarReporte()
+    {
+        if (is_null($this->fechaIni) || is_null($this->fechaFin)) {
+            $vehiculos = Vehiculo::all();
+        } else {
+            $vehiculos = Vehiculo::whereDate($this->fecha, '>=', $this->fechaIni)
+                ->whereDate($this->fecha, '<=', $this->fechaFin)
+                ->get();
+        }
+        $pdf = PDF::loadView('reporte.vehiculos.pdf-result', compact('vehiculos'));
+        return $pdf->stream();
+    }*/
 }

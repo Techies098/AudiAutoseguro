@@ -24,7 +24,7 @@ Route::middleware([
         return view('dashboard');
     })->name('dashboard')->middleware('auth:sanctum', 'verified');
     //Route::get('/administrador/reporte-vehiculo', [VehiculoController::class, 'reportev'])->name('reporte-vehiculo');
-    //Route::get('/administrador/pdf-vehiculo', [ListaVehiculosrep::class, 'generarReporte'])->name('pdf-vehiculo');
+    //Route::post('/administrador/pdf-vehiculo', [VehiculoController::class, 'generarReporte'])->name('pdf-vehiculo');
 });
 
 Route::get('/', function () {
@@ -69,5 +69,4 @@ Route::resource('/administrador/bitacoras', BitacoraController::class)
 /*-----------------------Reportes------------------*/
 
 Route::get('/administrador/reporte-vehiculo', [VehiculoController::class, 'reportev'])->name('reporte-vehiculo');
-//Route::get('/administrador/pdf-vehiculo', [ListaVehiculos::class, 'generarReporte'])->name('pdf-vehiculo');
-Route::get('/administrador/pdf-vehiculo', [ListaVehiculosrep::class, 'generarReporte'])->name('pdf-vehiculo');
+Route::post('/administrador/pdf-vehiculo', [VehiculoController::class, 'generarReporte'])->name('pdf-vehiculo');
