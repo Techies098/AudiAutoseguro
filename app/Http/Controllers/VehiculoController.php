@@ -47,7 +47,7 @@ class VehiculoController extends Controller
     {
         $request->validate([
             'cliente_id' => 'required',
-            'placa' => 'max:10',
+            'placa' => 'max:10|unique:vehiculos,placa',
             'clase' => 'max:30',
             'marca' => 'max:30',
             'modelo' => 'max:30',
@@ -95,7 +95,7 @@ class VehiculoController extends Controller
     {
         $request->validate([
             'cliente_id' => 'required',
-            'placa' => 'max:10',
+            'placa' => 'max:10|unique:vehiculos,placa',
             'clase' => 'max:30',
             'marca' => 'max:30',
             'modelo' => 'max:30',

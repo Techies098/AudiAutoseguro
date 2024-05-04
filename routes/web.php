@@ -23,6 +23,8 @@ Route::middleware([
     Route::get('/dashboard', function () {
         return view('dashboard');
     })->name('dashboard')->middleware('auth:sanctum', 'verified');
+    //Route::get('/administrador/reporte-vehiculo', [VehiculoController::class, 'reportev'])->name('reporte-vehiculo');
+    //Route::get('/administrador/pdf-vehiculo', [ListaVehiculosrep::class, 'generarReporte'])->name('pdf-vehiculo');
 });
 
 Route::get('/', function () {

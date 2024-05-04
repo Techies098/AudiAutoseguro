@@ -1,63 +1,28 @@
 <div>
     {{-- Knowing others is intelligence; knowing yourself is true wisdom. --}}
     <div class="container">
-        <!-- <div class="mb-3 row">
-            <div class="col-sm-3 col-md-3">
-                <input wire:model="buscar" wire:keydown.enter="buscarVehiculos" type="search" class="form-control"
-                    placeholder="vehiculo">
-            </div>
-            <div class="mx-auto d-grid col-sm-2 col-md-2">
-                <button wire:click= "buscarVehiculos" class="btn btn-secondary" type="button">
-                    Buscar
-                </button>
-            </div>
-            <div class="col-sm-3 col-md-3">
-                <label class="form-label">Desde fecha: </label>
-                <input wire:model="buscar" wire:keydown.enter="buscarVehiculos" type="date" id="desdeFecha"
-                    name="desdeFecha" class="form-control">
-            </div>
-            <div class="col-sm-3 col-md-3">
-                <label class="form-label">Hasta fecha: </label>
-                <input wire:model="buscar" wire:keydown.enter="buscarVehiculos" type="date" id="hastaFecha"
-                    name="hastaFecha" class="form-control">
-            </div>
-            <div class="col-sm-7"></div>
-        </div>-->
-        <!--++++++++++++++++++++++++++++++++++++++++++++++++++++-->
-        <form class="row g-3 needs-validation" novalidate>
-            <div class="col-md-6">
-                <label for="validationCustom01" class="form-label">Cliente:</label>
-                <input type="text" class="form-control" id="validationCustom01" value="Mark" required>
-                <div class="valid-feedback">
-                    Looks good!
-                </div>
+        <form class="row g-3">
+            <!--<div class="col-md-6">
+                <label class="form-label">Cliente:</label>
+                <input wire:model="name" type="text" class="form-control" placeholder="Nombre completo">
+            </div>-->
+            <div class="col-md-3">
+                <label for="fechaIni" class="form-label">Desde fecha:</label>
+                <input wire:model="fechaIni" type="date" class="form-control" id="fechaIni">
             </div>
             <div class="col-md-3">
-                <label for="validationCustom03" class="form-label">Desde fecha:</label>
-                <input type="date" class="form-control" id="validationCustom03" required>
-                <div class="invalid-feedback">
-                    Please provide a valid city.
+                <label for="fechaIni" class="form-label">Hasta Fecha:</label>
+                <input wire:model="fechaFin" type="date" class="form-control" id="fechaIni">
+            </div>
+            <div>
+                <div class="col-12">
+                    <button wire:click="buscarVehiculosr" class="btn btn-primary col-sm-2" type="button">Ver</button>
+                    <a href="{{ route('pdf-vehiculo') }}" class="btn btn-warning ms-4 col-sm-2" target="_blank">Generar
+                        Reporte</a>
                 </div>
+
             </div>
-            <div class="col-md-3">
-                <label for="validationCustom03" class="form-label">Hasta Fecha:</label>
-                <input type="date" class="form-control" id="validationCustom03" required>
-                <div class="invalid-feedback">
-                    Please provide a valid city.
-                </div>
-            </div>
-            <div class="col-3">
-                <button class="btn btn-primary col-sm-12" type="submit">consultar</button>
-            </div>
-            <div class="col-3 float-right ">
-                <a href="{{ route('pdf-vehiculo') }}" class="btn btn-warning float-right col-sm-12 "
-                    target="_blank">Generar
-                    Reporte</a>
-            </div>
-            <!--<button type="button" class="btn btn-primary btn-lg">Small button</button>
-            <button type="button" class="btn btn-secondary btn-lg">Small button</button>-->
         </form>
-        <!--++++++++++++++++++++++++++++++++++++++++++++++++++++-->
     </div>
 
     <div class="col-md-12 py-3">
@@ -89,12 +54,10 @@
                         <td>{{ $vehiculo->color }} </td>
                         <td>{{ $vehiculo->nro_asientos }} </td>
                         <td>{{ date('d-m-Y', strtotime($vehiculo->created_at)) }} </td>
-
                     </tr>
                 @endforeach
             </tbody>
         </table>
     </div>
 
-    {{ $vehiculos->links() }}
 </div>

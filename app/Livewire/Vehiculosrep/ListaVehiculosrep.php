@@ -11,24 +11,15 @@ class ListaVehiculosrep extends Component
 {
     use WithPagination;
 
-    public $buscar, $placa = 'placa';
+    public $placa = 'placa';
+    //public $name = 'name';
+    public $fechaIni, $fechaFin, $fecha = 'created_at';
 
     public function render()
     {
-        $vehiculos = $this->buscar ? $this->buscarVehiculos() : $this->obtenerVehiculos();
-        //dd($vehiculos);
+        $vehiculos = ($this->fechaIni and $this->fechaFin) ?  $this->buscarVehiculosr() : $this->obtenerVehiculos();
+
         return view('livewire.vehiculosrep.lista-vehiculosrep', compact('vehiculos'));
-    }
-
-    public function buscarVehiculos()
-    {
-        $this->validate([
-            'buscar' => 'required|string|min:1'
-        ]);
-
-        return Vehiculo::where('' . $this->placa . '', 'like', '%' . trim($this->buscar) . '%')
-            ->orderBy('' . $this->placa . '', 'asc')
-            ->paginate(25);
     }
 
     private function obtenerVehiculos()
@@ -39,14 +30,27 @@ class ListaVehiculosrep extends Component
 
     public function generarReporte()
     {
-        $vehiculos = Vehiculo::all();
+        if (is_null($this->fechaIni) || is_null($this->fechaFin)) {
+            $vehiculos = Vehiculo::all();
+        } else {
+            $vehiculos = Vehiculo::whereDate($this->fecha, '>=', $this->fechaIni)
+                ->whereDate($this->fecha, '<=', $this->fechaFin)
+                ->get();
+        }
         $pdf = PDF::loadView('reporte.vehiculos.pdf-result', compact('vehiculos'));
-
         return $pdf->stream();
     }
 
-    /*public function render()
+    public function buscarVehiculosr()
     {
-        return view('livewire.vehiculosrep.lista-vehiculosrep');
-    }*/
+        $this->validate([
+            //'name' => 'string|min:1',
+            'fechaIni' => 'date',
+            'fechaFin' => 'date'
+        ]);
+
+        return Vehiculo::whereDate($this->fecha, '>=', trim($this->fechaIni))
+            ->whereDate($this->fecha, '<=', trim($this->fechaFin))
+            ->get();
+    }
 }
