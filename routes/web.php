@@ -66,7 +66,7 @@ Route::resource('/administrador/bitacoras', BitacoraController::class)
     ->names('administrador.bitacoras')
     ->middleware('auth:sanctum', 'verified');
 
-/*-----------------------Reportes------------------*/
+/*REPORTES*/
 
 Route::get('/administrador/reporte-vehiculo', [VehiculoController::class, 'reportev'])->name('reporte-vehiculo');
 Route::post('/administrador/pdf-vehiculo', [VehiculoController::class, 'generarReporte'])->name('pdf-vehiculo');
