@@ -9,7 +9,7 @@ use App\Http\Controllers\BitacoraController;
 use App\Http\Controllers\ClausulaController;
 use App\Http\Controllers\VehiculoController;
 use App\Http\Controllers\CoberturaController;
-use App\Livewire\Vehiculosrep\ListaVehiculosrep;
+use App\Http\Controllers\ContratoController;
 
 // Route::get('/', function () {
 //     return view('welcome');
@@ -64,6 +64,11 @@ Route::resource('/administrador/seguros', SeguroController::class)
 Route::resource('/administrador/bitacoras', BitacoraController::class)
     ->parameters(['bitacoras' => 'bitacora'])
     ->names('administrador.bitacoras')
+    ->middleware('auth:sanctum', 'verified');
+
+Route::resource('/administrador/contratos', ContratoController::class)
+    ->parameters(['contratos' => 'contrato'])
+    ->names('administrador/contratos')
     ->middleware('auth:sanctum', 'verified');
 
 /*REPORTES*/

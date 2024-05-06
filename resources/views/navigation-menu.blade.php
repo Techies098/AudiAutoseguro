@@ -12,7 +12,7 @@
 
                 <!-- Navigation Links -->
                 @auth
-                {{-- usuarios autenticados: --}}
+                    {{-- usuarios autenticados: --}}
                     <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                         <x-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
                             {{ __('Dashboard') }}
@@ -55,24 +55,29 @@
                             {{ __('Bitacora') }}
                         </x-nav-link>
                     </div>
-                    <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex" >
+                    <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                         <x-nav-link href="{{ route('reporte-vehiculo') }}" :active="request()->routeIs('reporte/vehiculos.reportev')">
                             {{ __('Reporte Vehiculo') }}
                         </x-nav-link>
                     </div>
+                    <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                        <x-nav-link href="{{ route('administrador/contratos.index') }}" :active="request()->routeIs('administrador/contratos.index')">
+                            {{ __('Contrato') }}
+                        </x-nav-link>
+                    </div>
                 @else
-                {{-- Usuarios no autenticado: --}}
+                    {{-- Usuarios no autenticado: --}}
                     <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                         <x-nav-link href="{{ route('inicio') }}" :active="request()->routeIs('inicio')">
                             {{ __('Inicio') }}
                         </x-nav-link>
                     </div>
-                
+
                 @endauth
 
             </div>
             <div class="hidden sm:flex sm:items-center sm:ms-6">
-                
+
                 <!-- Settings Dropdown -->
                 @auth
                     <div class="relative ms-3">
@@ -130,14 +135,14 @@
                         </x-dropdown>
                     </div>
                 @else
-                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link :href="route('login')" :active="request()->routeIs('login')">
-                        {{ __('Login') }}
-                    </x-nav-link>
-                    <x-nav-link :href="route('register')" :active="request()->routeIs('register')">
-                        {{ __('Register') }}
-                    </x-nav-link>
-                </div>
+                    <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                        <x-nav-link :href="route('login')" :active="request()->routeIs('login')">
+                            {{ __('Login') }}
+                        </x-nav-link>
+                        <x-nav-link :href="route('register')" :active="request()->routeIs('register')">
+                            {{ __('Register') }}
+                        </x-nav-link>
+                    </div>
                 @endauth
             </div>
 
@@ -161,14 +166,14 @@
     <div :class="{ 'block': open, 'hidden': !open }" class="hidden sm:hidden">
 
         @auth
-        {{-- Usuarios autenticados --}}
+            {{-- Usuarios autenticados --}}
             <div class="pt-2 pb-3 space-y-1">
                 <x-responsive-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
                     {{ __('Dashboard') }}
                 </x-responsive-nav-link>
             </div>
         @else
-        {{-- usuarios no autenticados --}}
+            {{-- usuarios no autenticados --}}
             <div class="pt-2 pb-3 space-y-1">
                 <x-responsive-nav-link href="{{ route('inicio') }}" :active="request()->routeIs('inicio')">
                     {{ __('Inicio') }}
@@ -177,7 +182,7 @@
         @endauth
 
         <!-- Responsive Settings Options -->
-        
+
         @auth
             <div class="pt-4 pb-1 border-t border-gray-200">
                 <div class="flex items-center px-4">
@@ -215,7 +220,7 @@
                         </x-responsive-nav-link>
                     </form>
 
-                    
+
                 </div>
             </div>
         @else
