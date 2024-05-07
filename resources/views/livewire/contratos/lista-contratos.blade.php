@@ -51,16 +51,18 @@
                         <td>{{ $contrato->estado }} </td>
                         <td>
                             <a href="{{ route('administrador/contratos.edit', $contrato) }}"
-                                class="btn btn-warning">PDF</a>
+                                class="btn btn-secondary btn-sm">Ver</a>
                             <a href="{{ route('administrador/contratos.edit', $contrato) }}"
-                                class="btn btn-primary">Editar</a>
+                                class="btn btn-warning btn-sm">PDF</a>
+                            <a href="{{ route('administrador/contratos.edit', $contrato) }}"
+                                class="btn btn-primary btn-sm">Editar</a>
                             <form action="{{ route('administrador/contratos.destroy', $contrato) }}" method="POST"
                                 class="d-inline">
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit"
                                     onclick="return confirm('Eliminar contrato {{ $contrato->id }}?')"
-                                    class="btn btn-danger">Eliminar</button>
+                                    class="btn btn-danger btn-sm">Eliminar</button>
                             </form>
                         </td>
                     </tr>

@@ -6,7 +6,10 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Vehiculo;
 use App\Models\Contrato;
+use App\Models\Seguro;
 use App\Models\User;
+use App\Models\Vendedor;
+use Illuminate\Support\Facades\Auth;
 
 class ContratoController extends Controller
 {
@@ -23,18 +26,27 @@ class ContratoController extends Controller
      */
     public function create()
     {
-        $vendedores = User::select(
+        /*$vendedores = User::select(
             'vendedores.id',
             'users.name as nombrev',
-        )->join('vendedores', 'vendedores.user_id', '=', 'users.id')->get();
+        )->join('vendedores', 'vendedores.user_id', '=', 'users.id')->get();*/
+
+        $idVendedor = Auth::user()->id;
+
+        $vendedor = Vendedor::join('users', 'users.id', '=', 'vendedores.user_id')
+            ->where('users.id', $idVendedor)
+            ->select('vendedores.id as v_id', 'users.id as u_id', 'users.name as nombrev')
+            ->first();
+        //dd($vendedor);
 
         $vehiculos = Vehiculo::all();
-        //dd($vendedores);
+        $seguros = Seguro::all();
 
         return view('administrador.contratos.create', [
             'contrato' => new Contrato(),
-            'vendedores' => $vendedores,
-            'vehiculos' => $vehiculos
+            'seguros' => $seguros,
+            'vehiculos' => $vehiculos,
+            'vendedor' => $vendedor
         ]);
     }
 
@@ -43,7 +55,26 @@ class ContratoController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        //dd($request);
+        $request->validate([
+
+            'vehiculo_id' => 'required',
+            'vendedor_id' => 'required',
+            'seguro_id' => 'required',
+            'costofranquicia' => 'required',
+            'costoprima' => 'required',
+            'nro_cuotas' => 'required',
+            'tipovigencia' => 'required',
+            'vigenciainicio' => 'required',
+            'vigenciafin' => 'required',
+            'estado' => 'required'
+        ]);
+        //dd($request);
+        $contrato = Contrato::create($request->all());
+        //dd($contrato);
+
+        return redirect()->route('administrador/contratos.index')
+            ->with('msj_ok', 'Creado el contrato con ID: ' . $contrato->id);
     }
 
     /**
