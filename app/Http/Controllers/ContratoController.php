@@ -33,21 +33,26 @@ class ContratoController extends Controller
 
         $idVendedor = Auth::user()->id;
 
-        $vendedor = Vendedor::join('users', 'users.id', '=', 'vendedores.user_id')
-            ->where('users.id', $idVendedor)
-            ->select('vendedores.id as v_id', 'users.id as u_id', 'users.name as nombrev')
-            ->first();
-        //dd($vendedor);
+        if (!Vendedor::where('user_id', $idVendedor)->exists()) {
+            return redirect()->route('administrador/contratos.index')->with('error', 'El usuario autenticado no es de TIPO VENDEDOR');
+        } else {
 
-        $vehiculos = Vehiculo::all();
-        $seguros = Seguro::all();
+            $vendedor = Vendedor::join('users', 'users.id', '=', 'vendedores.user_id')
+                ->where('users.id', $idVendedor)
+                ->select('vendedores.id as v_id', 'users.id as u_id', 'users.name as nombrev')
+                ->first();
+            //dd($vendedor);
 
-        return view('administrador.contratos.create', [
-            'contrato' => new Contrato(),
-            'seguros' => $seguros,
-            'vehiculos' => $vehiculos,
-            'vendedor' => $vendedor
-        ]);
+            $vehiculos = Vehiculo::all();
+            $seguros = Seguro::all();
+
+            return view('administrador.contratos.create', [
+                'contrato' => new Contrato(),
+                'seguros' => $seguros,
+                'vehiculos' => $vehiculos,
+                'vendedor' => $vendedor
+            ]);
+        }
     }
 
     /**
@@ -57,7 +62,6 @@ class ContratoController extends Controller
     {
         //dd($request);
         $request->validate([
-
             'vehiculo_id' => 'required',
             'vendedor_id' => 'required',
             'seguro_id' => 'required',
@@ -88,17 +92,47 @@ class ContratoController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Contrato $contrato)
     {
-        //
+        $idVendedor = Auth::user()->id;
+        $vendedor = Vendedor::join('users', 'users.id', '=', 'vendedores.user_id')
+            ->where('users.id', $idVendedor)
+            ->select('vendedores.id as v_id', 'users.id as u_id', 'users.name as nombrev')
+            ->first();
+
+        $vehiculos = Vehiculo::all();
+        $seguros = Seguro::all();
+
+        return view('administrador.contratos.edit', [
+            'vendedor' => $vendedor,
+            'contrato' => $contrato,
+            'seguros' => $seguros,
+            'vehiculos' => $vehiculos
+        ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Contrato $contrato)
     {
-        //
+        $request->validate([
+            'vehiculo_id' => 'required',
+            'vendedor_id' => 'required',
+            'seguro_id' => 'required',
+            'costofranquicia' => 'required',
+            'costoprima' => 'required',
+            'nro_cuotas' => 'required',
+            'tipovigencia' => 'required',
+            'vigenciainicio' => 'required',
+            'vigenciafin' => 'required',
+            'estado' => 'required'
+        ]);
+
+        $contrato->update($request->all());
+
+        return redirect()->route('administrador/contratos.index')
+            ->with('msj_ok', 'Contrato actualizado: ' . $contrato->id);
     }
 
     /**

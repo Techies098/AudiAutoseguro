@@ -94,7 +94,7 @@
     <div class="col-md-4">
         <label for="estado" class="form-label">Estado</label>
         <select class="form-select" id="estado" name="estado" aria-label="Seleccionar Estado">
-            <option value="" selected disabled>Seleccionar Estado</option>
+            <option value="" selected disabled>Seleccionar</option>
             <option value="Activo" {{ old('estado', $contrato->estado) == 'Activo' ? 'selected' : '' }}>Activo</option>
             <option value="Desactivado" {{ old('estado', $contrato->estado) == 'Desactivado' ? 'selected' : '' }}>
                 Desactivado</option>

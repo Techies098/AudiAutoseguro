@@ -18,30 +18,6 @@ class VehiculoController extends Controller
     {
         return view('administrador.vehiculos.index');
     }
-
-    public function reportev()
-    {
-        return view('reporte.vehiculos.reportev');
-    }
-
-    public function generarReporte(Request $request)
-    {
-        $fechaIni = $request->input('fechaIni');
-        $fechaFin = $request->input('fechaFin');
-
-        $vehiculos = Vehiculo::query();
-
-        if (!is_null($fechaIni) && !is_null($fechaFin)) {
-            $vehiculos->whereDate('created_at', '>=', $fechaIni)
-                ->whereDate('created_at', '<=', $fechaFin);
-        }
-
-        $vehiculos = $vehiculos->get();
-
-        $pdf = PDF::loadView('reporte.vehiculos.pdf-result', compact('vehiculos'));
-        return $pdf->stream();
-    }
-
     /**
      * Show the form for creating a new resource.
      */
@@ -114,7 +90,7 @@ class VehiculoController extends Controller
     {
         $request->validate([
             'cliente_id' => 'required',
-            'placa' => 'max:10|unique:vehiculos,placa',
+            'placa' => 'max:10',
             'clase' => 'max:30',
             'marca' => 'max:30',
             'modelo' => 'max:30',
@@ -137,5 +113,28 @@ class VehiculoController extends Controller
         $vehiculo->delete();
         return redirect()->route('administrador/vehiculos.index')
             ->with('msj_ok', 'Eliminado: ' . $vehiculo->placa);
+    }
+
+    public function reportev()
+    {
+        return view('reporte.vehiculos.reportev');
+    }
+
+    public function generarReporte(Request $request)
+    {
+        $fechaIni = $request->input('fechaIni');
+        $fechaFin = $request->input('fechaFin');
+
+        $vehiculos = Vehiculo::query();
+
+        if (!is_null($fechaIni) && !is_null($fechaFin)) {
+            $vehiculos->whereDate('created_at', '>=', $fechaIni)
+                ->whereDate('created_at', '<=', $fechaFin);
+        }
+
+        $vehiculos = $vehiculos->get();
+
+        $pdf = PDF::loadView('reporte.vehiculos.pdf-result', compact('vehiculos'));
+        return $pdf->stream();
     }
 }
