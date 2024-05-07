@@ -2,13 +2,18 @@
 
 namespace App\Http\Controllers;
 
-
-use App\Http\Controllers\Controller;
+use Illuminate\Routing\Controller;
 use App\Models\Seguro;
 use Illuminate\Http\Request;
 
 class SeguroController extends Controller
 {
+    public function __construct() {
+        $this->middleware('can:administrador.seguros.index')->only('index');
+        $this->middleware('can:administrador.seguros.create')->only('create', 'store');
+        $this->middleware('can:administrador.seguros.edit')->only('edit', 'update');
+        $this->middleware('can:administrador.seguros.destroy')->only('destroy');
+    }
     /**
      * Display a listing of the resource.
      */

@@ -15,6 +15,7 @@ class UserSeeder extends Seeder
      */
     public function run(): void
     {
+        //Administrador:
         User::factory()->create([
             'name' => 'Test User',
             'email' => 'test@example.com',
@@ -24,9 +25,11 @@ class UserSeeder extends Seeder
         Administrador::create([
                 'user_id' => 1
         ]);
+
+        //Cliente:
         User::factory()->create([
-            'name' => 'Roberto',
-            'email' => 'robertoC@gmail.com',
+            'name' => 'User cliente',
+            'email' => 'cliente@example.com',
             'telefono' => '78452052',
             'password' => bcrypt('00000000'),//8 veces 0
         ])->assignRole('cliente');

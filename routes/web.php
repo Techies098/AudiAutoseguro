@@ -9,6 +9,7 @@ use App\Http\Controllers\BitacoraController;
 use App\Http\Controllers\ClausulaController;
 use App\Http\Controllers\VehiculoController;
 use App\Http\Controllers\CoberturaController;
+use App\Http\Controllers\PermisoController;
 use App\Livewire\Vehiculosrep\ListaVehiculosrep;
 
 // Route::get('/', function () {
@@ -35,6 +36,9 @@ Route::resource('/administrador/usuarios', UserController::class)
     ->parameters(['usuarios' => 'user'])
     ->names('administrador/usuarios')
     ->middleware('auth:sanctum', 'verified');
+
+Route::get('/administrador/permisos/{user}', [PermisoController::class, 'show'])->name('administrador/permisos.show');
+Route::post('/administrador/permisos/{user}/guardar',[PermisoController::class, 'guardar'])->name('administrador/permisos.guardar');
 
 Route::resource('/administrador/vehiculos', VehiculoController::class)
     ->parameters(['vehiculos' => 'vehiculo'])
