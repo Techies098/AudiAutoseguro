@@ -10,6 +10,7 @@ use App\Models\Seguro;
 use App\Models\User;
 use App\Models\Vendedor;
 use Illuminate\Support\Facades\Auth;
+use Barryvdh\DomPDF\Facade\Pdf as PDF;
 
 class ContratoController extends Controller
 {
@@ -141,5 +142,45 @@ class ContratoController extends Controller
     public function destroy(string $id)
     {
         //
+    }
+
+    public function generarReporte(Request $request)
+    {
+        $fechaIni = $request->input('fechaIni');
+        $fechaFin = $request->input('fechaFin');
+
+        $vehiculos = Vehiculo::query();
+
+        if (!is_null($fechaIni) && !is_null($fechaFin)) {
+            $vehiculos->whereDate('created_at', '>=', $fechaIni)
+                ->whereDate('created_at', '<=', $fechaFin);
+        }
+
+        $vehiculos = $vehiculos->get();
+
+        $pdf = PDF::loadView('reporte.vehiculos.pdf-result', compact('vehiculos'));
+        return $pdf->stream();
+    }
+
+    public function contrato(Contrato $contrato)
+    {
+        dd($contrato);
+        $idVendedor = Auth::user()->id;
+        $vendedor = Vendedor::join('users', 'users.id', '=', 'vendedores.user_id')
+            ->where('users.id', $idVendedor)
+            ->select('vendedores.id as v_id', 'users.id as u_id', 'users.name as nombrev')
+            ->first();
+
+        $vehiculos = Vehiculo::all();
+        $seguros = Seguro::all();
+
+        /*return view('administrador.contratos.edit', [
+            //'vendedor' => $vendedor,
+            'contrato' => $contrato,
+            'seguros' => $seguros,
+            'vehiculos' => $vehiculos
+        ]);*/
+        $pdf = PDF::loadView('reporte.contratos.pdf-contrato', compact('vehiculos'));
+        return $pdf->stream();
     }
 }

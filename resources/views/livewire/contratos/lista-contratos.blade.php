@@ -61,8 +61,8 @@
                             <td>
                                 <a href="{{ route('administrador/contratos.edit', $contrato) }}"
                                     class="btn btn-secondary btn-sm">Ver</a>
-                                <a href="{{ route('administrador/contratos.edit', $contrato) }}"
-                                    class="btn btn-warning btn-sm">PDF</a>
+                                <a href="{{ route('pdf-contrato', $contrato) }}" class="btn btn-warning btn-sm"
+                                    target="_blank">PDF</a>
                                 <a href="{{ route('administrador/contratos.edit', $contrato) }}"
                                     class="btn btn-primary btn-sm">Editar</a>
                                 <form action="{{ route('administrador/contratos.destroy', $contrato) }}" method="POST"
