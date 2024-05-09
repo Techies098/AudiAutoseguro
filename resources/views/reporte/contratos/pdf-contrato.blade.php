@@ -116,7 +116,7 @@
         </div>
         <p>En consideración a la Solicitud de Seguro presentada por el Asegurado y sus declaraciones contenidas en ella,
             con sujeción a las Condiciones Generales y Cláusulas de la Póliza y en virtud del pago de la prima
-            correspondiente, LA BOLIVIANA CIACRUZ DE SEGUROS Y REASEGUROS S.A. garantiza el pago de los daños o pérdida
+            correspondiente, EL AUTOSEGURO S.A. garantiza el pago de los daños o pérdida
             que pudiera sufrir dicho asegurado, en los términos y condiciones que más adelante se establecen:</p>
         <h2>Datos del Tomador/Asegurado/Beneficiario</h2>
         <p>TOMADOR:<span> </span>IMCRUZ COMERCIAL S.A.</p>
