@@ -162,9 +162,9 @@ class ContratoController extends Controller
         return $pdf->stream();
     }
 
-    public function contrato(Contrato $contrato)
+    public function contrato(Contrato $contrato, $id)
     {
-        dd($contrato);
+        //dd($id);
         $idVendedor = Auth::user()->id;
         $vendedor = Vendedor::join('users', 'users.id', '=', 'vendedores.user_id')
             ->where('users.id', $idVendedor)
