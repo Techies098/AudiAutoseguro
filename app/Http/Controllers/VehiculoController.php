@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Cliente;
-use App\Http\Controllers\Controller;
+use Illuminate\Routing\Controller;
 use App\Models\User;
 use App\Models\Vehiculo;
 use Illuminate\Http\Request;
@@ -11,9 +11,14 @@ use Barryvdh\DomPDF\Facade\Pdf as PDF;
 
 class VehiculoController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+    
+    public function __construct() {
+        $this->middleware('can:administrador.vehiculos.index')->only('index');
+        $this->middleware('can:administrador.vehiculos.create')->only('create', 'store');
+        $this->middleware('can:administrador.vehiculos.edit')->only('edit', 'update');
+        $this->middleware('can:administrador.vehiculos.destroy')->only('destroy');
+    }
+
     public function index()
     {
         return view('administrador.vehiculos.index');

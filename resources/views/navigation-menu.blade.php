@@ -1,5 +1,6 @@
-<nav x-data="{ open: false }" class="bg-white border-b border-gray-100">
-    <!-- Primary Navigation Menu -->
+{{-- <nav x-data="{ open: false }" class="bg-white border-b border-gray-100"> --}}
+<div x-data="{ openGestionSeguros: false }" class="bg-white border-b border-gray-100">
+        <!-- Primary Navigation Menu -->
     <div class="px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
         <div class="flex justify-between h-16">
             <div class="flex">
@@ -9,62 +10,91 @@
                         <x-application-mark class="block w-auto h-auto" />
                     </a>
                 </div>
+    
 
                 <!-- Navigation Links -->
                 @auth
-                    {{-- usuarios autenticados: --}}
-                    <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                        <x-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
-                            {{ __('Dashboard') }}
-                        </x-nav-link>
-                    </div>
-                    <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                        <x-nav-link href="{{ route('administrador/coberturas.index') }}" :active="request()->routeIs('administrador/coberturas.index')">
-                            {{ __('Coberturas') }}
-                        </x-nav-link>
-                    </div>
-                    <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                {{-- usuarios autenticados: --}}
+                <!-- Gestionar Seguros -->
+                <div x-data="{ openGestionSeguros: false }" class="relative ml-6 mt-3">
+                    <button @click="openGestionSeguros = !openGestionSeguros"
+                        class="flex text-sm transition border-2 border-transparent rounded-full focus:outline-none focus:border-gray-300">
+                        {{ __('Gestionar Seguros') }}
+                        <svg class="ms-2 -me-0.5 h-4 w-4" xmlns="http://www.w3.org/2000/svg"
+                            fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                            <path x-show="!openGestionSeguros" stroke-linecap="round" stroke-linejoin="round"
+                                d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+                            <path x-show="openGestionSeguros" stroke-linecap="round" stroke-linejoin="round"
+                                d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                    </button>
+                    <div x-show="openGestionSeguros" class="absolute left-0 mt-2 bg-white border border-gray-200 rounded-lg shadow-md z-10">
                         <x-nav-link href="{{ route('administrador/seguros.index') }}" :active="request()->routeIs('administrador/seguros.index')">
                             {{ __('Seguros') }}
                         </x-nav-link>
+                        <x-nav-link href="{{ route('administrador/coberturas.index') }}" :active="request()->routeIs('administrador/coberturas.index')">
+                            {{ __('Coberturas') }}
+                        </x-nav-link>
+                        <x-nav-link href="{{ route('administrador/clausulas.index') }}" :active="request()->routeIs('administrador/clausulas.index')">
+                            {{ __('Clausulas') }}
+                        </x-nav-link>                    
                     </div>
+                </div>
 
-
-                    <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                <!-- Gestionar Usuarios -->
+                <div x-data="{ openGestionUsuarios: false }" class="relative ml-6 mt-3">
+                    <button @click="openGestionUsuarios = !openGestionUsuarios"
+                        class="flex text-sm transition border-2 border-transparent rounded-full focus:outline-none focus:border-gray-300">
+                        {{ __('Gestionar Usuarios') }}
+                        <svg class="ms-2 -me-0.5 h-4 w-4" xmlns="http://www.w3.org/2000/svg"
+                            fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                            <path x-show="!openGestionUsuarios" stroke-linecap="round" stroke-linejoin="round"
+                                d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+                            <path x-show="openGestionUsuarios" stroke-linecap="round" stroke-linejoin="round"
+                                d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                    </button>
+                    <div x-show="openGestionUsuarios" class="absolute left-0 mt-2 bg-white border border-gray-200 rounded-lg shadow-md z-10">
                         <x-nav-link href="{{ route('administrador/usuarios.index') }}" :active="request()->routeIs('administrador/usuarios.index')">
                             {{ __('Usuarios') }}
                         </x-nav-link>
-                    </div>
-                    <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                        <x-nav-link href="{{ route('administrador/vehiculos.index') }}" :active="request()->routeIs('administrador/vehiculos.index')">
-                            {{ __('Vehiculos') }}
-                        </x-nav-link>
-                    </div>
-                    <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                        <x-nav-link href="{{ route('administrador/clausulas.index') }}" :active="request()->routeIs('administrador/clausulas.index')">
-                            {{ __('Clausulas') }}
-                        </x-nav-link>
-                    </div>
-                    <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                         <x-nav-link href="{{ route('personal/clientes.index') }}" :active="request()->routeIs('administrador/clientes.index')">
                             {{ __('Clientes') }}
                         </x-nav-link>
-                    </div>
-                    <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                         <x-nav-link href="{{ route('administrador.bitacoras.index') }}" :active="request()->routeIs('administrador.bitacoras.index')">
                             {{ __('Bitacora') }}
-                        </x-nav-link>
+                        </x-nav-link>                    
                     </div>
-                    <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                </div>
+
+                <!-- Gestionar Vehiculos -->
+                <div x-data="{ openGestionVehiculos: false }" class="relative ml-6 mt-3">
+                    <button @click="openGestionVehiculos = !openGestionVehiculos"
+                        class="flex text-sm transition border-2 border-transparent rounded-full focus:outline-none focus:border-gray-300">
+                        {{ __('Gestionar Vehiculos') }}
+                        <svg class="ms-2 -me-0.5 h-4 w-4" xmlns="http://www.w3.org/2000/svg"
+                            fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor">
+                            <path x-show="!openGestionVehiculos" stroke-linecap="round" stroke-linejoin="round"
+                                d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
+                            <path x-show="openGestionVehiculos" stroke-linecap="round" stroke-linejoin="round"
+                                d="M6 18L18 6M6 6l12 12" />
+                        </svg>
+                    </button>
+                    <div x-show="openGestionVehiculos" class="absolute left-0 mt-2 bg-white border border-gray-200 rounded-lg shadow-md z-10">
+                        <x-nav-link href="{{ route('administrador/vehiculos.index') }}" :active="request()->routeIs('administrador/vehiculos.index')">
+                            {{ __('Vehiculos') }}
+                        </x-nav-link>
                         <x-nav-link href="{{ route('reporte-vehiculo') }}" :active="request()->routeIs('reporte/vehiculos.reportev')">
                             {{ __('Reporte Vehiculo') }}
                         </x-nav-link>
+                        <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                            <x-nav-link href="{{ route('administrador/contratos.index') }}" :active="request()->routeIs('administrador/contratos.index')">
+                                {{ __('Contrato') }}
+                            </x-nav-link>
+                        </div>
                     </div>
-                    <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                        <x-nav-link href="{{ route('administrador/contratos.index') }}" :active="request()->routeIs('administrador/contratos.index')">
-                            {{ __('Contrato') }}
-                        </x-nav-link>
-                    </div>
+                </div>
+>>>>>>> main
                 @else
                     {{-- Usuarios no autenticado: --}}
                     <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
