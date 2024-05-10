@@ -22,8 +22,6 @@ class DatabaseSeeder extends Seeder
             ClausulaSeeder::class,
             CoberturaSeeder::class,
             SeguroSeeder::class,
-            CoberturaSeguroSeeder::class,
-            ClausulaSeguroSeeder::class,
             ContratoSeeder::class
         ]);
     }

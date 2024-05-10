@@ -27,6 +27,7 @@
                 </tr>
             </thead>
             <tbody>
+
                 @foreach ($coberturas as $cobertura)
                     <tr>
                         <td>{{ $cobertura->nombre }}</td>
