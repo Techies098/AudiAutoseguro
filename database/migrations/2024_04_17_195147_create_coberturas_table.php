@@ -13,9 +13,13 @@ return new class extends Migration
     {
         Schema::create('coberturas', function (Blueprint $table) {
             $table->id();
-            $table->string('nombre');
-            $table->decimal('limite_cobertura');
-            $table->decimal('porcentaje_cobertura');
+
+            $table->longText('nombre');
+            $table->decimal('cubre')->nullable();
+            $table->char('sujeto_a_franquicia', length: 2);
+            $table->decimal('limite_cobertura')->nullable();
+            $table->decimal('precio'); //precio de la cobertura en porcentaje
+
             $table->timestamps();
         });
     }

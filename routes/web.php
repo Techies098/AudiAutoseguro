@@ -9,6 +9,7 @@ use App\Http\Controllers\BitacoraController;
 use App\Http\Controllers\ClausulaController;
 use App\Http\Controllers\VehiculoController;
 use App\Http\Controllers\CoberturaController;
+use App\Http\Controllers\ContratoController;
 use App\Http\Controllers\PermisoController;
 use App\Livewire\Vehiculosrep\ListaVehiculosrep;
 
@@ -70,7 +71,14 @@ Route::resource('/administrador/bitacoras', BitacoraController::class)
     ->names('administrador.bitacoras')
     ->middleware('auth:sanctum', 'verified');
 
-/*-----------------------Reportes------------------*/
+Route::resource('/administrador/contratos', ContratoController::class)
+    ->parameters(['contratos' => 'contrato'])
+    ->names('administrador/contratos')
+    ->middleware('auth:sanctum', 'verified');
 
+/*REPORTES*/
+//Vehiculo
 Route::get('/administrador/reporte-vehiculo', [VehiculoController::class, 'reportev'])->name('reporte-vehiculo');
 Route::post('/administrador/pdf-vehiculo', [VehiculoController::class, 'generarReporte'])->name('pdf-vehiculo');
+//Contrato
+Route::get('/administrador/pdf-contrato/{id}', [ContratoController::class, 'contrato'])->name('pdf-contrato');

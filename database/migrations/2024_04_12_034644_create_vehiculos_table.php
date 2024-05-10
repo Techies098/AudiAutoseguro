@@ -22,7 +22,7 @@ return new class extends Migration
             $table->string('anio');
             $table->string('color');
             $table->string('nro_asientos');
-            $table->foreign('cliente_id')->references('id')->on('clientes');
+            $table->foreign('cliente_id')->references('id')->on('clientes')->onUpdate('cascade')->onDelete('cascade');
 
             $table->timestamps();
         });
