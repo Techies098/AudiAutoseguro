@@ -87,14 +87,11 @@
                         <x-nav-link href="{{ route('reporte-vehiculo') }}" :active="request()->routeIs('reporte/vehiculos.reportev')">
                             {{ __('Reporte Vehiculo') }}
                         </x-nav-link>
-                        <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                            <x-nav-link href="{{ route('administrador/contratos.index') }}" :active="request()->routeIs('administrador/contratos.index')">
-                                {{ __('Contrato') }}
-                            </x-nav-link>
-                        </div>
+                        <x-nav-link href="{{ route('administrador/contratos.index') }}" :active="request()->routeIs('administrador/contratos.index')">
+                            {{ __('Contrato') }}
+                        </x-nav-link>
                     </div>
                 </div>
->>>>>>> main
                 @else
                     {{-- Usuarios no autenticado: --}}
                     <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">

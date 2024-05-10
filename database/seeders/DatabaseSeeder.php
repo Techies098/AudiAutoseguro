@@ -19,7 +19,7 @@ class DatabaseSeeder extends Seeder
             RoleSeeder::class,
             UserSeeder::class,
             VehiculoSeeder::class,
-            ContratoSeeder::class
+            // ContratoSeeder::class
         ]);
     }
 }
