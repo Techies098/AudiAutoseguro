@@ -39,8 +39,10 @@ class CoberturaController extends Controller
     {
         $request->validate([
             'nombre' => 'required',
-            'limite_cobertura' => 'required|numeric',
-            'porcentaje_cobertura' => 'required|numeric',
+            'cubre' => 'numeric',
+            'sujeto_a_franquicia' => 'required|string',
+            'limite_cobertura' => 'numeric',
+            'precio' => 'required|numeric'
         ]);
 
         Cobertura::create($request->all());
@@ -72,8 +74,10 @@ class CoberturaController extends Controller
     {
         $request->validate([
             'nombre' => 'required',
-            'limite_cobertura' => 'required|numeric',
-            'porcentaje_cobertura' => 'required|numeric',
+            'cubre' => 'numeric',
+            'sujeto_a_franquicia' => 'required|string',
+            'limite_cobertura' => 'numeric',
+            'precio' => 'required|numeric'
         ]);
 
         $cobertura->update($request->all());

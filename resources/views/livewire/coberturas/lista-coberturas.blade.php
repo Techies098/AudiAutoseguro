@@ -19,17 +19,22 @@
             <thead>
                 <tr>
                     <th scope="col">Nombre</th>
+                    <th scope="col">Cubre al</th>
+                    <th scope="col">Sujeto a Franquicia?</th>
                     <th scope="col">Limite Cobertura</th>
-                    <th scope="col">Porcentaje Cobertura</th>
+                    <th scope="col">Precio</th>
                     <th scope="col">Acciones</th>
                 </tr>
             </thead>
             <tbody>
+
                 @foreach ($coberturas as $cobertura)
                     <tr>
                         <td>{{ $cobertura->nombre }}</td>
+                        <td>{{ $cobertura->cubre }}</td>
+                        <td>{{ $cobertura->sujeto_a_franquicia }}</td>
                         <td>{{ $cobertura->limite_cobertura }}</td>
-                        <td>{{ $cobertura->porcentaje_cobertura }}</td>
+                        <td>{{ $cobertura->precio }}</td>
 
                         <td>
                             <a href="{{ route('administrador/coberturas.edit', $cobertura) }}"
@@ -39,7 +44,7 @@
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit"
-                                    onclick="return confirm('Eliminar Cobertura {{ $cobertura->nombre }}?')" 
+                                    onclick="return confirm('Eliminar Cobertura {{ $cobertura->nombre }}?')"
                                     class="btn btn-danger">Eliminar</button>
                             </form>
                         </td>

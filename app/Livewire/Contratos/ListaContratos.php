@@ -25,7 +25,7 @@ class ListaContratos extends Component
             'buscar' => 'required|string|min:1'
         ]);
 
-        return Contrato::where('' . $this->id . '', 'like', '%' . trim($this->id) . '%')
+        return Contrato::where('' . $this->id . '', 'like', '%' . trim($this->buscar) . '%')
             ->orderBy('' . $this->id . '', 'asc')
             ->paginate(25);
     }

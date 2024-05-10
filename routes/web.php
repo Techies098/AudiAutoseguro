@@ -77,6 +77,8 @@ Route::resource('/administrador/contratos', ContratoController::class)
     ->middleware('auth:sanctum', 'verified');
 
 /*REPORTES*/
-
+//Vehiculo
 Route::get('/administrador/reporte-vehiculo', [VehiculoController::class, 'reportev'])->name('reporte-vehiculo');
 Route::post('/administrador/pdf-vehiculo', [VehiculoController::class, 'generarReporte'])->name('pdf-vehiculo');
+//Contrato
+Route::get('/administrador/pdf-contrato/{id}', [ContratoController::class, 'contrato'])->name('pdf-contrato');
