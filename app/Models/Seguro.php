@@ -18,10 +18,7 @@ class Seguro extends Model
     public function cobertura(){
     return $this->belongsToMany('App\Models\Cobertura');
     }
-    //relacion de muchos a muchos
-    public function vehiculos(){
-    return $this->belongsToMany('App\Models\Vehiculo');
-    }
+
     //relacion de muchos a muchos
     public function clausula(){
     return $this->belongsToMany('App\Models\Clausula');
