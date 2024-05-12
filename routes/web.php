@@ -92,8 +92,9 @@ Route::get('/administrador/pdf-contrato/{id}', [ContratoController::class, 'cont
 //cotizacion 
 Route::get('/cotizacion', [CotizacionController::class, 'create'])->name('cotizacion.create');
 Route::post('/cotizaciones', [CotizacionController::class, 'store'])->name('cotizaciones.store');
-Route::get('cotizaciones/success', [CotizacionController::class, 'success'])->name('cotizaciones.success');
 
 
+Route::get('/cotizaciones/success/{id}', [CotizacionController::class, 'success'])
+    ->name('cotizaciones.success');
 
 Route::get('/cotizaciones/{id}/pdf', 'CotizacionController@generarPDF')->name('cotizaciones.generarPDF');

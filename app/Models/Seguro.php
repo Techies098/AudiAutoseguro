@@ -14,18 +14,21 @@ class Seguro extends Model
         'precio_prima'
     ];
 
-    //relacion de muchos a muchos
-    public function cobertura(){
-    return $this->belongsToMany('App\Models\Cobertura');
-    }
 
-    //relacion de muchos a muchos
-    public function clausula(){
-    return $this->belongsToMany('App\Models\Clausula');
-    }
     public function cotizacion()
     {
         return $this->hasMany(Cotizacion::class);
     }
+    public function cobertura()
+    {
+        return $this->belongsToMany(Cobertura::class);
+    }
+
+    public function clausula()
+    {
+        return $this->belongsToMany(Clausula::class);
+    }
+
+
 }
 
