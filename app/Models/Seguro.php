@@ -23,5 +23,9 @@ class Seguro extends Model
     public function clausula(){
     return $this->belongsToMany('App\Models\Clausula');
     }
+    public function cotizacion()
+    {
+        return $this->hasMany(Cotizacion::class);
+    }
 }
 
