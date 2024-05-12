@@ -59,12 +59,12 @@ class CotizacionController extends Controller
             'marca' => 'required|string|max:20',
             'modelo' => 'required|string|max:40',
             'seguro_id' => 'required|exists:seguros,id', // Validar que el seguro seleccionado existe en la tabla de seguros
-    
         ]);
     
         // Crear una nueva cotización con los datos del formulario
         $cotizacion = Cotizacion::create($request->all());
     
-        // Redireccionar a la ruta que genera el PDF, pasando el ID de la cotización como parámetro
-        return redirect()->route('cotizaciones.generarPDF', ['id' => $cotizacion->id]);    }
+        // Redireccionar a la vista de éxito de la cotización, pasando el ID de la cotización como parámetro
+        return redirect()->route('cotizaciones.success', ['id' => $cotizacion->id]);
+    }
 }

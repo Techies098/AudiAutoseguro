@@ -12,7 +12,7 @@
                     <p class="text-green-600">La cotización se ha creado correctamente.</p>
                     
                     <!-- Agregar enlace para descargar el PDF -->
-                    <a href="{{ route('cotizaciones.download_pdf') }}" class="text-blue-600 hover:underline">Descargar PDF de la cotización</a>
+                    {{-- <a href="{{ route('cotizaciones.download_pdf') }}" class="text-blue-600 hover:underline">Descargar PDF de la cotización</a> --}}
                 </div>
             </div>
         </div>

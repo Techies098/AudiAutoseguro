@@ -94,7 +94,6 @@ Route::get('/cotizacion', [CotizacionController::class, 'create'])->name('cotiza
 Route::post('/cotizaciones', [CotizacionController::class, 'store'])->name('cotizaciones.store');
 Route::get('cotizaciones/success', [CotizacionController::class, 'success'])->name('cotizaciones.success');
 
-Route::get('/cotizaciones/download-pdf', [CotizacionController::class, 'downloadPdf'])->name('cotizaciones.download_pdf');
-Route::get('/cotizaciones/{id}/generar-pdf', [CotizacionController::class, 'generarPDF'])->name('cotizaciones.pdf');
+
 
 Route::get('/cotizaciones/{id}/pdf', 'CotizacionController@generarPDF')->name('cotizaciones.generarPDF');
