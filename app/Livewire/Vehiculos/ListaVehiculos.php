@@ -12,6 +12,7 @@ class ListaVehiculos extends Component
     use WithPagination;
 
     public $buscar, $placa = 'placa';
+    public $id = 'id';
 
     public function render()
     {
@@ -33,7 +34,7 @@ class ListaVehiculos extends Component
 
     private function obtenerVehiculos()
     {
-        return Vehiculo::orderBy('' . $this->placa . '', 'asc')
+        return Vehiculo::orderBy('' . $this->id . '', 'asc')
             ->paginate(25);
     }
 

@@ -11,8 +11,9 @@ use Barryvdh\DomPDF\Facade\Pdf as PDF;
 
 class VehiculoController extends Controller
 {
-    
-    public function __construct() {
+
+    public function __construct()
+    {
         $this->middleware('can:administrador.vehiculos.index')->only('index');
         $this->middleware('can:administrador.vehiculos.create')->only('create', 'store');
         $this->middleware('can:administrador.vehiculos.edit')->only('edit', 'update');
@@ -46,14 +47,22 @@ class VehiculoController extends Controller
     public function store(Request $request)
     {
         $request->validate([
+
             'cliente_id' => 'required',
-            'placa' => 'max:10|unique:vehiculos,placa',
-            'clase' => 'max:30',
             'marca' => 'max:30',
             'modelo' => 'max:30',
-            'anio' => 'max:10',
+            'clase' => 'max:30',
             'color' => 'max:30',
-            'nro_asientos' => 'max:5'
+            'placa' => 'max:8|required|unique:vehiculos,placa',
+            'chasis' => 'max:100|unique:vehiculos,chasis',
+            'motor' => 'max:100|unique:vehiculos,motor',
+            'traccion' => 'max:15',
+            'anio' => 'max:5',
+            'uso' => 'max:30',
+            'nro_asientos' => 'max:5',
+            'combustible' => 'max:40',
+            'valor_comercial' => 'numeric'
+
         ]);
 
         $vehiculo = Vehiculo::create($request->all());
@@ -95,13 +104,19 @@ class VehiculoController extends Controller
     {
         $request->validate([
             'cliente_id' => 'required',
-            'placa' => 'max:10',
-            'clase' => 'max:30',
             'marca' => 'max:30',
             'modelo' => 'max:30',
-            'anio' => 'max:10',
+            'clase' => 'max:30',
             'color' => 'max:30',
-            'nro_asientos' => 'max:5'
+            'placa' => 'max:8|required',
+            'chasis' => 'max:100',
+            'motor' => 'max:100',
+            'traccion' => 'max:15',
+            'anio' => 'max:5',
+            'uso' => 'max:30',
+            'nro_asientos' => 'max:5',
+            'combustible' => 'max:40',
+            'valor_comercial' => 'numeric'
         ]);
 
         $vehiculo->update($request->all());
