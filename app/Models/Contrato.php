@@ -22,4 +22,8 @@ class Contrato extends Model
         'vigenciafin',
         'estado'
     ];
+    public function siniestros()
+    {
+        return $this->hasMany(Siniestro::class);
+    }
 }
