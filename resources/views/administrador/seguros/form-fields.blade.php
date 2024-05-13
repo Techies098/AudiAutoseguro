@@ -21,7 +21,7 @@
 
 
     <div class="mb-3">
-        <label for="precio_prima" class="form-label">Precio de la prima *</label>
+        <label for="precio_prima" class="form-label">Porcentaje de la prima *</label>
         <input type="number" step="0.01" class="form-control" id="precio_prima" name="precio_prima"
             value="{{ old('precio_prima', $seguro->precio_prima) }}">
         @error('precio_prima')

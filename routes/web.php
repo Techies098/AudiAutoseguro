@@ -11,6 +11,7 @@ use App\Http\Controllers\VehiculoController;
 use App\Http\Controllers\CoberturaController;
 use App\Http\Controllers\ContratoController;
 use App\Http\Controllers\PermisoController;
+use App\Http\Controllers\CotizacionController;
 use App\Livewire\Vehiculosrep\ListaVehiculosrep;
 
 // Route::get('/', function () {
@@ -65,6 +66,11 @@ Route::resource('/administrador/seguros', SeguroController::class)
     ->parameters(['seguros' => 'seguro'])
     ->names('administrador/seguros')
     ->middleware('auth:sanctum', 'verified');
+    Route::get('/administrador/seguros/{id}/relacionar', [SeguroController::class, 'relacionarSeguro'])->name('administrador.seguros.relacionar');
+
+    Route::post('/guardar-relacion', [SeguroController::class, 'guardarRelacion'])->name('guardar.relacion');
+
+
 
 Route::resource('/administrador/bitacoras', BitacoraController::class)
     ->parameters(['bitacoras' => 'bitacora'])
@@ -82,3 +88,13 @@ Route::get('/administrador/reporte-vehiculo', [VehiculoController::class, 'repor
 Route::post('/administrador/pdf-vehiculo', [VehiculoController::class, 'generarReporte'])->name('pdf-vehiculo');
 //Contrato
 Route::get('/administrador/pdf-contrato/{id}', [ContratoController::class, 'contrato'])->name('pdf-contrato');
+
+//cotizacion 
+Route::get('/cotizacion', [CotizacionController::class, 'create'])->name('cotizacion.create');
+Route::post('/cotizaciones', [CotizacionController::class, 'store'])->name('cotizaciones.store');
+
+
+Route::get('/cotizaciones/success/{id}', [CotizacionController::class, 'success'])
+    ->name('cotizaciones.success');
+
+Route::get('/cotizaciones/{id}/pdf', 'CotizacionController@generarPDF')->name('cotizaciones.generarPDF');
