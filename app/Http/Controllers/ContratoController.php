@@ -9,6 +9,7 @@ use App\Models\Contrato;
 use App\Models\Seguro;
 use App\Models\User;
 use App\Models\Vendedor;
+use App\Models\Administrador;
 use Illuminate\Support\Facades\Auth;
 use Barryvdh\DomPDF\Facade\Pdf as PDF;
 
@@ -33,9 +34,10 @@ class ContratoController extends Controller
         )->join('vendedores', 'vendedores.user_id', '=', 'users.id')->get();*/
 
         $idVendedor = Auth::user()->id;
+        //$idAdministrador = Auth::user()->id;
 
         if (!Vendedor::where('user_id', $idVendedor)->exists()) {
-            return redirect()->route('administrador/contratos.index')->with('error', 'El usuario autenticado no es de TIPO VENDEDOR');
+            return redirect()->route('administrador/contratos.index')->with('error', 'El usuario autenticado no tiene los permisos');
         } else {
 
             $vendedor = Vendedor::join('users', 'users.id', '=', 'vendedores.user_id')
@@ -54,6 +56,51 @@ class ContratoController extends Controller
                 'vendedor' => $vendedor
             ]);
         }
+
+        /*if (Vendedor::where('user_id', $idVendedor)->exists()) {
+            $vendedor = Vendedor::join('users', 'users.id', '=', 'vendedores.user_id')
+                ->where('users.id', $idVendedor)
+                ->select('vendedores.id as v_id', 'users.id as u_id', 'users.name as nombrev')
+                ->first();
+            //dd($vendedor);
+
+            $vehiculos = Vehiculo::all();
+            $seguros = Seguro::all();
+
+            return view('administrador.contratos.create', [
+                'contrato' => new Contrato(),
+                'seguros' => $seguros,
+                'vehiculos' => $vehiculos,
+                'vendedor' => $vendedor,
+                'administrador' => null
+            ]);
+
+            
+        } else {
+
+            if (Administrador::where('user_id', $idAdministrador)->exists()) {
+                $administrador = Administrador::join('users', 'users.id', '=', 'administradores.user_id')
+                    ->where('users.id', $idAdministrador)
+                    ->select('administradores.id as a_id', 'users.id as u_id', 'users.name as nombrea')
+                    ->first();
+                //dd($administrador);
+    
+                $vehiculos = Vehiculo::all();
+                $seguros = Seguro::all();
+    
+                return view('administrador.contratos.create', [
+                    'contrato' => new Contrato(),
+                    'seguros' => $seguros,
+                    'vehiculos' => $vehiculos,
+                    'administrador' => $administrador,
+                    'administrador' => null
+                ]);
+    
+                
+            }
+
+            return redirect()->route('administrador/contratos.index')->with('error', 'El usuario autenticado no tiene los permisos');
+        }*/
     }
 
     /**

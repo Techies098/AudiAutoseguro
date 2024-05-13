@@ -22,7 +22,7 @@ class DatabaseSeeder extends Seeder
             ClausulaSeeder::class,
             CoberturaSeeder::class,
             SeguroSeeder::class,
-            // ContratoSeeder::class
+            ContratoSeeder::class
         ]);
     }
 }

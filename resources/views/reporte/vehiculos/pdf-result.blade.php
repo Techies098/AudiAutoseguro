@@ -89,15 +89,24 @@
 
 
         <p>Total de vehículos asegurados: {{ $vehiculos->count() }}</p>
-        <table>
+        <table style="font-size: 11px;">
             <thead>
                 <tr>
-                    <th>Placa</th>
-                    <th>Clase</th>
+                    <th>Cliente</th>
                     <th>Marca</th>
                     <th>Modelo</th>
-                    <th>Año</th>
+                    <th>Clase</th>
                     <th>Color</th>
+                    <th>Placa</th>
+                    <th>Chasis</th>
+                    <th>Motor</th>
+                    <th>Clase</th>
+                    <th>Traccion</th>
+                    <th>Año</th>
+                    <th>Uso</th>
+                    <th>Nro Asientos</th>
+                    <th>Combustible</th>
+                    <th>Valor Comercial</th>
                     <th>Fecha</th>
                 </tr>
             </thead>
@@ -105,12 +114,20 @@
 
                 @foreach ($vehiculos as $vehiculo)
                     <tr>
-                        <td>{{ $vehiculo->placa }}</td>
-                        <td>{{ $vehiculo->clase }}</td>
-                        <td>{{ $vehiculo->marca }}</td>
-                        <td>{{ $vehiculo->modelo }}</td>
-                        <td>{{ $vehiculo->anio }}</td>
-                        <td>{{ $vehiculo->color }}</td>
+                        <td>{{ $vehiculo->cliente_id }}</td>
+                        <td>{{ $vehiculo->marca }} </td>
+                        <td>{{ $vehiculo->modelo }} </td>
+                        <td>{{ $vehiculo->clase }} </td>
+                        <td>{{ $vehiculo->color }} </td>
+                        <td>{{ $vehiculo->placa }} </td>
+                        <td>{{ $vehiculo->chasis }} </td>
+                        <td>{{ $vehiculo->motor }} </td>
+                        <td>{{ $vehiculo->traccion }} </td>
+                        <td>{{ $vehiculo->anio }} </td>
+                        <td>{{ $vehiculo->uso }} </td>
+                        <td>{{ $vehiculo->nro_asientos }} </td>
+                        <td>{{ $vehiculo->combustible }} </td>
+                        <td>{{ $vehiculo->valor_comercial }} </td>
                         <td>{{ date('d-m-Y', strtotime($vehiculo->created_at)) }} </td>
                     </tr>
                 @endforeach

@@ -15,13 +15,19 @@ return new class extends Migration
             $table->id();
 
             $table->unsignedBigInteger('cliente_id');
-            $table->string('placa')->unique();
-            $table->string('clase');
             $table->string('marca');
             $table->string('modelo');
-            $table->string('anio');
+            $table->string('clase');
             $table->string('color');
+            $table->string('placa')->unique();
+            $table->string('chasis')->unique();
+            $table->string('motor')->unique();
+            $table->string('traccion');
+            $table->string('anio');
+            $table->string('uso');
             $table->string('nro_asientos');
+            $table->string('combustible');
+            $table->double('valor_comercial');
             $table->foreign('cliente_id')->references('id')->on('clientes')->onUpdate('cascade')->onDelete('cascade');
 
             $table->timestamps();
