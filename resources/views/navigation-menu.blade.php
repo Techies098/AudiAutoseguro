@@ -35,6 +35,7 @@
                         <x-nav-link href="{{ route('administrador/coberturas.index') }}" :active="request()->routeIs('administrador/coberturas.index')">
                             {{ __('Coberturas') }}
                         </x-nav-link>
+
                         <x-nav-link href="{{ route('administrador/clausulas.index') }}" :active="request()->routeIs('administrador/clausulas.index')">
                             {{ __('Clausulas') }}
                         </x-nav-link>                    
