@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Cliente;
-use App\Http\Controllers\Controller;
+use Illuminate\Routing\Controller;
 use App\Models\User;
 use App\Models\Vehiculo;
 use Illuminate\Http\Request;
@@ -11,37 +11,19 @@ use Barryvdh\DomPDF\Facade\Pdf as PDF;
 
 class VehiculoController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+
+    public function __construct()
+    {
+        $this->middleware('can:administrador.vehiculos.index')->only('index');
+        $this->middleware('can:administrador.vehiculos.create')->only('create', 'store');
+        $this->middleware('can:administrador.vehiculos.edit')->only('edit', 'update');
+        $this->middleware('can:administrador.vehiculos.destroy')->only('destroy');
+    }
+
     public function index()
     {
         return view('administrador.vehiculos.index');
     }
-
-    public function reportev()
-    {
-        return view('reporte.vehiculos.reportev');
-    }
-
-    public function generarReporte(Request $request)
-    {
-        $fechaIni = $request->input('fechaIni');
-        $fechaFin = $request->input('fechaFin');
-
-        $vehiculos = Vehiculo::query();
-
-        if (!is_null($fechaIni) && !is_null($fechaFin)) {
-            $vehiculos->whereDate('created_at', '>=', $fechaIni)
-                ->whereDate('created_at', '<=', $fechaFin);
-        }
-
-        $vehiculos = $vehiculos->get();
-
-        $pdf = PDF::loadView('reporte.vehiculos.pdf-result', compact('vehiculos'));
-        return $pdf->stream();
-    }
-
     /**
      * Show the form for creating a new resource.
      */
@@ -65,14 +47,22 @@ class VehiculoController extends Controller
     public function store(Request $request)
     {
         $request->validate([
+
             'cliente_id' => 'required',
-            'placa' => 'max:10|unique:vehiculos,placa',
-            'clase' => 'max:30',
             'marca' => 'max:30',
             'modelo' => 'max:30',
-            'anio' => 'max:10',
+            'clase' => 'max:30',
             'color' => 'max:30',
-            'nro_asientos' => 'max:5'
+            'placa' => 'max:8|required|unique:vehiculos,placa',
+            'chasis' => 'max:100|unique:vehiculos,chasis',
+            'motor' => 'max:100|unique:vehiculos,motor',
+            'traccion' => 'max:15',
+            'anio' => 'max:5',
+            'uso' => 'max:30',
+            'nro_asientos' => 'max:5',
+            'combustible' => 'max:40',
+            'valor_comercial' => 'numeric'
+
         ]);
 
         $vehiculo = Vehiculo::create($request->all());
@@ -114,13 +104,19 @@ class VehiculoController extends Controller
     {
         $request->validate([
             'cliente_id' => 'required',
-            'placa' => 'max:10|unique:vehiculos,placa',
-            'clase' => 'max:30',
             'marca' => 'max:30',
             'modelo' => 'max:30',
-            'anio' => 'max:10',
+            'clase' => 'max:30',
             'color' => 'max:30',
-            'nro_asientos' => 'max:5'
+            'placa' => 'max:8|required',
+            'chasis' => 'max:100',
+            'motor' => 'max:100',
+            'traccion' => 'max:15',
+            'anio' => 'max:5',
+            'uso' => 'max:30',
+            'nro_asientos' => 'max:5',
+            'combustible' => 'max:40',
+            'valor_comercial' => 'numeric'
         ]);
 
         $vehiculo->update($request->all());
@@ -137,5 +133,28 @@ class VehiculoController extends Controller
         $vehiculo->delete();
         return redirect()->route('administrador/vehiculos.index')
             ->with('msj_ok', 'Eliminado: ' . $vehiculo->placa);
+    }
+
+    public function reportev()
+    {
+        return view('reporte.vehiculos.reportev');
+    }
+
+    public function generarReporte(Request $request)
+    {
+        $fechaIni = $request->input('fechaIni');
+        $fechaFin = $request->input('fechaFin');
+
+        $vehiculos = Vehiculo::query();
+
+        if (!is_null($fechaIni) && !is_null($fechaFin)) {
+            $vehiculos->whereDate('created_at', '>=', $fechaIni)
+                ->whereDate('created_at', '<=', $fechaFin);
+        }
+
+        $vehiculos = $vehiculos->get();
+
+        $pdf = PDF::loadView('reporte.vehiculos.pdf-result', compact('vehiculos'));
+        return $pdf->stream();
     }
 }

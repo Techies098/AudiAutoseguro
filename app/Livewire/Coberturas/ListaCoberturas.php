@@ -12,7 +12,7 @@ class ListaCoberturas extends Component
     use WithPagination;
 
     public $buscar, $nombre = 'nombre';
-
+    public $id = 'id';
     public function render()
     {
         $coberturas = $this->buscar ? $this->buscarCoberturas() : $this->obtenerCoberturas();
@@ -20,7 +20,7 @@ class ListaCoberturas extends Component
         return view('livewire.coberturas.lista-coberturas', compact('coberturas'));
     }
 
-    public function buscarCobertura()
+    public function buscarCoberturas()
     {
         $this->validate([
             'buscar' => 'required|string|min:1'
@@ -33,7 +33,7 @@ class ListaCoberturas extends Component
 
     private function obtenerCoberturas()
     {
-        return Cobertura::orderBy('' . $this->nombre . '', 'asc')
+        return Cobertura::orderBy('' . $this->id . '', 'asc')
             ->paginate(10);
     }
 }

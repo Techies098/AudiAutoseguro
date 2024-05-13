@@ -43,6 +43,7 @@
                         <td>{{ $usuario->email }} </td>
                         <td>{{ $usuario->fecha_nacimiento}} </td>
                         <td>
+                            <a href="{{ route('administrador/permisos.show', $usuario) }}" class="btn btn-secondary">Permisos</a>
                             <a href="{{ route('administrador/usuarios.edit', $usuario) }}" class="btn btn-primary">Editar</a>
                             <form action="{{ route('administrador/usuarios.destroy', $usuario) }}" method="POST" class="d-inline">
                                 @csrf

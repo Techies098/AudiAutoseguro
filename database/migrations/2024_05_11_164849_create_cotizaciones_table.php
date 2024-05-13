@@ -11,12 +11,20 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('seguro_vehiculo', function (Blueprint $table) {
+        Schema::create('cotizaciones', function (Blueprint $table) {
+            $table->id();
+
             $table->unsignedBigInteger('seguro_id');
-            $table->unsignedBigInteger('vehiculo_id');
             $table->foreign('seguro_id')->references('id')->on('seguros')->onUpdate('cascade')->onDelete('cascade');
-            $table->foreign('vehiculo_id')->references('id')->on('vehiculos')->onUpdate('cascade')->onDelete('cascade');
-            $table->primary(['seguro_id','vehiculo_id']);
+
+            $table->string('name');
+            $table->string('email');
+            $table->string('telefono')->nullable();
+            $table->year('year');
+            $table->decimal('precio', 9, 2);
+            $table->string('marca');
+            $table->string('modelo');
+
             $table->timestamps();
         });
     }
@@ -26,6 +34,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('seguro_vehiculo');
+        Schema::dropIfExists('cotizaciones');
     }
 };

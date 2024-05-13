@@ -10,14 +10,22 @@ class Vehiculo extends Model
     use HasFactory;
 
     protected $fillable = [
+
         'cliente_id',
-        'placa',
-        'clase',
         'marca',
         'modelo',
-        'anio',
+        'clase',
         'color',
-        'nro_asientos'
+        'placa',
+        'chasis',
+        'motor',
+        'traccion',
+        'anio',
+        'uso',
+        'nro_asientos',
+        'combustible',
+        'valor_comercial'
+
     ];
 
     //Relaciones
@@ -25,9 +33,5 @@ class Vehiculo extends Model
     {
         return $this->hasOne(Cliente::class);
     }
-        //relacion de muchos a muchos
-        public function seguros(){
-            return $this->belongsToMany('App\Models\Seguro');
-        }
 
 }

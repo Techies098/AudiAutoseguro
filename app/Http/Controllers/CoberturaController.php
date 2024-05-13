@@ -2,16 +2,21 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
 use App\Models\Cobertura;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controller;
 
 
 class CoberturaController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
+    
+    public function __construct() {
+        $this->middleware('can:administrador.coberturas.index')->only('index');
+        $this->middleware('can:administrador.coberturas.create')->only('create', 'store');
+        $this->middleware('can:administrador.coberturas.edit')->only('edit', 'update');
+        $this->middleware('can:administrador.coberturas.destroy')->only('destroy');
+    }
+    
     public function index()
     {
         return view('administrador.coberturas.index');
@@ -34,8 +39,10 @@ class CoberturaController extends Controller
     {
         $request->validate([
             'nombre' => 'required',
-            'limite_cobertura' => 'required|numeric',
-            'porcentaje_cobertura' => 'required|numeric',
+            'cubre' => 'numeric',
+            'sujeto_a_franquicia' => 'required|string',
+            'limite_cobertura' => 'numeric',
+            'precio' => 'required|numeric'
         ]);
 
         Cobertura::create($request->all());
@@ -67,8 +74,10 @@ class CoberturaController extends Controller
     {
         $request->validate([
             'nombre' => 'required',
-            'limite_cobertura' => 'required|numeric',
-            'porcentaje_cobertura' => 'required|numeric',
+            'cubre' => 'numeric',
+            'sujeto_a_franquicia' => 'required|string',
+            'limite_cobertura' => 'numeric',
+            'precio' => 'required|numeric'
         ]);
 
         $cobertura->update($request->all());

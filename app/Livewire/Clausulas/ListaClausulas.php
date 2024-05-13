@@ -11,6 +11,7 @@ class ListaClausulas extends Component
     use WithPagination;
 
     public $buscar, $detalle = 'detalle';
+    public $id = 'id';
 
 
     public function render()
@@ -33,8 +34,8 @@ class ListaClausulas extends Component
 
     private function obtenerClausulas()
     {
-        return Clausula::orderBy('' . $this->detalle . '', 'asc')
-            ->paginate(25);
+        return Clausula::orderBy('' . $this->id . '', 'asc')
+            ->paginate(10);
     }
 
 
