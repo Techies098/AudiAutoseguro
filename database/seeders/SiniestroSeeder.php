@@ -39,5 +39,30 @@ class SiniestroSeeder extends Seeder
             'detalle' => 'Choque a baja velocidad, semaforo rojo',
             'estado_ebriedad' => 'No',
         ]);
+        Siniestro::create([
+            'ubicacion' => 'cotoca',
+            'estado' => 'Espera',
+            'created_at' => Carbon::now()->subDays(1),
+            'tipo' => 'Choque',
+            'contrato_id' => 1,
+        ]);
+        Siniestro::create([
+            'ubicacion' => 'urubo',
+            'estado' => 'revisado',
+            'created_at' => Carbon::now()->subDays(1),
+            'tipo' => 'incendio',
+            'contrato_id' => 2,
+            'detalle' => 'Incendio espontaneo, sin causas humanas aparentes',
+            'estado_ebriedad' => 'No',
+        ]);
+        Siniestro::create([
+            'ubicacion' => 'paurito',
+            'estado' => 'aprobado',
+            'created_at' => Carbon::now()->subDays(1),
+            'tipo' => 'Choque',
+            'contrato_id' => 3,
+            'detalle' => 'Choque a baja velocidad, semaforo rojo',
+            'estado_ebriedad' => 'No',
+        ]);
     }
 }

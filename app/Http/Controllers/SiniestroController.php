@@ -21,10 +21,17 @@ class SiniestroController extends Controller
     }
     public function reportar()
     {
-        $clienteId = auth()->user()->cliente->id; // Accede al ID del cliente relacionado
-        $vehiculos = Vehiculo::where('cliente_id', $clienteId)->get();
-        $contratos = Contrato::where('vigenciafin', '>', now())->get();
+        $user=auth()->user();
+        if ($user->cliente) {
+            $clienteId = auth()->user()->cliente->id; // Accede al ID del cliente relacionado
+            $vehiculos = Vehiculo::where('cliente_id', $clienteId)->get();
+            $contratos = Contrato::where('vigenciafin', '>', now())->get();
         return view('Personal.siniestros.reportar', compact('vehiculos', 'contratos'));
+        }else{
+            return redirect()->route('personal/siniestros.index')
+                ->with('msj_ok', 'No tienes permisos para reportar siniestro');
+        }
+
     }
 
     public function store(Request $request)

@@ -40,13 +40,13 @@
                             <td>
                                 <a href="{{ route('personal/siniestros.show', $siniestro->id) }}"
                                             class="btn btn-primary">ver</a>
-                                @if ($siniestro->estado == 'revisado')
+                                @if ($siniestro->estado == 'revisado' && auth()->user()->administrador)
                                     <a href="{{ route('denegar_siniestro', $siniestro->id) }}"
                                         class="btn btn-primary">Denegar</a>
                                     <a href="{{ route('aprobar_siniestro', $siniestro->id) }}"
                                         class="btn btn-primary">Aprobar</a>
                                 @else
-                                    @if ($siniestro->estado == 'Espera')
+                                    @if ($siniestro->estado == 'Espera' && auth()->user()->perito)
                                         <a href="{{ route('revisar_siniestro', $siniestro) }}"
                                             class="btn btn-primary">revisar</a>
                                     @else

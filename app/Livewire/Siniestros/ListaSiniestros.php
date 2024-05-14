@@ -4,6 +4,7 @@ namespace App\Livewire\Siniestros;
 
 use Livewire\Component;
 use App\Models\Siniestro;
+use Illuminate\Support\Facades\Auth;
 use Livewire\WithPagination;
 
 class ListaSiniestros extends Component
@@ -21,7 +22,22 @@ class ListaSiniestros extends Component
     }
     private function obtenerSiniestros()
     {
-        return Siniestro::orderBy('' . 'created_at' . '', 'desc')
+        if (auth()->user()->cliente) {
+            return Siniestro::whereIn('contrato_id', function($query) {
+                $query->select('id')
+                      ->from('contratos')
+                      ->whereIn('vehiculo_id', function($subQuery) {
+                          $subQuery->select('id')
+                                   ->from('vehiculos')
+                                   ->where('cliente_id', auth()->user()->cliente->id);
+                      });
+            })
+            ->orderBy('created_at', 'desc')
             ->paginate(25);
+
+        } else {
+            return Siniestro::orderBy('' . 'created_at' . '', 'desc')
+            ->paginate(25);
+        }
     }
 }
