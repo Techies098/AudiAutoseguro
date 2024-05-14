@@ -5,12 +5,13 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\SeguroController;
 use App\Http\Controllers\ClienteController;
+use App\Http\Controllers\PermisoController;
 use App\Http\Controllers\BitacoraController;
 use App\Http\Controllers\ClausulaController;
+use App\Http\Controllers\ContratoController;
 use App\Http\Controllers\VehiculoController;
 use App\Http\Controllers\CoberturaController;
-use App\Http\Controllers\ContratoController;
-use App\Http\Controllers\PermisoController;
+use App\Http\Controllers\SiniestroController;
 use App\Http\Controllers\CotizacionController;
 use App\Livewire\Vehiculosrep\ListaVehiculosrep;
 
@@ -52,7 +53,7 @@ Route::resource('/administrador/clausulas', ClausulaController::class)
     ->names('administrador/clausulas')
     ->middleware('auth:sanctum', 'verified');
 
-Route::resource('/administrador/clientes', ClienteController::class)
+Route::resource('/personal/clientes', ClienteController::class)
     ->parameters(['clientes' => 'cliente'])
     ->names('personal/clientes')
     ->middleware('auth:sanctum', 'verified');
@@ -70,6 +71,21 @@ Route::resource('/administrador/seguros', SeguroController::class)
 
     Route::post('/guardar-relacion', [SeguroController::class, 'guardarRelacion'])->name('guardar.relacion');
 
+Route::resource('/personal/siniestros', SiniestroController::class)
+    ->parameters(['siniestros' => 'siniestro'])
+    ->names('personal/siniestros')
+    ->middleware('auth:sanctum', 'verified');
+Route::get('/reportar-siniestro', [SiniestroController::class, 'reportar'])->name('reportar_siniestro')
+->middleware('auth:sanctum', 'verified');
+Route::get('/aprobar-siniestro/{id}', [SiniestroController::class, 'aprobar'])->name('aprobar_siniestro')
+->middleware('auth:sanctum', 'verified');
+Route::get('/denegar-siniestro/{id}', [SiniestroController::class, 'denegar'])->name('denegar_siniestro')
+->middleware('auth:sanctum', 'verified');
+Route::get('/re_evaluar-siniestro/{id}', [SiniestroController::class, 're_evaluar'])->name('re_evaluar_siniestro')
+->middleware('auth:sanctum', 'verified');
+Route::get('/revisar-siniestro/{id}', [SiniestroController::class, 'revisar'])->name('revisar_siniestro')
+->middleware('auth:sanctum', 'verified');
+Route::put('/ruta/{id}',  [SiniestroController::class, 'update'])->name('personal.siniestros.update');
 
 
 Route::resource('/administrador/bitacoras', BitacoraController::class)
@@ -89,7 +105,7 @@ Route::post('/administrador/pdf-vehiculo', [VehiculoController::class, 'generarR
 //Contrato
 Route::get('/administrador/pdf-contrato/{id}', [ContratoController::class, 'contrato'])->name('pdf-contrato');
 
-//cotizacion 
+//cotizacion
 Route::get('/cotizacion', [CotizacionController::class, 'create'])->name('cotizacion.create');
 Route::post('/cotizaciones', [CotizacionController::class, 'store'])->name('cotizaciones.store');
 

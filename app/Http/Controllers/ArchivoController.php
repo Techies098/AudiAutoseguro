@@ -2,14 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Cliente;
 use Illuminate\Http\Request;
 
-class ClienteController extends Controller
+class ArchivoController extends Controller
 {
+
     public function index()
     {
-        return view('Personal.clientes.index');
+        //
     }
 
     public function create()
@@ -22,22 +22,22 @@ class ClienteController extends Controller
         //
     }
 
-    public function show(Cliente $cliente)
+    public function show(string $id)
     {
         //
     }
 
-    public function edit(Cliente $cliente)
+    public function edit(string $id)
     {
         //
     }
 
-    public function update(Request $request, Cliente $cliente)
+    public function update(Request $request, string $id)
     {
         //
     }
 
-    public function destroy(Cliente $cliente)
+    public function destroy(string $id)
     {
         //
     }
