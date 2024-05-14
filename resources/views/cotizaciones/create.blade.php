@@ -29,17 +29,17 @@
                         </div>
 
                         <div class="mb-4">
-                            <label for="year" class="block text-sm font-medium text-gray-700">Año:</label>
+                            <label for="year" class="block text-sm font-medium text-gray-700">Año del vehiculo:</label>
                             <input type="number" name="year" id="year" autocomplete="year" class="mt-1 p-2 block w-full border-gray-300 rounded-md shadow-sm focus:outline-none focus:border-blue-400 focus:ring focus:ring-blue-400">
                         </div>
 
                         <div class="mb-4">
-                            <label for="precio" class="block text-sm font-medium text-gray-700">Precio:</label>
+                            <label for="precio" class="block text-sm font-medium text-gray-700">Precio de lista del vehículo:</label>
                             <input type="number" name="precio" id="precio" autocomplete="precio" step="0.01" class="mt-1 p-2 block w-full border-gray-300 rounded-md shadow-sm focus:outline-none focus:border-blue-400 focus:ring focus:ring-blue-400">
                         </div>
 
                         <div class="mb-4">
-                            <label for="marca" class="block text-sm font-medium text-gray-700">Marca:</label>
+                            <label for="marca" class="block text-sm font-medium text-gray-700">Marca del vehiculo:</label>
                             <input type="text" name="marca" id="marca" autocomplete="marca" class="mt-1 p-2 block w-full border-gray-300 rounded-md shadow-sm focus:outline-none focus:border-blue-400 focus:ring focus:ring-blue-400">
                         </div>
 
@@ -61,7 +61,7 @@
                                 @endforeach
                             </select>
                         </div> --}}
-                        <button type="submit" class="px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">Enviar Cotización</button>
+                        <button type="submit" class="px-4 py-2 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">Realizar Cotización</button>
                     </form>
                 </div>
             </div>

@@ -12,7 +12,8 @@ class Contrato extends Model
     protected $fillable = [
 
         'vehiculo_id',
-        'vendedor_id',
+        //'vendedor_id',
+        'user_id',
         'seguro_id',
         'costofranquicia',
         'costoprima',
@@ -31,6 +32,10 @@ class Contrato extends Model
     public function seguro()
     {
         return $this->belongsTo(Seguro::class);
+    }
+  
+    public function siniestros()    {
+        return $this->hasMany(Siniestro::class);
     }
 
 }

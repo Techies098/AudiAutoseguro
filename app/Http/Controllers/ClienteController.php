@@ -11,7 +11,7 @@ class ClienteController extends Controller
 {
     public function index()
     {
-        return view('personal.clientes.index');
+        return view('Personal.clientes.index');
     }
 
     //Lista de contratos del cliente

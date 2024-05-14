@@ -1,9 +1,12 @@
 <x-app-layout>
     <x-slot name="header">
-        <a href="{{ route('administrador/seguros.create') }}" class="btn btn-primary float-right col-sm-2">Nuevo Seguro</a>
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Lista de seguros') }}
-        </h2>
+        @can('administrador.seguros.create')
+            <a href="{{ route('administrador/seguros.create') }}" class="btn btn-primary float-right col-sm-2">Nuevo Seguro</a>
+            @endcan
+            <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+                {{ __('Lista de seguros disponibles') }}
+            </h2>
+
     </x-slot>
 
     <div class="py-12">

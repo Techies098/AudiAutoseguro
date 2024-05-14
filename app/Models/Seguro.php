@@ -23,6 +23,10 @@ class Seguro extends Model
     {
         return $this->belongsToMany(Cobertura::class);
     }
+    public function contratos()
+    {
+        return $this->hasmany(Contrato::class);
+    }
 
     public function clausula()
     {
