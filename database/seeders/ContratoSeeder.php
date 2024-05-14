@@ -16,7 +16,7 @@ class ContratoSeeder extends Seeder
         Contrato::create([
 
             'vehiculo_id' => '1',
-            'vendedor_id' => '1',
+            'user_id' => '1',
             'seguro_id' => 1,
             'costofranquicia' => 300,
             'costoprima' => 450,
@@ -31,7 +31,7 @@ class ContratoSeeder extends Seeder
         Contrato::create([
 
             'vehiculo_id' => '2',
-            'vendedor_id' => '2',
+            'user_id' => '7',
             'seguro_id' => 2,
             'costofranquicia' => 350,
             'costoprima' => 550,
@@ -46,7 +46,7 @@ class ContratoSeeder extends Seeder
         Contrato::create([
 
             'vehiculo_id' => '3',
-            'vendedor_id' => '1',
+            'user_id' => '7',
             'seguro_id' => 3,
             'costofranquicia' => 550,
             'costoprima' => 1050,
