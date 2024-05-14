@@ -117,5 +117,17 @@ class UserSeeder extends Seeder
         Vendedor::create([
             'user_id' => 8
         ]);
+
+        User::factory()->create([
+            'name' => 'Vendedor Test',
+            'email' => 'vendedor@example.com',
+            'telefono' => '79542856',
+            'password' => bcrypt('00000000'), //8 veces 0
+        ])->assignRole('vendedor');
+
+        Vendedor::create([
+            'user_id' => 8
+        ]);
+
     }
 }

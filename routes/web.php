@@ -67,9 +67,10 @@ Route::resource('/administrador/seguros', SeguroController::class)
     ->parameters(['seguros' => 'seguro'])
     ->names('administrador/seguros')
     ->middleware('auth:sanctum', 'verified');
-    Route::get('/administrador/seguros/{id}/relacionar', [SeguroController::class, 'relacionarSeguro'])->name('administrador.seguros.relacionar');
+    
+Route::get('/administrador/seguros/{id}/relacionar', [SeguroController::class, 'relacionarSeguro'])->name('administrador.seguros.relacionar');
 
-    Route::post('/guardar-relacion', [SeguroController::class, 'guardarRelacion'])->name('guardar.relacion');
+Route::post('/guardar-relacion', [SeguroController::class, 'guardarRelacion'])->name('guardar.relacion');
 
 Route::resource('/personal/siniestros', SiniestroController::class)
     ->parameters(['siniestros' => 'siniestro'])
@@ -113,4 +114,9 @@ Route::post('/cotizaciones', [CotizacionController::class, 'store'])->name('coti
 Route::get('/cotizaciones/success/{id}', [CotizacionController::class, 'success'])
     ->name('cotizaciones.success');
 
-Route::get('/cotizaciones/{id}/pdf', 'CotizacionController@generarPDF')->name('cotizaciones.generarPDF');
+// Route::get('/cotizaciones/{id}/pdf', 'CotizacionController@generarPDF')->name('cotizaciones.generarPDF');
+
+
+//Vista del cliente:
+Route::get('/cliente/{cliente}/contratos', [ClienteController::class, 'contratos'])->name('cliente.contratos.index');
+Route::get('/cliente/contratos/{contrato}', [ClienteController::class, 'show'])->name('cliente.contratos.show');

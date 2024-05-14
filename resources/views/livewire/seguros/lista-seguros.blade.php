@@ -55,6 +55,7 @@
                             @can('administrador.seguros.edit', $seguro)
                             <a href="{{ route('administrador/seguros.edit', $seguro) }}" class="btn btn-primary">Editar</a>
                             @endcan
+                            <a href="{{ route('administrador/seguros.show', $seguro) }}" class="btn btn-primary">Ver</a>
 
                             @can('administrador.seguros.destroy', $seguro)
                             <form action="{{ route('administrador/seguros.destroy', $seguro) }}" method="POST" class="d-inline">

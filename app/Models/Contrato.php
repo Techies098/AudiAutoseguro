@@ -24,10 +24,16 @@ class Contrato extends Model
         'estado'
     ];
 
-
-    public function seguro()    {
-        return $this->belongsto(Seguro::class);
+    public function vehiculo()
+    {
+        return $this->belongsTo(Vehiculo::class);
     }
+
+    public function seguro()
+    {
+        return $this->belongsTo(Seguro::class);
+    }
+  
     public function siniestros()    {
         return $this->hasMany(Siniestro::class);
     }

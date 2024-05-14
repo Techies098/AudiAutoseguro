@@ -33,4 +33,10 @@ class Vehiculo extends Model
     {
         return $this->belongsTo(Cliente::class);
     }
+
+    public function contratos()
+    {
+        return $this->hasMany(Contrato::class);
+    }
+
 }
