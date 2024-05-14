@@ -10,12 +10,13 @@ class Siniestro extends Model
     protected $table = 'siniestros'; // Nombre de la tabla en la base de datos
 
     protected $fillable = [
+        'contrato_id',
         'detalle',
-        'Estado',
-        'Estado_ebriead',
-        'Monto_siniestro',
-        'Porcentaje_danio',
-        'PorcentajeCulpabilidad',
+        'estado',
+        'estado_ebriedad',
+        'monto_siniestro',
+        'porcentaje_danio',
+        'porcentajeCulpabilidad',
         'tipo',
         'ubicacion',
         'url_informe',

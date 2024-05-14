@@ -13,15 +13,15 @@ return new class extends Migration
     {
         Schema::create('siniestros', function (Blueprint $table) {
             $table->id();
-            $table->string('detalle');
-            $table->string('Estado');
-            $table->string('Estado_ebriead');
-            $table->double('Monto_siniestro', 15, 2);
-            $table->double('Porcentaje_danio', 5, 2);
-            $table->double('PorcentajeCulpabilidad', 5, 2);
-            $table->string('tipo');
+            $table->string('detalle')->nullable();
+            $table->string('estado')->default('Espera');
+            $table->string('estado_ebriedad')->nullable();
+            $table->double('monto_siniestro', 15, 2)->nullable();
+            $table->double('porcentaje_danio', 5, 2)->nullable();
+            $table->double('porcentajeCulpabilidad', 5, 2)->nullable();
+            $table->string('tipo')->nullable();
             $table->string('ubicacion');
-            $table->string('url_informe');
+            $table->string('url_informe')->nullable();
             $table->foreignId('contrato_id')->constrained('contratos');
             $table->foreignId('perito_id')->nullable()->constrained('peritos');
             $table->foreignId('administrador_id')->nullable()->constrained('administradores');

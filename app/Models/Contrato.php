@@ -22,8 +22,10 @@ class Contrato extends Model
         'vigenciafin',
         'estado'
     ];
-    public function siniestros()
-    {
+    public function seguro()    {
+        return $this->belongsto(Seguro::class);
+    }
+    public function siniestros()    {
         return $this->hasMany(Siniestro::class);
     }
 }
