@@ -33,5 +33,4 @@ class Vehiculo extends Model
     {
         return $this->belongsTo(Cliente::class);
     }
-
 }
