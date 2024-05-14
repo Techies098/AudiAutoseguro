@@ -12,7 +12,7 @@
                     <div class="container mt-4">
                         <div class="card">
                             <div class="card-header">
-                                <h2><strong>Siniestro 2</strong></h2>
+                                <h2 class="text-xl font-semibold leading-tight text-gray-800"><strong>Siniestro {{ $siniestro->id }}</strong></h2>
                             </div>
                             <div class="card-body">
                                 <p class="card-text"><strong>Detalle:</strong> {{ $siniestro->detalle ?? 'No disponible' }}</p>
@@ -28,6 +28,7 @@
                                 <p class="card-text"><strong>Fecha de Actualización:</strong> {{ $siniestro->updated_at ?? 'No disponible' }}</p>
                                 <p class="card-text"><strong>Contrato:</strong> {{ $siniestro->contrato->id. '- '.$siniestro->contrato->seguro->nombre ?? 'No disponible' }}</p>
                                 <p class="card-text"><strong>Administrador:</strong> {{ $siniestro->administrador->user->name ?? 'No disponible' }}</p>
+                                <p class="card-text"><strong>Perito:</strong> {{ $siniestro->perito->user->name ?? 'No disponible' }}</p>
                             </div>
                             <div class="card">
                             <div class="card-header">

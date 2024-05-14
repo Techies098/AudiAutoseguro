@@ -47,22 +47,13 @@
                                         class="btn btn-primary">Aprobar</a>
                                 @else
                                     @if ($siniestro->estado == 'Espera')
-                                        <a href="{{ route('personal/siniestros.edit', $siniestro) }}"
+                                        <a href="{{ route('revisar_siniestro', $siniestro) }}"
                                             class="btn btn-primary">revisar</a>
                                     @else
                                         {{--<a href="{{ route('re_evaluar_siniestro', $siniestro->id) }}"
                                             class="btn btn-primary">Re_evaluar</a>--}}
                                     @endif
                                 @endif
-
-                                <form action="{{ route('personal/siniestros.destroy', $siniestro->id) }}" method="POST"
-                                    class="d-inline">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit"
-                                        onclick="return confirm('Eliminar siniestro {{ $siniestro->id }}?')"
-                                        class="btn btn-danger">Eliminar</button>
-                                </form>
                             </td>
                         </tr>
                     @endif

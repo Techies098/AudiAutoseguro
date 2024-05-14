@@ -83,6 +83,10 @@ Route::get('/denegar-siniestro/{id}', [SiniestroController::class, 'denegar'])->
 ->middleware('auth:sanctum', 'verified');
 Route::get('/re_evaluar-siniestro/{id}', [SiniestroController::class, 're_evaluar'])->name('re_evaluar_siniestro')
 ->middleware('auth:sanctum', 'verified');
+Route::get('/revisar-siniestro/{id}', [SiniestroController::class, 'revisar'])->name('revisar_siniestro')
+->middleware('auth:sanctum', 'verified');
+Route::put('/ruta/{id}',  [SiniestroController::class, 'update'])->name('personal.siniestros.update');
+
 
 Route::resource('/administrador/bitacoras', BitacoraController::class)
     ->parameters(['bitacoras' => 'bitacora'])

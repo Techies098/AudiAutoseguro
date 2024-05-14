@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use App\Models\User;
 use App\Models\Cliente;
 use App\Models\Administrador;
+use App\Models\Perito;
 use App\Models\Vendedor;
 use Illuminate\Database\Seeder;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
@@ -29,7 +30,7 @@ class UserSeeder extends Seeder
 
         //Cliente:
         User::factory()->create([
-            'name' => 'User cliente',
+            'name' => 'cliente Rodri',
             'email' => 'cliente@example.com',
             'telefono' => '78452052',
             'password' => bcrypt('00000000'), //8 veces 0
@@ -41,7 +42,7 @@ class UserSeeder extends Seeder
 
         User::factory()->create([
             'name' => 'Manuel',
-            'email' => 'ManuSaa@gmail.com',
+            'email' => 'Manu@gmail.com',
             'telefono' => '75028281',
             'password' => bcrypt('00000000'), //8 veces 0
         ])->assignRole('cliente');
@@ -72,10 +73,9 @@ class UserSeeder extends Seeder
             'user_id' => 5
         ]);
 
-        //Vendedor:
         User::factory()->create([
-            'name' => 'Juan',
-            'email' => 'juan@gmail.com',
+            'name' => 'vendedor juan',
+            'email' => 'vendedor@example.com',
             'telefono' => '79542856',
             'password' => bcrypt('00000000'), //8 veces 0
         ])->assignRole('vendedor');
@@ -85,8 +85,19 @@ class UserSeeder extends Seeder
         ]);
 
         User::factory()->create([
-            'name' => 'Diego',
-            'email' => 'diego@gmail.com',
+            'name' => 'perito Jose',
+            'email' => 'perito@example.com',
+            'telefono' => '68743632',
+            'password' => bcrypt('00000000'), //8 veces 0
+        ])->assignRole('perito');
+
+        Perito::create([
+            'user_id' => 7
+        ]);
+
+        User::factory()->create([
+            'name' => 'vendedor nick',
+            'email' => 'nick@example.com',
             'telefono' => '68743632',
             'password' => bcrypt('00000000'), //8 veces 0
         ])->assignRole('vendedor');

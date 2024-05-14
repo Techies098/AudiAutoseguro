@@ -21,7 +21,7 @@ class ListaSiniestros extends Component
     }
     private function obtenerSiniestros()
     {
-        return Siniestro::orderBy('' . 'id' . '', 'asc')
+        return Siniestro::orderBy('' . 'created_at' . '', 'desc')
             ->paginate(25);
     }
 }

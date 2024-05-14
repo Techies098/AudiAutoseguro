@@ -2,7 +2,7 @@
     <x-slot name="header">
         {{--<a href="{{route('administrador/usuarios.create')}}" class="float-right btn btn-primary col-sm-2 ">Nuevo Cliente</a>
         --}}
-        <a href="{{route('personal/siniestros.create')}}" class="float-right btn btn-primary col-sm-2 ">Nuevo Siniestro</a>
+        <a href="{{route('reportar_siniestro')}}" class="float-right btn btn-primary col-sm-2 ">Reportar Siniestro</a>
         <h2 class="text-xl font-semibold leading-tight text-gray-800">
             {{ __('Lista de Siniestros') }}
         </h2>

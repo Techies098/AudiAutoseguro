@@ -53,9 +53,8 @@ class SiniestroController extends Controller
         if ($registro) {
             $registro->estado = 'aprobado';
             $registro->save();
-            return "El estado ha sido cambiado a aprobado.";
-        } else {
-            return "Registro no encontrado.";
+            return redirect()->route('personal/siniestros.index')
+                ->with('msj_ok', 'El estado ha sido cambiado a aprobado, id: ' . $id);
         }
     }
 
@@ -63,11 +62,10 @@ class SiniestroController extends Controller
     {
         $registro = Siniestro::find($id);
         if ($registro) {
-            $registro->estado = 'denegar';
+            $registro->estado = 'negado';
             $registro->save();
-            return "El estado ha sido cambiado a denegado.";
-        } else {
-            return "Registro no encontrado.";
+            return redirect()->route('personal/siniestros.index')
+                ->with('msj_ok', 'El estado ha sido cambiado a negado, id: ' . $id);
         }
     }
     public function re_evaluar(string $id)
@@ -76,9 +74,8 @@ class SiniestroController extends Controller
         if ($registro) {
             $registro->estado = 'Espera';
             $registro->save();
-            return "El estado ha sido cambiado a Re_evaluar.";
-        } else {
-            return "Registro no encontrado.";
+            return redirect()->route('personal/siniestros.index')
+                ->with('msj_ok', 'El estado ha sido cambiado a Re_evaluar, id: ' . $id);
         }
     }
 
@@ -88,19 +85,52 @@ class SiniestroController extends Controller
         // Obtén el siniestro por su ID
         $siniestro = Siniestro::findOrFail($id);
         // Envía el siniestro a la vista
-        return view('Personal.siniestros.show', compact('siniestro'));
+        return view('Personal/siniestros.show', compact('siniestro'));
+    }
+    public function revisar(string $id)
+    {
+        // Obtén el siniestro por su ID
+        $siniestro = Siniestro::findOrFail($id);
+        // Envía el siniestro a la vista
+        return view('Personal.siniestros.revisar', compact('siniestro'));
     }
 
 
     public function edit(string $id)
     {
-        //
     }
 
-    public function update(Request $request, string $id)
+    public function update(Request $request, $id)
     {
-        //
+        // Validar los datos de entrada (opcional)
+        $validatedData = $request->validate([
+            'contrato_id' => 'nullable|integer',
+            'detalle' => 'nullable|string',
+            'estado' => 'nullable|string',
+            'estado_ebriedad' => 'nullable|string',
+            'monto_siniestro' => 'nullable|numeric',
+            'porcentaje_danio' => 'nullable|numeric',
+            'porcentajeCulpabilidad' => 'nullable|numeric',
+            'tipo' => 'nullable|string',
+            'ubicacion' => 'nullable|string',
+            'url_informe' => 'nullable|url',
+        ]);
+
+        // Buscar el siniestro por ID y actualizarlo
+        $siniestro = Siniestro::findOrFail($id);
+        $siniestro->fill($validatedData);
+        $siniestro->estado = 'revisado';
+        $user = auth()->user();
+        if ($user->perito) {
+            $perito = $user->perito->id;
+        } else {
+            $perito = null;//un admin
+        }
+        $siniestro->perito_id = $perito;
+        $siniestro->save();
+        return redirect()->route('personal/siniestros.index')->with('msj_ok', 'Siniestro revisado: ' . $siniestro->id);
     }
+
 
     public function destroy(string $id)
     {
