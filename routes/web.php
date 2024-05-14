@@ -12,6 +12,7 @@ use App\Http\Controllers\CoberturaController;
 use App\Http\Controllers\ContratoController;
 use App\Http\Controllers\PermisoController;
 use App\Http\Controllers\CotizacionController;
+use App\Http\Controllers\PaypalController;
 use App\Livewire\Vehiculosrep\ListaVehiculosrep;
 
 // Route::get('/', function () {
@@ -66,7 +67,7 @@ Route::resource('/administrador/seguros', SeguroController::class)
     ->parameters(['seguros' => 'seguro'])
     ->names('administrador/seguros')
     ->middleware('auth:sanctum', 'verified');
-    
+
 Route::get('/administrador/seguros/{id}/relacionar', [SeguroController::class, 'relacionarSeguro'])->name('administrador.seguros.relacionar');
 
 Route::post('/guardar-relacion', [SeguroController::class, 'guardarRelacion'])->name('guardar.relacion');
@@ -104,3 +105,8 @@ Route::get('/cotizaciones/success/{id}', [CotizacionController::class, 'success'
 //Vista del cliente:
 Route::get('/cliente/{cliente}/contratos', [ClienteController::class, 'contratos'])->name('cliente.contratos.index');
 Route::get('/cliente/contratos/{contrato}', [ClienteController::class, 'show'])->name('cliente.contratos.show');
+
+//Pagos:
+Route::post('paypal', [PaypalController::class, 'paypal'])->name('paypal');
+Route::get('success', [PaypalController::class, 'success'])->name('success');
+Route::get('cancel', [PaypalController::class, 'cancel'])->name('cancel');
