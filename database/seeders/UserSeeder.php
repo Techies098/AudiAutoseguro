@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use App\Models\User;
 use App\Models\Cliente;
 use App\Models\Administrador;
+use App\Models\Perito;
 use App\Models\Vendedor;
 use Illuminate\Database\Seeder;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
@@ -29,7 +30,9 @@ class UserSeeder extends Seeder
 
         //Cliente:
         User::factory()->create([
+
             'name' => 'Pedro Carbajal Gomes',
+
             'email' => 'cliente@example.com',
             'telefono' => '78452052',
             'direccion' => 'Av. Los Cusis / Calle Toborochi / Nro Casa 342',
@@ -41,9 +44,11 @@ class UserSeeder extends Seeder
         ]);
 
         User::factory()->create([
+
             'name' => 'Manuel Zarate Guzman',
             'email' => 'ManuSaa@gmail.com',
             'direccion' => 'Av. Radial 10 / Calle Motacu / Nro Casa 231',
+
             'telefono' => '75028281',
             'password' => bcrypt('00000000'), //8 veces 0
         ])->assignRole('cliente');
@@ -76,10 +81,11 @@ class UserSeeder extends Seeder
             'user_id' => 5
         ]);
 
-        //Vendedor:
         User::factory()->create([
+
             'name' => 'Juan Torres Perez',
             'email' => 'juan@gmail.com',
+
             'telefono' => '79542856',
             'password' => bcrypt('00000000'), //8 veces 0
         ])->assignRole('vendedor');
@@ -89,14 +95,27 @@ class UserSeeder extends Seeder
         ]);
 
         User::factory()->create([
-            'name' => 'Diego Valencia Vargas',
-            'email' => 'diego@gmail.com',
+
+            'name' => 'perito Jose',
+            'email' => 'perito@example.com',
+            'telefono' => '68743632',
+            'password' => bcrypt('00000000'), //8 veces 0
+        ])->assignRole('perito');
+
+        Perito::create([
+            'user_id' => 7
+        ]);
+
+        User::factory()->create([
+            'name' => 'vendedor nick',
+            'email' => 'nick@example.com',
+
             'telefono' => '68743632',
             'password' => bcrypt('00000000'), //8 veces 0
         ])->assignRole('vendedor');
 
         Vendedor::create([
-            'user_id' => 7
+            'user_id' => 8
         ]);
     }
 }

@@ -10,13 +10,13 @@
                         <x-application-mark class="block w-auto h-auto" />
                     </a>
                 </div>
-    
+
 
                 <!-- Navigation Links -->
                 @auth
                 {{-- usuarios autenticados: --}}
                 <!-- Gestionar Seguros -->
-                <div x-data="{ openGestionSeguros: false }" class="relative ml-6 mt-3">
+                <div x-data="{ openGestionSeguros: false }" class="relative mt-3 ml-6">
                     <button @click="openGestionSeguros = !openGestionSeguros"
                         class="flex text-sm transition border-2 border-transparent rounded-full focus:outline-none focus:border-gray-300">
                         {{ __('Gestionar Seguros') }}
@@ -28,21 +28,22 @@
                                 d="M6 18L18 6M6 6l12 12" />
                         </svg>
                     </button>
-                    <div x-show="openGestionSeguros" class="absolute left-0 mt-2 bg-white border border-gray-200 rounded-lg shadow-md z-10">
+                    <div x-show="openGestionSeguros" class="absolute left-0 z-10 mt-2 bg-white border border-gray-200 rounded-lg shadow-md">
                         <x-nav-link href="{{ route('administrador/seguros.index') }}" :active="request()->routeIs('administrador/seguros.index')">
                             {{ __('Seguros') }}
                         </x-nav-link>
                         <x-nav-link href="{{ route('administrador/coberturas.index') }}" :active="request()->routeIs('administrador/coberturas.index')">
                             {{ __('Coberturas') }}
                         </x-nav-link>
+
                         <x-nav-link href="{{ route('administrador/clausulas.index') }}" :active="request()->routeIs('administrador/clausulas.index')">
                             {{ __('Clausulas') }}
-                        </x-nav-link>                    
+                        </x-nav-link>
                     </div>
                 </div>
 
                 <!-- Gestionar Usuarios -->
-                <div x-data="{ openGestionUsuarios: false }" class="relative ml-6 mt-3">
+                <div x-data="{ openGestionUsuarios: false }" class="relative mt-3 ml-6">
                     <button @click="openGestionUsuarios = !openGestionUsuarios"
                         class="flex text-sm transition border-2 border-transparent rounded-full focus:outline-none focus:border-gray-300">
                         {{ __('Gestionar Usuarios') }}
@@ -54,21 +55,21 @@
                                 d="M6 18L18 6M6 6l12 12" />
                         </svg>
                     </button>
-                    <div x-show="openGestionUsuarios" class="absolute left-0 mt-2 bg-white border border-gray-200 rounded-lg shadow-md z-10">
+                    <div x-show="openGestionUsuarios" class="absolute left-0 z-10 mt-2 bg-white border border-gray-200 rounded-lg shadow-md">
                         <x-nav-link href="{{ route('administrador/usuarios.index') }}" :active="request()->routeIs('administrador/usuarios.index')">
                             {{ __('Usuarios') }}
                         </x-nav-link>
-                        <x-nav-link href="{{ route('personal/clientes.index') }}" :active="request()->routeIs('administrador/clientes.index')">
+                        <x-nav-link href="{{ route('personal/clientes.index') }}" :active="request()->routeIs('personal/clientes.index')">
                             {{ __('Clientes') }}
                         </x-nav-link>
                         <x-nav-link href="{{ route('administrador.bitacoras.index') }}" :active="request()->routeIs('administrador.bitacoras.index')">
                             {{ __('Bitacora') }}
-                        </x-nav-link>                    
+                        </x-nav-link>
                     </div>
                 </div>
 
                 <!-- Gestionar Vehiculos -->
-                <div x-data="{ openGestionVehiculos: false }" class="relative ml-6 mt-3">
+                <div x-data="{ openGestionVehiculos: false }" class="relative mt-3 ml-6">
                     <button @click="openGestionVehiculos = !openGestionVehiculos"
                         class="flex text-sm transition border-2 border-transparent rounded-full focus:outline-none focus:border-gray-300">
                         {{ __('Gestionar Vehiculos') }}
@@ -80,7 +81,7 @@
                                 d="M6 18L18 6M6 6l12 12" />
                         </svg>
                     </button>
-                    <div x-show="openGestionVehiculos" class="absolute left-0 mt-2 bg-white border border-gray-200 rounded-lg shadow-md z-10">
+                    <div x-show="openGestionVehiculos" class="absolute left-0 z-10 mt-2 bg-white border border-gray-200 rounded-lg shadow-md">
                         <x-nav-link href="{{ route('administrador/vehiculos.index') }}" :active="request()->routeIs('administrador/vehiculos.index')">
                             {{ __('Vehiculos') }}
                         </x-nav-link>
@@ -89,6 +90,9 @@
                         </x-nav-link>
                         <x-nav-link href="{{ route('administrador/contratos.index') }}" :active="request()->routeIs('administrador/contratos.index')">
                             {{ __('Contrato') }}
+                        </x-nav-link>
+                        <x-nav-link href="{{ route('personal/siniestros.index') }}" :active="request()->routeIs('Personal/siniestros.index')">
+                            {{ __('Siniestro') }}
                         </x-nav-link>
                     </div>
                 </div>
