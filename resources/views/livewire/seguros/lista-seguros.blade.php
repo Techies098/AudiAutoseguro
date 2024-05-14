@@ -49,6 +49,7 @@
                             <a href="{{ route('administrador.seguros.relacionar', $seguro->id) }}" class="btn btn-primary">Relacionar Cláusulas y Coberturas</a>
 
                             <a href="{{ route('administrador/seguros.edit', $seguro) }}" class="btn btn-primary">Editar</a>
+                            <a href="{{ route('administrador/seguros.show', $seguro) }}" class="btn btn-primary">Ver</a>
                             <form action="{{ route('administrador/seguros.destroy', $seguro) }}" method="POST" class="d-inline">
                                 @csrf
                                 @method('DELETE')

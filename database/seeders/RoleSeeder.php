@@ -84,5 +84,9 @@ class RoleSeeder extends Seeder
             'name' => 'administrador.vehiculos.destroy', 'description' => 'Eliminar vehiculos'
             ])->syncRoles([$roleAdministrador]);
         
+        //Vista del cliente:
+        Permission::create([
+            'name' => 'cliente.contratos.index', 'description' => 'Ver listado de contratos'
+            ])->syncRoles([$roleCliente]);
     }
 }

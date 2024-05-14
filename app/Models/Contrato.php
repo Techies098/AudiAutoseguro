@@ -22,4 +22,15 @@ class Contrato extends Model
         'vigenciafin',
         'estado'
     ];
+
+    public function vehiculo()
+    {
+        return $this->belongsTo(Vehiculo::class);
+    }
+
+    public function seguro()
+    {
+        return $this->belongsTo(Seguro::class);
+    }
+
 }
