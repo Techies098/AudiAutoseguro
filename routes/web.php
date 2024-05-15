@@ -1,6 +1,5 @@
 <?php
 
-use App\Models\Seguro;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\SeguroController;
@@ -14,7 +13,6 @@ use App\Http\Controllers\CoberturaController;
 use App\Http\Controllers\SiniestroController;
 use App\Http\Controllers\CotizacionController;
 use App\Http\Controllers\PaypalController;
-use App\Livewire\Vehiculosrep\ListaVehiculosrep;
 
 // Rutas que requieren autenticación y verificación
 Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified'])->group(function () {
