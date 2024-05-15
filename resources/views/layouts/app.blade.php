@@ -17,13 +17,8 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 
     <script>
-        if( navigator.serviceWorker){
+        if(navigator.serviceWorker){
             navigator.serviceWorker.register('/sw.js')
-                // .then((registration) => {
-                //     console.log('SW-Registrado');
-                // }).catch((error) =>{
-                //     console.log('SW-Registro fallido: ', error);
-                // })
         }
     </script>
     {{-- <link rel="manifest" href="http://localhost:8000/manifest.json"> --}}
