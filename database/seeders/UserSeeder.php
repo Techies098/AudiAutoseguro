@@ -8,18 +8,15 @@ use App\Models\Administrador;
 use App\Models\Perito;
 use App\Models\Vendedor;
 use Illuminate\Database\Seeder;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
 class UserSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     */
+
     public function run(): void
     {
         //Administrador:
         User::factory()->create([
-            'name' => 'Test User',
+            'name' => 'Usuario Administrador',
             'email' => 'test@example.com',
             'password' => bcrypt('00000000'), //8 veces 0
         ])->assignRole('administrador');
@@ -30,9 +27,7 @@ class UserSeeder extends Seeder
 
         //Cliente:
         User::factory()->create([
-
-            'name' => 'Pedro Carbajal Gomes',
-
+            'name' => 'Usuario Cliente',
             'email' => 'cliente@example.com',
             'telefono' => '78452052',
             'direccion' => 'Av. Los Cusis / Calle Toborochi / Nro Casa 342',
@@ -44,31 +39,29 @@ class UserSeeder extends Seeder
         ]);
 
         User::factory()->create([
-
-            'name' => 'Manuel Zarate Guzman',
-            'email' => 'ManuSaa@gmail.com',
-            'direccion' => 'Av. Radial 10 / Calle Motacu / Nro Casa 231',
-
+            'name' => 'Usuario Vendedor ',
+            'email' => 'vendedor@example.com',
             'telefono' => '75028281',
             'password' => bcrypt('00000000'), //8 veces 0
-        ])->assignRole('cliente');
+        ])->assignRole('vendedor');
 
         Cliente::create([
             'user_id' => 3
         ]);
 
         User::factory()->create([
-            'name' => 'Ana Martinez Leaños',
-            'email' => 'ana@gmail.com',
-            'direccion' => 'Av. Grigota / Calle Grigota / Nro Casa 4325',
+            'name' => 'Usuario Perito',
+            'email' => 'perito@example.com',
             'telefono' => '68232052',
             'password' => bcrypt('00000000'), //8 veces 0
-        ])->assignRole('cliente');
+        ])->assignRole('perito');
 
         Cliente::create([
             'user_id' => 4
         ]);
 
+        //Agregar mas si lo necesitan:
+        
         User::factory()->create([
             'name' => 'Santiago Fernandez Rodriguez',
             'email' => 'santiago@gmail.com',
@@ -95,38 +88,14 @@ class UserSeeder extends Seeder
         ]);
 
         User::factory()->create([
-
-            'name' => 'perito Jose',
-            'email' => 'perito@example.com',
+            'name' => 'Diego',
+            'email' => 'diego@gmail.com',
             'telefono' => '68743632',
             'password' => bcrypt('00000000'), //8 veces 0
         ])->assignRole('perito');
 
-        Perito::create([
+        Vendedor::create([
             'user_id' => 7
-        ]);
-
-        User::factory()->create([
-            'name' => 'vendedor nick',
-            'email' => 'nick@example.com',
-
-            'telefono' => '68743632',
-            'password' => bcrypt('00000000'), //8 veces 0
-        ])->assignRole('vendedor');
-
-        Vendedor::create([
-            'user_id' => 8
-        ]);
-
-        User::factory()->create([
-            'name' => 'Vendedor Test',
-            'email' => 'vendedor@example.com',
-            'telefono' => '79542856',
-            'password' => bcrypt('00000000'), //8 veces 0
-        ])->assignRole('vendedor');
-
-        Vendedor::create([
-            'user_id' => 8
         ]);
 
     }

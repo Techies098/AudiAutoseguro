@@ -19,139 +19,22 @@
 
 
                 <!-- Navigation Links -->
-                @auth<!-- usuarios autenticados: -->
+                @auth<!-- Menu de usuarios autenticados: -->
 
-                    <!-- Inicio del menu del administrador: -->
-                    @if (Auth::user()->hasRole('administrador'))
+                    <!-- Menu del administrador: -->
+                    @include('zmenu-web.nav-administrador')
 
-                        <!-- Gestionar Seguros -->
-                        <div class="hidden sm:flex sm:items-center sm:ml-6">
-                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                Gestion de seguros
-                            </a>
-                            <ul class="dropdown-menu bg-white p-2" aria-labelledby="navbarDropdown">
-                                <x-nav-link class="dropdown-item" href="{{ route('administrador/seguros.index') }}" :active="request()->routeIs('administrador/seguros.index')">
-                                    {{ __('Seguros') }}
-                                </x-nav-link>
-                                <x-nav-link class="dropdown-item" href="{{ route('administrador/coberturas.index') }}" :active="request()->routeIs('administrador/coberturas.index')">
-                                    {{ __('Coberturas') }}
-                                </x-nav-link>
-                                <x-nav-link class="dropdown-item" href="{{ route('administrador/clausulas.index') }}" :active="request()->routeIs('administrador/clausulas.index')">
-                                    {{ __('Clausulas') }}
-                                </x-nav-link>
-                            </ul>
-                        </div>
+                    <!-- Menu del vendedor: -->
+                    @include('zmenu-web.nav-vendedor')
 
-                        <!-- Gestionar Usuarios -->
-                        <div class="hidden sm:flex sm:items-center sm:ml-6">
-                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            Gestion de usuarios
-                            </a>
-                            <ul class="dropdown-menu bg-white p-2" aria-labelledby="navbarDropdown">
-                                <x-nav-link class="dropdown-item" href="{{ route('administrador/usuarios.index') }}" :active="request()->routeIs('administrador/usuarios.index')">
-                                    {{ __('Usuarios') }}
-                                </x-nav-link>
-                                <x-nav-link class="dropdown-item" href="{{ route('personal/clientes.index') }}" :active="request()->routeIs('administrador/clientes.index')">
-                                    {{ __('Clientes') }}
-                                </x-nav-link>
-                                <x-nav-link class="dropdown-item" href="{{ route('administrador.bitacoras.index') }}" :active="request()->routeIs('administrador.bitacoras.index')">
-                                    {{ __('Bitacora') }}
-                                </x-nav-link>
-                            </ul>
-                        </div>
+                    <!-- Menu del cliente: -->
+                    @include('zmenu-web.nav-cliente')
 
-                        <!-- Gestionar Vehiculos -->
-                        <div class="hidden sm:flex sm:items-center sm:ml-6">
-                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            Gestion de vehiculos
-                            </a>
-                            <ul class="dropdown-menu bg-white p-2" aria-labelledby="navbarDropdown">
-                                <x-nav-link class="dropdown-item" href="{{ route('administrador/vehiculos.index') }}" :active="request()->routeIs('administrador/vehiculos.index')">
-                                    {{ __('Vehiculos') }}
-                                </x-nav-link>
-                                <x-nav-link class="dropdown-item" href="{{ route('reporte-vehiculo') }}" :active="request()->routeIs('reporte/vehiculos.reportev')">
-                                    {{ __('Reporte Vehiculo') }}
-                                </x-nav-link>
-                                <x-nav-link class="dropdown-item" href="{{ route('administrador/contratos.index') }}" :active="request()->routeIs('administrador/contratos.index')">
-                                    {{ __('Contrato') }}
-                                </x-nav-link>
-                                <x-nav-link href="{{ route('personal/siniestros.index') }}" :active="request()->routeIs('Personal/siniestros.index')">
-                                    {{ __('Siniestro') }}
-                                </x-nav-link>
-                            </ul>
-                        </div>
-
-                    @endif <!-- Fin del menu del administrador -->
-
-                    <!-- Inicio del menu del vendedor: -->
-                    @if (Auth::user()->hasRole('vendedor'))
-
-                        <!-- Gestionar Seguros -->
-                        <div class="hidden sm:flex sm:items-center sm:ml-6">
-                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                Gestion de seguros
-                            </a>
-                            <ul class="dropdown-menu bg-white p-2" aria-labelledby="navbarDropdown">
-                                <x-nav-link class="dropdown-item" href="{{ route('administrador/seguros.index') }}" :active="request()->routeIs('administrador/seguros.index')">
-                                    {{ __('Seguros') }}
-                                </x-nav-link>
-                                <x-nav-link class="dropdown-item" href="{{ route('administrador/coberturas.index') }}" :active="request()->routeIs('administrador/coberturas.index')">
-                                    {{ __('Coberturas') }}
-                                </x-nav-link>
-                                <x-nav-link class="dropdown-item" href="{{ route('administrador/clausulas.index') }}" :active="request()->routeIs('administrador/clausulas.index')">
-                                    {{ __('Clausulas') }}
-                                </x-nav-link>
-                            </ul>
-                        </div>
-
-                        <!-- Gestionar Usuarios -->
-                        <div class="hidden sm:flex sm:items-center sm:ml-6">
-                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                Gestion de usuarios
-                            </a>
-                            <ul class="dropdown-menu bg-white p-2" aria-labelledby="navbarDropdown">
-                                <x-nav-link class="dropdown-item" href="{{ route('personal/clientes.index') }}" :active="request()->routeIs('administrador/clientes.index')">
-                                    {{ __('Clientes') }}
-                                </x-nav-link>
-                            </ul>
-                        </div>
-
-                        <!-- Gestionar Vehiculos -->
-                        <div class="hidden sm:flex sm:items-center sm:ml-6">
-                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                Gestion de vehiculos
-                            </a>
-                            <ul class="dropdown-menu bg-white p-2" aria-labelledby="navbarDropdown">
-                                <x-nav-link class="dropdown-item" href="{{ route('administrador/vehiculos.index') }}" :active="request()->routeIs('administrador/vehiculos.index')">
-                                    {{ __('Vehiculos') }}
-                                </x-nav-link>
-                                <x-nav-link class="dropdown-item" href="{{ route('reporte-vehiculo') }}" :active="request()->routeIs('reporte/vehiculos.reportev')">
-                                    {{ __('Reporte Vehiculo') }}
-                                </x-nav-link>
-                                <x-nav-link class="dropdown-item" href="{{ route('administrador/contratos.index') }}" :active="request()->routeIs('administrador/contratos.index')">
-                                    {{ __('Contrato') }}
-                                </x-nav-link>
-                                <x-nav-link href="{{ route('personal/siniestros.index') }}" :active="request()->routeIs('Personal/siniestros.index')">
-                                    {{ __('Siniestro') }}
-                                </x-nav-link>
-                            </ul>
-                        </div>
-
-                    @endif <!-- Fin del menu del vendedor -->
-
-                    <!-- Inicio del menu del cliente: -->
-                    @if (Auth::user()->hasRole('cliente'))
-
-                        <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                            <x-nav-link :href="route('cliente.contratos.index', ['cliente' => Auth::user()->cliente->id])" :active="request()->routeIs('cliente.contratos.index')">
-                                {{ __('Contratos') }}
-                            </x-nav-link>
-                        </div>
-
-                    @endif <!-- Fin del menu del cliente -->
+                    <!-- Menu del perito: -->
+                    @include('zmenu-web.nav-perito')
         
                 
-                @else <!-- Usuarios no autenticado: -->
+                @else <!-- Menu de usuarios no autenticados: -->
                     
                     <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                         <x-nav-link href="{{ route('inicio') }}" :active="request()->routeIs('inicio')">
@@ -258,16 +141,17 @@
                 </x-responsive-nav-link>
             </div>
 
-            <!-- Inicio del menu del cliente: -->
-            @if (Auth::user()->hasRole('cliente'))
+            <!-- Menu del administrador: -->
+            @include('zmenu-movil.resp-nav-administrador')
 
-                <div class="pt-2 pb-3 space-y-1">
-                    <x-responsive-nav-link :href="route('cliente.contratos.index', ['cliente' => Auth::user()->cliente->id])" :active="request()->routeIs('cliente.contratos.index')">
-                        {{ __('Contratos') }}
-                    </x-responsive-nav-link>
-                </div>
+            <!-- Menu del cliente: -->
+            @include('zmenu-movil.resp-nav-cliente')
 
-            @endif <!-- Fin del menu del cliente -->
+            <!-- Menu del vendedor: -->
+            @include('zmenu-movil.resp-nav-vendedor')
+
+            <!-- Menu del perito: -->
+            @include('zmenu-movil.resp-nav-perito')
 
 
         @else <!-- usuarios no autenticados: -->
