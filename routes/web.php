@@ -44,8 +44,8 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']
     
     //Contratos:
     Route::resource('/administrador/contratos', ContratoController::class)->parameters(['contratos' => 'contrato'])->names('administrador/contratos');
-    Route::get('/cliente/{cliente}/contratos', [ClienteController::class, 'contratos'])->name('cliente.contratos.index');
-    Route::get('/cliente/contratos/{contrato}', [ClienteController::class, 'show'])->name('cliente.contratos.show');
+    Route::get('/cliente/{cliente}/contratos', [ClienteController::class, 'contratos'])->name('cliente.contratos.index');//Vista del cliente
+    Route::get('/cliente/contratos/{contrato}', [ClienteController::class, 'show'])->name('cliente.contratos.show');//Vista de cliente, admin y vendedor
 
     //Pagos:
     Route::post('paypal', [PaypalController::class, 'paypal'])->name('paypal');
@@ -56,6 +56,21 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']
     Route::get('/administrador/reporte-vehiculo', [VehiculoController::class, 'reportev'])->name('reporte-vehiculo');
     Route::post('/administrador/pdf-vehiculo', [VehiculoController::class, 'generarReporte'])->name('pdf-vehiculo');
     Route::get('/administrador/pdf-contrato/{id}', [ContratoController::class, 'contrato'])->name('pdf-contrato');
+
+    //Siniestros:
+    Route::resource('/personal/siniestros', SiniestroController::class)->parameters(['siniestros' => 'siniestro'])->names('personal/siniestros');
+
+    Route::get('/reportar-siniestro', [SiniestroController::class, 'reportar'])->name('reportar_siniestro')
+    ->middleware('auth:sanctum', 'verified');
+    Route::get('/aprobar-siniestro/{id}', [SiniestroController::class, 'aprobar'])->name('aprobar_siniestro')
+    ->middleware('auth:sanctum', 'verified');
+    Route::get('/denegar-siniestro/{id}', [SiniestroController::class, 'denegar'])->name('denegar_siniestro')
+    ->middleware('auth:sanctum', 'verified');
+    Route::get('/re_evaluar-siniestro/{id}', [SiniestroController::class, 're_evaluar'])->name('re_evaluar_siniestro')
+    ->middleware('auth:sanctum', 'verified');
+    Route::get('/revisar-siniestro/{id}', [SiniestroController::class, 'revisar'])->name('revisar_siniestro')
+    ->middleware('auth:sanctum', 'verified');
+    Route::put('/ruta/{id}',  [SiniestroController::class, 'update'])->name('personal.siniestros.update');
 });
 
 // Rutas públicas
