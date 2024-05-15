@@ -49,6 +49,22 @@ class RoleSeeder extends Seeder
         Permission::create([
             'name' => 'administrador.coberturas.destroy', 'description' => 'Eliminar coberturas'
             ])->syncRoles([$roleAdministrador]);
+        //Clausulas
+        Permission::create([
+            'name' => 'administrador.clausulas.index', 'description' => 'Ver listado de clausulas'
+            ])->syncRoles([$roleAdministrador, $roleVendedor, $rolePerito]);
+        
+        Permission::create([
+            'name' => 'administrador.clausulas.create', 'description' => 'Crear clausulas'
+            ])->syncRoles([$roleAdministrador]);
+        
+        Permission::create([
+            'name' => 'administrador.clausulas.edit', 'description' => 'Editar clausulas'
+            ])->syncRoles([$roleAdministrador]);
+        
+        Permission::create([
+            'name' => 'administrador.clausulas.destroy', 'description' => 'Eliminar clausulas'
+            ])->syncRoles([$roleAdministrador]);
         
         //Seguros
         Permission::create([
@@ -65,6 +81,9 @@ class RoleSeeder extends Seeder
         
         Permission::create([
             'name' => 'administrador.seguros.destroy', 'description' => 'Eliminar seguros'
+            ])->syncRoles([$roleAdministrador]);
+        Permission::create([
+            'name' => 'administrador.seguros.relacionar', 'description' => 'Eliminar seguros'
             ])->syncRoles([$roleAdministrador]);
 
         //Vehiculos

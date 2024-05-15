@@ -41,7 +41,7 @@
                         <tr>
                             <td>{{ $contrato->id }}</td>
                             <td>{{ $contrato->vehiculo_id }} </td>
-                            <td>{{ $contrato->vendedor_id }} </td>
+                            <td>{{ $contrato->user_id }} </td>
                             <td>{{ $contrato->seguro_id }} </td>
                             <td>{{ $contrato->costofranquicia }} </td>
                             <td>{{ $contrato->costoprima }} </td>
@@ -65,14 +65,16 @@
                                     target="_blank">PDF</a>
                                 <a href="{{ route('administrador/contratos.edit', $contrato) }}"
                                     class="btn btn-primary btn-sm">Editar</a>
-                                <form action="{{ route('administrador/contratos.destroy', $contrato) }}" method="POST"
+                                <a href="{{ route('administrador/contratos.edit', $contrato) }}"
+                                    class="btn btn-info btn-sm">Enviar</a>
+                                <!--<form action="{{ route('administrador/contratos.destroy', $contrato) }}" method="POST"
                                     class="d-inline">
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit"
                                         onclick="return confirm('Eliminar contrato {{ $contrato->id }}?')"
                                         class="btn btn-danger btn-sm">Eliminar</button>
-                                </form>
+                                </form>-->
                             </td>
                         </tr>
                     @endforeach

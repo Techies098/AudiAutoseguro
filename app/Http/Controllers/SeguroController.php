@@ -34,19 +34,12 @@ class SeguroController extends Controller
         //
     }
 
-    public function relacionar($id)
-{
-    $seguro = Seguro::findOrFail($id);
-    $coberturas = Cobertura::all(); // Obtener todas las coberturas
-    $clausulas = Clausula::all(); // Obtener todas las cláusulas
 
-    return view('administrador.seguros.relacionar', compact('seguro', 'coberturas', 'clausulas'));
-}
 public function relacionarSeguro($id)
 {
     $seguro = Seguro::findOrFail($id);
-    $coberturas = Cobertura::all(); // Obtener todas las coberturas
-    $clausulas = Clausula::all(); // Obtener todas las cláusulas
+    $coberturas = Cobertura::all(); 
+    $clausulas = Clausula::all(); 
 
     return view('administrador.seguros.relacionar', compact('seguro', 'coberturas', 'clausulas'));
 }

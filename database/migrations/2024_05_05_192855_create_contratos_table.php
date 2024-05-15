@@ -15,7 +15,8 @@ return new class extends Migration
             $table->id();
 
             $table->unsignedBigInteger('vehiculo_id');
-            $table->unsignedBigInteger('vendedor_id'); //vendedores_id
+            //$table->unsignedBigInteger('vendedor_id'); //vendedores_id
+            $table->unsignedBigInteger('user_id'); //Solo vendedor y adminstrador
             $table->unsignedBigInteger('seguro_id');
             $table->double('costofranquicia');
             $table->double('costoprima');
@@ -25,8 +26,11 @@ return new class extends Migration
             $table->date('vigenciafin');
             $table->string('estado');
 
+
             $table->foreign('vehiculo_id')->references('id')->on('vehiculos')->onUpdate('cascade')->onDelete('cascade');
-            $table->foreign('vendedor_id')->references('id')->on('vendedores');
+            //$table->foreign('vendedor_id')->references('id')->on('vendedores');
+            //$table->foreign('user_id')->references('id')->on('users')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('user_id')->references('id')->on('users');
             $table->foreign('seguro_id')->references('id')->on('seguros');
 
             $table->timestamps();

@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use App\Models\User;
 use App\Models\Cliente;
 use App\Models\Administrador;
+use App\Models\Perito;
 use App\Models\Vendedor;
 use Illuminate\Database\Seeder;
 
@@ -29,6 +30,7 @@ class UserSeeder extends Seeder
             'name' => 'Usuario Cliente',
             'email' => 'cliente@example.com',
             'telefono' => '78452052',
+            'direccion' => 'Av. Los Cusis / Calle Toborochi / Nro Casa 342',
             'password' => bcrypt('00000000'), //8 veces 0
         ])->assignRole('cliente');
 
@@ -61,8 +63,9 @@ class UserSeeder extends Seeder
         //Agregar mas si lo necesitan:
         
         User::factory()->create([
-            'name' => 'Santiago',
+            'name' => 'Santiago Fernandez Rodriguez',
             'email' => 'santiago@gmail.com',
+            'direccion' => 'Av. Centenario / Calle Charcas / Nro Casa 6534',
             'telefono' => '73987654',
             'password' => bcrypt('00000000'), //8 veces 0
         ])->assignRole('cliente');
@@ -71,10 +74,11 @@ class UserSeeder extends Seeder
             'user_id' => 5
         ]);
 
-        //Vendedor:
         User::factory()->create([
-            'name' => 'Juan',
+
+            'name' => 'Juan Torres Perez',
             'email' => 'juan@gmail.com',
+
             'telefono' => '79542856',
             'password' => bcrypt('00000000'), //8 veces 0
         ])->assignRole('vendedor');
@@ -88,7 +92,7 @@ class UserSeeder extends Seeder
             'email' => 'diego@gmail.com',
             'telefono' => '68743632',
             'password' => bcrypt('00000000'), //8 veces 0
-        ])->assignRole('vendedor');
+        ])->assignRole('perito');
 
         Vendedor::create([
             'user_id' => 7

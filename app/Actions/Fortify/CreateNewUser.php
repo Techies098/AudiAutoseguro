@@ -25,11 +25,17 @@ class CreateNewUser implements CreatesNewUsers
             'password' => $this->passwordRules(),
             'terms' => Jetstream::hasTermsAndPrivacyPolicyFeature() ? ['accepted', 'required'] : '',
         ])->validate();
-
-        return User::create([
+        
+        // Aquí está la función User::create(), creando un nuevo usuario en la base de datos.
+        $user = User::create([
             'name' => $input['name'],
             'email' => $input['email'],
             'password' => Hash::make($input['password']),
         ]);
+
+        // Asignar el rol con ID 2 al usuario
+        $user->assignRole(1); // Suponiendo que tengas un método "assignRole" en tu modelo de usuario para asignar roles.
+
+        return $user;
     }
 }
