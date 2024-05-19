@@ -20,6 +20,7 @@ class DatabaseSeeder extends Seeder
             SeguroSeeder::class,
             ContratoSeeder::class,
             SiniestroSeeder::class,
+            TallerSeeder::class,
         ]);
     }
 }
