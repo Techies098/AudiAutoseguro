@@ -33,28 +33,46 @@
                             <td>{{ $taller->direccion }}</td>
                             <td>{{ $taller->telefono }}</td>
                             <td>
-                                @if ($taller->estado == 'Activo')
-                                    <span class="badge bg-success">Activo</span>
-                                @else
-                                    <span class="badge bg-danger">Inactivo</span>
-                                @endif
+                                <span id="estado-{{ $taller->id }}"
+                                    class="badge {{ $taller->estado == 'Activo' ? 'bg-success' : 'bg-danger' }} cursor-pointer"
+                                    onclick="cambiarEstado({{ $taller->id }})">
+                                    {{ $taller->estado }}
+                                </span>
                             </td>
                             <td>
+                                <a href="{{ route('administrador/talleres.show', $taller->id) }}"
+                                    class="btn btn-secondary">Ver</a>
                                 <a href="{{ route('administrador/talleres.edit', $taller) }}"
                                     class="btn btn-primary">Editar</a>
-                                <form action="{{ route('administrador/talleres.destroy', $taller) }}" method="POST"
-                                    class="d-inline">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit"
-                                        onclick="return confirm('Eliminar taller {{ $taller->nombre }}?')"
-                                        class="btn btn-danger">Eliminar</button>
-                                </form>
+
                             </td>
                         </tr>
                     @endforeach
                 </tbody>
             </table>
+
+            <!--javaScript INI-->
+            <script>
+                function cambiarEstado(id) {
+                    fetch(`/administrador/talleres/cambiar-estado/${id}`, {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                            },
+                        })
+                        .then(response => response.json())
+                        .then(data => {
+                            const estadoSpan = document.getElementById(`estado-${id}`);
+                            estadoSpan.textContent = data.nuevoEstado;
+                            estadoSpan.classList.toggle('bg-success', data.nuevoEstado === 'Activo');
+                            estadoSpan.classList.toggle('bg-danger', data.nuevoEstado === 'Inactivo');
+                        })
+                        .catch(error => console.error('Error:', error));
+                }
+            </script>
+
+            <!--javaScript FIN-->
         </div>
     </div>
 

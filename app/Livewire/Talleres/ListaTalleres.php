@@ -29,12 +29,12 @@ class ListaTalleres extends Component
 
         return Taller::where('' . $this->nombre . '', 'like', '%' . trim($this->buscar) . '%')
             ->orderBy('' . $this->nombre . '', 'asc')
-            ->paginate(25);
+            ->paginate(10);
     }
 
     private function obtenerTalleres()
     {
-        return Taller::orderBy('' . $this->id . '', 'asc')
-            ->paginate(25);
+        return Taller::orderBy('' . $this->id . '', 'desc')
+            ->paginate(10);
     }
 }

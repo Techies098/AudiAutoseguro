@@ -1,5 +1,4 @@
 @if (Auth::user()->hasRole('administrador'))
-
     <!-- Gestionar Seguros -->
     <div class="hidden sm:flex sm:items-center sm:ml-6">
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
@@ -57,7 +56,9 @@
             <x-nav-link class="dropdown-item" href="{{ route('personal/siniestros.index') }}" :active="request()->routeIs('Personal/siniestros.index')">
                 {{ __('Siniestro') }}
             </x-nav-link>
+            <x-nav-link class="dropdown-item" href="{{ route('administrador/talleres.index') }}" :active="request()->routeIs('administrador/talleres.index')">
+                {{ __('Taller') }}
+            </x-nav-link>
         </ul>
     </div>
-    
 @endif

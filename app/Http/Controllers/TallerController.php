@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Models\Taller;
 use Illuminate\Http\Request;
 
 class TallerController extends Controller
@@ -12,7 +13,7 @@ class TallerController extends Controller
      */
     public function index()
     {
-        //
+        return view('administrador.talleres.index');
     }
 
     /**
@@ -20,7 +21,9 @@ class TallerController extends Controller
      */
     public function create()
     {
-        //
+        return view('administrador.talleres.create', [
+            'taller' => new Taller()
+        ]);
     }
 
     /**
@@ -28,31 +31,51 @@ class TallerController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'nombre' => 'required|max:250',
+            'direccion' => 'required|max:250',
+            'telefono' => 'required|max:250'
+        ]);
+
+        $taller = taller::create($request->all());
+
+        return redirect()->route('administrador/talleres.index')
+            ->with('msj_ok', 'Creado: ' . $taller->nombre);
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Taller $taller)
     {
-        //
+        return view('administrador.talleres.show', compact('taller'));
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Taller $taller)
     {
-        //
+        return view('administrador.talleres.edit', [
+            'taller' => $taller
+        ]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Taller $taller)
     {
-        //
+        $request->validate([
+            'nombre' => 'required|max:250',
+            'direccion' => 'required|max:250',
+            'telefono' => 'required|max:250'
+        ]);
+
+        $taller->update($request->all());
+
+        return redirect()->route('administrador/talleres.index')
+            ->with('msj_ok', 'Actualizado: ' . $taller->nombre);
     }
 
     /**
@@ -61,5 +84,14 @@ class TallerController extends Controller
     public function destroy(string $id)
     {
         //
+    }
+
+    public function cambiarEstado($id)
+    {
+        $taller = Taller::findOrFail($id);
+        $taller->estado = $taller->estado == 'Activo' ? 'Inactivo' : 'Activo';
+        $taller->save();
+
+        return response()->json(['nuevoEstado' => $taller->estado]);
     }
 }
