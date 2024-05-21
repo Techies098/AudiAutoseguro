@@ -1,10 +1,10 @@
 <div class="row g-3">
     <div class="col-md-4">
-        <label for="user_id" class="form-label">
-            <h1 class="font-bold">{{ $vendedor == null ? $administrador->user->name : $vendedor->user->name }}</h1>
+        <label for="vendedor_id" class="form-label">
+            <h1 class="font-bold">{{ $vendedor == null ? '' : $vendedor->user->name }}</h1>
         </label>
-        <input type="text" class="form-control" id="user_id" name="user_id"
-            value="{{ old('user_id', $vendedor == null ? $administrador->user->id : $vendedor->user->id) }}" readonly>
+        <input type="text" class="form-control" id="vendedor_id" name="vendedor_id"
+            value="{{ old('vendedor_id', $vendedor == null ? '' : $vendedor->id) }}" readonly>
     </div>
 
     <div class="col-md-4">

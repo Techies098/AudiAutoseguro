@@ -40,8 +40,8 @@
                     @foreach ($contratos as $fila => $contrato)
                         <tr>
                             <td>{{ $contrato->id }}</td>
-                            <td>{{ $contrato->vehiculo_id }} </td>
-                            <td>{{ $contrato->user_id }} </td>
+                            <td>{{ $contrato->vehiculo_id }}-{{ $contrato->vehiculo->placa }} </td>
+                            <td>{{ $contrato->vendedor_id }} </td>
                             <td>{{ $contrato->seguro_id }} </td>
                             <td>{{ $contrato->costofranquicia }} </td>
                             <td>{{ $contrato->costoprima }} </td>
