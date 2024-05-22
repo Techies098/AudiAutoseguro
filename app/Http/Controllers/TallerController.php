@@ -2,12 +2,22 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
+//use App\Http\Controllers\Controller;
+use Illuminate\Routing\Controller;
 use App\Models\Taller;
 use Illuminate\Http\Request;
 
 class TallerController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('can:administrador.talleres.index')->only('index');
+        $this->middleware('can:administrador.talleres.create')->only('create', 'store');
+        $this->middleware('can:administrador.talleres.edit')->only('edit', 'update');
+        $this->middleware('can:administrador.talleres.show')->only('edit', 'show');
+        $this->middleware('can:administrador.talleres.destroy')->only('destroy');
+    }
+
     /**
      * Display a listing of the resource.
      */

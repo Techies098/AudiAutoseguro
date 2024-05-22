@@ -1,7 +1,10 @@
 <x-app-layout>
     <x-slot name="header">
-        <a href="{{ route('administrador/talleres.create') }}" class="btn btn-primary float-right col-sm-2 ">Nuevo
-            taller</a>
+        @can('administrador.talleres.create')
+            <a href="{{ route('administrador/talleres.create') }}" class="btn btn-primary float-right col-sm-2 ">Nuevo
+                taller</a>
+        @endcan
+
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
             {{ __('Lista de talleres') }}
         </h2>

@@ -42,8 +42,11 @@
                             <td>
                                 <a href="{{ route('administrador/talleres.show', $taller->id) }}"
                                     class="btn btn-secondary">Ver</a>
-                                <a href="{{ route('administrador/talleres.edit', $taller) }}"
-                                    class="btn btn-primary">Editar</a>
+
+                                @can('administrador.talleres.edit', $taller)
+                                    <a href="{{ route('administrador/talleres.edit', $taller) }}"
+                                        class="btn btn-primary">Editar</a>
+                                @endcan
 
                             </td>
                         </tr>

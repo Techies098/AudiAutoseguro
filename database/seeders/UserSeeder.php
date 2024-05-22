@@ -261,7 +261,7 @@ class UserSeeder extends Seeder
 
             'name' => 'Juan Torres Perez',
             'email' => 'juan@gmail.com',
-
+            'direccion' => 'Av. Monte Cristo C/231 Nro/32',
             'telefono' => '79542856',
             'password' => bcrypt('00000000'), //8 veces 0
         ])->assignRole('vendedor');
@@ -273,9 +273,10 @@ class UserSeeder extends Seeder
         User::factory()->create([
             'name' => 'Diego',
             'email' => 'diego@gmail.com',
+            'direccion' => 'Av. Cascote Radial 20 B/Cascote C/56 Nro/ 45',
             'telefono' => '68743632',
             'password' => bcrypt('00000000'), //8 veces 0
-        ])->assignRole('perito');
+        ])->assignRole('vendedor');
 
         Vendedor::create([
             'user_id' => 22
