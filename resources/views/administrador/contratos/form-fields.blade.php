@@ -97,6 +97,8 @@
         <button type="submit" class="btn btn-primary">Guardar</button>
     </div>
 
+    <!-- JavaScript - DOM -->
+
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             var vehiculoSelect = document.getElementById('vehiculo_id');
@@ -114,7 +116,9 @@
                 var selectedSeguro = seguros.find(seguro => seguro.id == selectedSeguroId);
 
                 if (selectedVehiculo && selectedSeguro) {
-                    primaInput.value = selectedVehiculo.valor_comercial * selectedSeguro.precio_prima;
+                    //primaInput.value = selectedVehiculo.valor_comercial * selectedSeguro.precio_prima;
+                    var prima = selectedVehiculo.valor_comercial * selectedSeguro.precio_prima;
+                    primaInput.value = prima.toFixed(2); // Redondear a dos decimales
                 } else {
                     primaInput.value = ''; // Limpiar el campo si no se selecciona ningún seguro
                 }

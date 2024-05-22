@@ -1,7 +1,9 @@
 <x-app-layout>
     <x-slot name="header">
-        <a href="{{ route('administrador/contratos.create') }}" class="btn btn-primary float-right col-sm-2 ">Nuevo
-            contrato</a>
+        @can('administrador.contratos.create')
+            <a href="{{ route('administrador/contratos.create') }}" class="btn btn-primary float-right col-sm-2 ">Nuevo
+                contrato</a>
+        @endcan
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
             {{ __('Lista de contratos') }}
         </h2>

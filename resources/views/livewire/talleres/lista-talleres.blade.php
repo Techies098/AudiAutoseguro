@@ -33,11 +33,14 @@
                             <td>{{ $taller->direccion }}</td>
                             <td>{{ $taller->telefono }}</td>
                             <td>
-                                <span id="estado-{{ $taller->id }}"
-                                    class="badge {{ $taller->estado == 'Activo' ? 'bg-success' : 'bg-danger' }} cursor-pointer"
-                                    onclick="cambiarEstado({{ $taller->id }})">
-                                    {{ $taller->estado }}
-                                </span>
+                                @can('talleres.cambiarEstado', $taller)
+                                    <span id="estado-{{ $taller->id }}"
+                                        class="badge {{ $taller->estado == 'Activo' ? 'bg-success' : 'bg-danger' }} cursor-pointer"
+                                        onclick="cambiarEstado({{ $taller->id }})">
+                                        {{ $taller->estado }}
+                                    </span>
+                                @endcan
+
                             </td>
                             <td>
                                 <a href="{{ route('administrador/talleres.show', $taller->id) }}"

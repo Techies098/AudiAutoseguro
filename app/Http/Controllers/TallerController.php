@@ -14,7 +14,7 @@ class TallerController extends Controller
         $this->middleware('can:administrador.talleres.index')->only('index');
         $this->middleware('can:administrador.talleres.create')->only('create', 'store');
         $this->middleware('can:administrador.talleres.edit')->only('edit', 'update');
-        $this->middleware('can:administrador.talleres.show')->only('edit', 'show');
+        $this->middleware('can:administrador.talleres.show')->only('show');
         $this->middleware('can:administrador.talleres.destroy')->only('destroy');
     }
 

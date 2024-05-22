@@ -128,5 +128,34 @@ class RoleSeeder extends Seeder
         Permission::create([
             'name' => 'administrador.talleres.destroy', 'description' => 'Eliminar talleres'
         ])->syncRoles([$roleAdministrador]);
+
+        Permission::create([
+            'name' => 'talleres.cambiarEstado', 'description' => 'Cambiar estado del taller'
+        ])->syncRoles([$roleAdministrador]);
+
+        //Contratos
+        Permission::create([
+            'name' => 'administrador.contratos.index', 'description' => 'Ver listado de contratos'
+        ])->syncRoles([$roleAdministrador, $roleVendedor]);
+
+        Permission::create([
+            'name' => 'administrador.contratos.create', 'description' => 'Crear contratos'
+        ])->syncRoles([$roleVendedor]);
+
+        Permission::create([
+            'name' => 'administrador.contratos.edit', 'description' => 'Editar contratos'
+        ])->syncRoles([$roleVendedor]);
+
+        Permission::create([
+            'name' => 'administrador.contratos.show', 'description' => 'Vista del contrato'
+        ])->syncRoles([$roleAdministrador, $roleVendedor]);
+
+        Permission::create([
+            'name' => 'administrador.contratos.destroy', 'description' => 'Eliminar contratos'
+        ])->syncRoles([$roleVendedor]);
+
+        Permission::create([
+            'name' => 'pdf-contrato', 'description' => 'Genera contrato' //genera un contrato en formato pdf de
+        ])->syncRoles([$roleAdministrador, $roleVendedor]);
     }
 }
