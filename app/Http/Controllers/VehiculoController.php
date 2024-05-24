@@ -154,7 +154,7 @@ class VehiculoController extends Controller
 
         $vehiculos = $vehiculos->get();
 
-        $pdf = PDF::loadView('reporte.vehiculos.pdf-result', compact('vehiculos'));
+        $pdf = PDF::loadView('reporte.vehiculos.pdf-result', compact('vehiculos'))->setPaper('a4', 'landscape');
         return $pdf->stream();
     }
 }

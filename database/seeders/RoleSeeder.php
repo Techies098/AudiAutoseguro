@@ -111,7 +111,7 @@ class RoleSeeder extends Seeder
         //Talleres
         Permission::create([
             'name' => 'administrador.talleres.index', 'description' => 'Ver listado de talleres'
-        ])->syncRoles([$roleAdministrador, $rolePerito]);
+        ])->syncRoles([$roleAdministrador]);
 
         Permission::create([
             'name' => 'administrador.talleres.create', 'description' => 'Crear talleres'
@@ -123,7 +123,7 @@ class RoleSeeder extends Seeder
 
         Permission::create([
             'name' => 'administrador.talleres.show', 'description' => 'Vista del taller'
-        ])->syncRoles([$roleAdministrador, $rolePerito]);
+        ])->syncRoles([$roleAdministrador]);
 
         Permission::create([
             'name' => 'administrador.talleres.destroy', 'description' => 'Eliminar talleres'

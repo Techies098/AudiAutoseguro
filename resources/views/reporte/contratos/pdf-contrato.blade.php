@@ -89,6 +89,29 @@
         .page-break {
             page-break-before: always;
         }
+
+        .signature-section {
+            margin-top: 3rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            text-align: center;
+        }
+
+        .signature-section div {
+            /*text-align: center;*/
+            width: 65%;
+        }
+
+        .signature-section .company-signature {
+            margin-left: auto;
+            margin-right: auto;
+            margin-top: 2rem;
+        }
+
+        .signature-section p {
+            margin: 0;
+        }
     </style>
 </head>
 
@@ -220,7 +243,38 @@
         </div>
 
         <div class="page-break"></div>
+        <div class="container">
 
+            <p><strong>ESPECIFICACIONES:</strong></p>
+            <hr>
+            <p><strong>Central de Riesgos:</strong></p>
+            <p>
+                El asegurado autoriza a la Compañía su reporte a la Central de Riesgos del Mercado de Seguros, acorde a
+                las
+                normativas reglamentarias de la Autoridad de Fiscalización y Control de Pensiones y Seguros - APS.
+            </p><br>
+            <p>
+                Se deja claramente establecido que la Compañía no se hace responsable por los repuestos que no puedan
+                encontrarse en el mercado boliviano a consecuencia del siniestro amparado en el Contrato (Póliza).
+                En este caso la Compañía se reserva el derecho de indemnizar en efectivo de acuerdo a cotizaciones
+                referenciales que pudieran ser emitidas en el mercado local o a la sustitución de partes similares.
+            </p><br>
+
+            <p><strong>Lugar y fecha:</strong> Santa Cruz de la Sierra, {{ date('d-m-Y') }}</p>
+
+            <div class="signature-section">
+                <div>
+                    <p><strong>Firma del Asegurado</strong></p>
+                </div>
+                <!--<div>
+                    <p><strong>Por la Compañía</strong></p>
+                </div>-->
+            </div>
+            <br>
+            <p class="text-center">AUTOSEGURO S.A.</p>
+        </div>
+
+        <div class="page-break"></div>
         <hr>
         <h5 class="text-center">LIQUIDACIÓN DE COBRANZA</h5>
         <div class="col-6">
