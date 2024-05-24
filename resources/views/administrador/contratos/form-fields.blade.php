@@ -1,10 +1,10 @@
 <div class="row g-3">
     <div class="col-md-4">
         <label for="vendedor_id" class="form-label">
-            <h1 class="font-bold">Vendedor: {{ $vendedor->nombrev }}</h1>
+            <h1 class="font-bold">{{ $vendedor == null ? '' : $vendedor->user->name }}</h1>
         </label>
         <input type="text" class="form-control" id="vendedor_id" name="vendedor_id"
-            value="{{ old('vendedor_id', $vendedor->v_id) }}" readonly>
+            value="{{ old('vendedor_id', $vendedor == null ? '' : $vendedor->id) }}" readonly>
     </div>
 
     <div class="col-md-4">
@@ -34,7 +34,7 @@
     </div>
 
     <div class="col-md-4">
-        <label for="costofranquicia" class="form-label">Franquicia</label>
+        <label for="costofranquicia" class="form-label">Franquicia ($us)</label>
         <input type="number" class="form-control" id="costofranquicia" name="costofranquicia"
             value="{{ old('costofranquicia', $contrato->costofranquicia) }}" min="1">
         @error('costofranquicia')
@@ -43,9 +43,9 @@
     </div>
 
     <div class="col-md-4">
-        <label for="costoprima" class="form-label">Prima</label>
+        <label for="costoprima" class="form-label">Prima ($us)</label>
         <input type="number" class="form-control" id="costoprima" name="costoprima"
-            value="{{ old('costoprima', $contrato->costoprima) }}" min="1">
+            value="{{ old('costoprima', $contrato->costoprima) }}" min="1" readonly>
         @error('costoprima')
             <div class="alert alert-danger">{{ $message }}</div>
         @enderror
@@ -91,16 +91,47 @@
         @enderror
     </div>
 
-    <div class="col-md-4">
-        <label for="estado" class="form-label">Estado</label>
-        <select class="form-select" id="estado" name="estado" aria-label="Seleccionar Estado">
-            <option value="" selected disabled>Seleccionar</option>
-            <option value="Activo" {{ old('estado', $contrato->estado) == 'Activo' ? 'selected' : '' }}>Activo</option>
-            <option value="Desactivado" {{ old('estado', $contrato->estado) == 'Desactivado' ? 'selected' : '' }}>
-                Desactivado</option>
-        </select>
-    </div>
+
 
     <div class="col-12">
         <button type="submit" class="btn btn-primary">Guardar</button>
     </div>
+
+    <!-- JavaScript - DOM -->
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            var vehiculoSelect = document.getElementById('vehiculo_id');
+            var seguroSelect = document.getElementById('seguro_id');
+            var primaInput = document.getElementById('costoprima');
+            var vehiculos = {!! json_encode($vehiculos) !!}; // Obtener los vehiculos desde DB
+            var seguros = {!! json_encode($seguros) !!}; // Obtener los seguros desde DB
+
+            // Función para calcular el costo de la prima
+            function calcularPrima() {
+                var selectedVehiculoId = vehiculoSelect.value;
+                var selectedSeguroId = seguroSelect.value;
+
+                var selectedVehiculo = vehiculos.find(vehiculo => vehiculo.id == selectedVehiculoId);
+                var selectedSeguro = seguros.find(seguro => seguro.id == selectedSeguroId);
+
+                if (selectedVehiculo && selectedSeguro) {
+                    //primaInput.value = selectedVehiculo.valor_comercial * selectedSeguro.precio_prima;
+                    var prima = selectedVehiculo.valor_comercial * selectedSeguro.precio_prima;
+                    primaInput.value = prima.toFixed(2); // Redondear a dos decimales
+                } else {
+                    primaInput.value = ''; // Limpiar el campo si no se selecciona ningún seguro
+                }
+            }
+
+            // Event listener para el cambio en el campo de selección del vehículo
+            vehiculoSelect.addEventListener('change', function() {
+                calcularPrima(); // Calcular la prima cuando se cambia el vehículo
+            });
+
+            // Event listener para el cambio en el campo de selección del seguro
+            seguroSelect.addEventListener('change', function() {
+                calcularPrima(); // Calcular la prima cuando se cambia el seguro
+            });
+        });
+    </script>

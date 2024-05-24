@@ -2,19 +2,29 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Controllers\Controller;
+//use App\Http\Controllers\Controller;
+use Illuminate\Routing\Controller;
 use Illuminate\Http\Request;
 use App\Models\Vehiculo;
 use App\Models\Contrato;
 use App\Models\Seguro;
-use App\Models\User;
+use App\Models\Cliente;
 use App\Models\Vendedor;
 use App\Models\Administrador;
+use App\Models\Cuota;
 use Illuminate\Support\Facades\Auth;
 use Barryvdh\DomPDF\Facade\Pdf as PDF;
 
 class ContratoController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('can:administrador.contratos.index')->only('index');
+        $this->middleware('can:administrador.contratos.create')->only('create', 'store');
+        $this->middleware('can:administrador.contratos.edit')->only('edit', 'update');
+        $this->middleware('can:administrador.contratos.show')->only('show');
+        $this->middleware('can:administrador.contratos.destroy')->only('destroy');
+    }
     /**
      * Display a listing of the resource.
      */
@@ -28,79 +38,34 @@ class ContratoController extends Controller
      */
     public function create()
     {
-        /*$vendedores = User::select(
-            'vendedores.id',
-            'users.name as nombrev',
-        )->join('vendedores', 'vendedores.user_id', '=', 'users.id')->get();*/
+        $user = Auth::user();
 
-        $idVendedor = Auth::user()->id;
-        //$idAdministrador = Auth::user()->id;
+        // Verificar si el usuario es un vendedor
+        $vendedor = Vendedor::where('user_id', $user->id)->first();
 
-        if (!Vendedor::where('user_id', $idVendedor)->exists()) {
-            return redirect()->route('administrador/contratos.index')->with('error', 'El usuario autenticado no tiene los permisos');
-        } else {
+        if (!$vendedor) {
+            return redirect()->route('administrador/contratos.index')->with('error', 'El usuario autenticado no tiene los permisos adecuados');
+            /*// Si el usuario no es un vendedor, verificar si es un administrador
+            $administrador = Administrador::where('user_id', $user->id)->first();
 
-            $vendedor = Vendedor::join('users', 'users.id', '=', 'vendedores.user_id')
-                ->where('users.id', $idVendedor)
-                ->select('vendedores.id as v_id', 'users.id as u_id', 'users.name as nombrev')
-                ->first();
-            //dd($vendedor);
-
-            $vehiculos = Vehiculo::all();
-            $seguros = Seguro::all();
-
-            return view('administrador.contratos.create', [
-                'contrato' => new Contrato(),
-                'seguros' => $seguros,
-                'vehiculos' => $vehiculos,
-                'vendedor' => $vendedor
-            ]);
+            if (!$administrador) {
+                // Si el usuario no es ni vendedor ni administrador, redirigir con error
+                return redirect()->route('administrador/contratos.index')->with('error', 'El usuario autenticado no tiene los permisos adecuados');
+            }*/
         }
 
-        /*if (Vendedor::where('user_id', $idVendedor)->exists()) {
-            $vendedor = Vendedor::join('users', 'users.id', '=', 'vendedores.user_id')
-                ->where('users.id', $idVendedor)
-                ->select('vendedores.id as v_id', 'users.id as u_id', 'users.name as nombrev')
-                ->first();
-            //dd($vendedor);
+        // Recuperar datos necesarios para el formulario de creación
+        $vehiculos = Vehiculo::all();
+        $seguros = Seguro::all();
 
-            $vehiculos = Vehiculo::all();
-            $seguros = Seguro::all();
-
-            return view('administrador.contratos.create', [
-                'contrato' => new Contrato(),
-                'seguros' => $seguros,
-                'vehiculos' => $vehiculos,
-                'vendedor' => $vendedor,
-                'administrador' => null
-            ]);
-
-            
-        } else {
-
-            if (Administrador::where('user_id', $idAdministrador)->exists()) {
-                $administrador = Administrador::join('users', 'users.id', '=', 'administradores.user_id')
-                    ->where('users.id', $idAdministrador)
-                    ->select('administradores.id as a_id', 'users.id as u_id', 'users.name as nombrea')
-                    ->first();
-                //dd($administrador);
-    
-                $vehiculos = Vehiculo::all();
-                $seguros = Seguro::all();
-    
-                return view('administrador.contratos.create', [
-                    'contrato' => new Contrato(),
-                    'seguros' => $seguros,
-                    'vehiculos' => $vehiculos,
-                    'administrador' => $administrador,
-                    'administrador' => null
-                ]);
-    
-                
-            }
-
-            return redirect()->route('administrador/contratos.index')->with('error', 'El usuario autenticado no tiene los permisos');
-        }*/
+        // Pasar los datos recuperados a la vista
+        return view('administrador.contratos.create', [
+            'contrato' => new Contrato(),
+            'seguros' => $seguros,
+            'vehiculos' => $vehiculos,
+            'vendedor' => $vendedor ?? null/*, // Puede ser null si no es un vendedor
+            'administrador' => $administrador ?? null // Puede ser null si no es un administrador*/
+        ]);
     }
 
     /**
@@ -111,6 +76,7 @@ class ContratoController extends Controller
         //dd($request);
         $request->validate([
             'vehiculo_id' => 'required',
+            //'user_id' => 'required',
             'vendedor_id' => 'required',
             'seguro_id' => 'required',
             'costofranquicia' => 'required',
@@ -118,12 +84,22 @@ class ContratoController extends Controller
             'nro_cuotas' => 'required',
             'tipovigencia' => 'required',
             'vigenciainicio' => 'required',
-            'vigenciafin' => 'required',
-            'estado' => 'required'
+            'vigenciafin' => 'required'
         ]);
+
+        //$request->merge(['estado' => 'Inactivo']);
         //dd($request);
         $contrato = Contrato::create($request->all());
         //dd($contrato);
+
+        for ($i = 1; $i <= $contrato->nro_cuotas; $i++) {
+            $cuota = new Cuota();
+            $cuota->numero = $i;
+            $cuota->monto = $contrato->costoprima / $contrato->nro_cuotas;
+            $cuota->fecha_por_pagar = date('Y-m-d', strtotime($contrato->vigenciainicio . ' + ' . $i-1 . ' month'));
+            $cuota->contrato_id = $contrato->id;
+            $cuota->save();
+        }
 
         return redirect()->route('administrador/contratos.index')
             ->with('msj_ok', 'Creado el contrato con ID: ' . $contrato->id);
@@ -134,7 +110,24 @@ class ContratoController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $contrato = Contrato::find($id);
+
+        $vehiculo = Vehiculo::find($contrato->vehiculo_id);
+        $cliente = Cliente::find($vehiculo->cliente_id)->user;
+
+        //dd($cliente);
+
+        $seguro = Seguro::find($contrato->seguro_id);
+        $coberturas = $seguro->cobertura;
+        $clausulas = $seguro->clausula;
+
+        return view('administrador.contratos.show', [
+            'contrato' => $contrato,
+            'vehiculo' => $vehiculo,
+            'coberturas' => $coberturas,
+            'clausulas' => $clausulas,
+            'cliente' => $cliente
+        ]);
     }
 
     /**
@@ -142,20 +135,39 @@ class ContratoController extends Controller
      */
     public function edit(Contrato $contrato)
     {
-        $idVendedor = Auth::user()->id;
+        /*$idVendedor = Auth::user()->id;
         $vendedor = Vendedor::join('users', 'users.id', '=', 'vendedores.user_id')
             ->where('users.id', $idVendedor)
             ->select('vendedores.id as v_id', 'users.id as u_id', 'users.name as nombrev')
-            ->first();
+            ->first();*/
+
+        $user = Auth::user();
+
+        // Verificar si el usuario es un vendedor
+        $vendedor = Vendedor::where('user_id', $user->id)->first();
+
+        if (!$vendedor) {
+            return redirect()->route('administrador/contratos.index')->with('error', 'El usuario autenticado no tiene los permisos adecuados');
+            /*// Si el usuario no es un vendedor, verificar si es un administrador
+            $administrador = Administrador::where('user_id', $user->id)->first();
+
+            if (!$administrador) {
+                // Si el usuario no es ni vendedor ni administrador, redirigir con error
+                return redirect()->route('administrador/contratos.index')->with('error', 'El usuario autenticado no tiene los permisos adecuados');
+            }*/
+        }
+
 
         $vehiculos = Vehiculo::all();
         $seguros = Seguro::all();
 
         return view('administrador.contratos.edit', [
-            'vendedor' => $vendedor,
+            //'vendedor' => $vendedor,
             'contrato' => $contrato,
             'seguros' => $seguros,
-            'vehiculos' => $vehiculos
+            'vehiculos' => $vehiculos,
+            'vendedor' => $vendedor ?? null/*, // Puede ser null si no es un vendedor
+            'administrador' => $administrador ?? null // Puede ser null si no es un administrador*/
         ]);
     }
 
@@ -166,6 +178,7 @@ class ContratoController extends Controller
     {
         $request->validate([
             'vehiculo_id' => 'required',
+            //'user_id' => 'required',
             'vendedor_id' => 'required',
             'seguro_id' => 'required',
             'costofranquicia' => 'required',
@@ -173,9 +186,22 @@ class ContratoController extends Controller
             'nro_cuotas' => 'required',
             'tipovigencia' => 'required',
             'vigenciainicio' => 'required',
-            'vigenciafin' => 'required',
-            'estado' => 'required'
+            'vigenciafin' => 'required'
         ]);
+
+        //$request->merge(['estado' => 'Inactivo']);
+
+        if($contrato->nro_cuotas != $request->nro_cuotas){
+            Cuota::where('contrato_id', $contrato->id)->delete();
+            for ($i = 1; $i <= $request->nro_cuotas; $i++) {
+                $cuota = new Cuota();
+                $cuota->numero = $i;
+                $cuota->monto = $request->costoprima / $request->nro_cuotas;
+                $cuota->fecha_por_pagar = date('Y-m-d', strtotime($request->vigenciainicio . ' + ' . $i-1 . ' month'));
+                $cuota->contrato_id = $contrato->id;
+                $cuota->save();
+            }
+        }
 
         $contrato->update($request->all());
 
@@ -209,25 +235,27 @@ class ContratoController extends Controller
         return $pdf->stream();
     }
 
-    public function contrato(Contrato $contrato, $id)
+    public function contrato($id)
     {
-        //dd($id);
-        $idVendedor = Auth::user()->id;
-        $vendedor = Vendedor::join('users', 'users.id', '=', 'vendedores.user_id')
-            ->where('users.id', $idVendedor)
-            ->select('vendedores.id as v_id', 'users.id as u_id', 'users.name as nombrev')
-            ->first();
+        $contrato = Contrato::find($id);
 
-        $vehiculos = Vehiculo::all();
-        $seguros = Seguro::all();
+        $vehiculo = Vehiculo::find($contrato->vehiculo_id);
+        $cliente = Cliente::find($vehiculo->cliente_id)->user;
 
-        /*return view('administrador.contratos.edit', [
-            //'vendedor' => $vendedor,
+        //dd($cliente);
+
+        $seguro = Seguro::find($contrato->seguro_id);
+        $coberturas = $seguro->cobertura;
+        $clausulas = $seguro->clausula;
+
+        //$pdf = PDF::loadView('reporte.contratos.pdf-contrato', compact('vehiculos'));
+        $pdf = PDF::loadView('reporte.contratos.pdf-contrato', [
             'contrato' => $contrato,
-            'seguros' => $seguros,
-            'vehiculos' => $vehiculos
-        ]);*/
-        $pdf = PDF::loadView('reporte.contratos.pdf-contrato', compact('vehiculos'));
+            'vehiculo' => $vehiculo,
+            'coberturas' => $coberturas,
+            'clausulas' => $clausulas,
+            'cliente' => $cliente
+        ]);
         return $pdf->stream();
     }
 }

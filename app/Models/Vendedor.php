@@ -12,8 +12,13 @@ class Vendedor extends Model
     protected $fillable = ['user_id'];
 
     //Relaciones
-    public function user(){
+    public function user()
+    {
         return $this->belongsTo(User::class);
     }
 
+    public function contratos()
+    {
+        return $this->hasMany(Contrato::class);
+    }
 }

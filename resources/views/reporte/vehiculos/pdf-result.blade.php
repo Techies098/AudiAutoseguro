@@ -6,71 +6,113 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Reporte</title>
+
     <style>
         body {
             font-family: Arial, sans-serif;
-            background-color: #f2f2f2;
+            font-size: 12px;
+            line-height: 1.6;
             margin: 0;
             padding: 0;
         }
 
         .container {
-            max-width: 800px;
-            margin: 50px auto;
             padding: 20px;
-            background-color: #fff;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
 
-        .header {
+        .text-center {
             text-align: center;
-            margin-bottom: 30px;
         }
 
-        .header img {
-            width: 150px;
-            height: auto;
-            margin-bottom: 20px;
+        .mb-3 {
+            margin-bottom: 1rem;
         }
 
-        .company-name {
-            font-size: 20px;
-            font-weight: bold;
-            margin-bottom: 10px;
+        .mb-1 {
+            margin-bottom: 0.5rem;
         }
 
-        .date {
-            font-style: italic;
-            margin-bottom: 20px;
-        }
-
-        h1 {
-            color: #333;
-            font-size: 24px;
-            margin-bottom: 20px;
-        }
-
-        p {
-            margin-bottom: 20px;
-            line-height: 1.5;
+        hr {
+            border: 0;
+            border-top: 1px solid #000;
+            margin: 1rem 0;
         }
 
         table {
             width: 100%;
             border-collapse: collapse;
+            font-size: 11px;
+            margin-bottom: 1rem;
         }
 
         th,
         td {
-            border: 1px solid #ccc;
-            padding: 12px;
+            padding: 8px;
             text-align: left;
         }
 
-        th {
-            background-color: #f2f2f2;
-            font-weight: bold;
+        .table-bordered th,
+        .table-bordered td {
+            border: 1px solid #000;
+        }
+
+        .col-6 {
+            width: 50%;
+            float: left;
+        }
+
+        .clearfix {
+            clear: both;
+        }
+
+        p {
+            margin: 0;
+        }
+
+        .two-column {
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        .two-column div {
+            width: 50%;
+        }
+
+        ul {
+            padding: 0;
+            margin: 0;
+            list-style-position: inside;
+        }
+
+        li {
+            margin: 0;
+        }
+
+        .page-break {
+            page-break-before: always;
+        }
+
+        .signature-section {
+            margin-top: 3rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            text-align: center;
+        }
+
+        .signature-section div {
+            /*text-align: center;*/
+            width: 65%;
+        }
+
+        .signature-section .company-signature {
+            margin-left: auto;
+            margin-right: auto;
+            margin-top: 2rem;
+        }
+
+        .signature-section p {
+            margin: 0;
         }
     </style>
 
@@ -78,18 +120,21 @@
 
 <body>
     <div class="container">
-        <div class="header">
-            <!--<img src="https://imgur.com/2hKCMgT" alt="Logo">-->
-            <div class="company-name">Auto Seguro</div>
-            <div class="date">Fecha: {{ date('d-m-Y') }}</div>
-            <h1>Reporte de Vehículos Asegurados</h1>
-        </div>
-        <p>Este es un informe de los vehículos asegurados en nuestro sistema. A continuación se muestra una lista de los
-            vehículos junto con sus detalles:</p>
 
+        <p class="text-center mb-1"><strong>AUTO SEGURO</strong></p>
+        <p class="text-center mb-1">Fecha: <strong>{{ date('d-m-Y') }}</strong></p>
+        <h5 class="text-center">REPORTE DE VEHÍCULOS ASEGURADOS</h5>
+
+        <div class="mb-3">
+            <p>
+                Este es un informe de los vehículos asegurados en nuestro sistema. A continuación
+                se muestra una lista de los vehículos junto con sus detalles:
+            </p>
+        </div>
 
         <p>Total de vehículos asegurados: {{ $vehiculos->count() }}</p>
-        <table style="font-size: 11px;">
+        <br>
+        <table class="table table-bordered">
             <thead>
                 <tr>
                     <th>Cliente</th>
@@ -100,7 +145,6 @@
                     <th>Placa</th>
                     <th>Chasis</th>
                     <th>Motor</th>
-                    <th>Clase</th>
                     <th>Traccion</th>
                     <th>Año</th>
                     <th>Uso</th>

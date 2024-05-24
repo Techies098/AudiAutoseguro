@@ -40,7 +40,7 @@
                     @foreach ($contratos as $fila => $contrato)
                         <tr>
                             <td>{{ $contrato->id }}</td>
-                            <td>{{ $contrato->vehiculo_id }} </td>
+                            <td>{{ $contrato->vehiculo_id }}-{{ $contrato->vehiculo->placa }} </td>
                             <td>{{ $contrato->vendedor_id }} </td>
                             <td>{{ $contrato->seguro_id }} </td>
                             <td>{{ $contrato->costofranquicia }} </td>
@@ -59,20 +59,24 @@
                             </td>
 
                             <td>
-                                <a href="{{ route('administrador/contratos.edit', $contrato) }}"
+                                <a href="{{ route('administrador/contratos.show', $contrato->id) }}"
                                     class="btn btn-secondary btn-sm">Ver</a>
                                 <a href="{{ route('pdf-contrato', $contrato) }}" class="btn btn-warning btn-sm"
                                     target="_blank">PDF</a>
+                                @can('administrador.contratos.edit')
+                                    <a href="{{ route('administrador/contratos.edit', $contrato) }}"
+                                        class="btn btn-primary btn-sm">Editar</a>
+                                @endcan
                                 <a href="{{ route('administrador/contratos.edit', $contrato) }}"
-                                    class="btn btn-primary btn-sm">Editar</a>
-                                <form action="{{ route('administrador/contratos.destroy', $contrato) }}" method="POST"
+                                    class="btn btn-info btn-sm">Enviar</a>
+                                <!--<form action="{{ route('administrador/contratos.destroy', $contrato) }}" method="POST"
                                     class="d-inline">
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit"
                                         onclick="return confirm('Eliminar contrato {{ $contrato->id }}?')"
                                         class="btn btn-danger btn-sm">Eliminar</button>
-                                </form>
+                                </form>-->
                             </td>
                         </tr>
                     @endforeach
