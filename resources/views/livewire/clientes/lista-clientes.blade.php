@@ -46,16 +46,28 @@
                         <td>{{ $usuario->direccion }} </td>
                         <td>{{ $usuario->email }} </td>
                         <td>{{ $usuario->fecha_nacimiento}} </td>
-
-                        <td>@if($usuario->cliente->vehiculos)
+                        <td>
                             @foreach ($usuario->cliente->vehiculos as $vehiculo)
-
-                               {{ $vehiculo->placa }}
-                               <br>
+                                {{ $vehiculo->placa }}
+                                <br>
                             @endforeach
-                        @endif
                         </td>
-                        <td>{{ 'no'}} </td>
+                        <td>
+                            @foreach ($usuario->cliente->vehiculos as $vehiculo)
+                                @php
+                                    $hasActiveContract = false;
+                                    foreach ($vehiculo->contratos as $contrato) {
+                                        if ($contrato->fecha_inicio <= now() && $contrato->fecha_fin >= now()) {
+                                            $hasActiveContract = true;
+                                            break;
+                                        }
+                                    }
+                                @endphp
+                                {{ $hasActiveContract ? 'Sí' : 'No' }}
+                                <br>
+                            @endforeach
+                        </td>
+
                         <td>
                             <a href="{{ route('administrador/usuarios.edit', $usuario) }}" class="btn btn-primary">Editar</a>
                             <form action="{{ route('administrador/usuarios.destroy', $usuario) }}" method="POST" class="d-inline">

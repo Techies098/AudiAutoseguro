@@ -37,23 +37,35 @@
                             <td>{{ $siniestro->estado }} </td>
                             <td>{{ $siniestro->created_at }} </td>
                             <td>{{ $siniestro->ubicacion }} </td>
-                            <td>
+                            <td>{{-- ESTADOS : aprobado,negado,espera,pagado --}}
                                 <a href="{{ route('personal/siniestros.show', $siniestro->id) }}"
-                                            class="btn btn-primary">ver</a>
-                                @if ($siniestro->estado == 'revisado' && auth()->user()->administrador)
-                                    <a href="{{ route('denegar_siniestro', $siniestro->id) }}"
-                                        class="btn btn-primary">Denegar</a>
-                                    <a href="{{ route('aprobar_siniestro', $siniestro->id) }}"
-                                        class="btn btn-primary">Aprobar</a>
-                                @else
-                                    @if ($siniestro->estado == 'Espera' && auth()->user()->perito)
-                                        <a href="{{ route('revisar_siniestro', $siniestro) }}"
-                                            class="btn btn-primary">revisar</a>
-                                    @else
-                                        {{--<a href="{{ route('re_evaluar_siniestro', $siniestro->id) }}"
-                                            class="btn btn-primary">Re_evaluar</a>--}}
+                                    class="btn btn-primary">ver</a>
+                                @if ($siniestro->estado == 'revisado')
+                                    @if (auth()->user()->administrador || auth()->user()->perito)
+                                        <a href="{{ route('denegar_siniestro', $siniestro->id) }}"
+                                            class="btn btn-primary">Denegar</a>
+                                        <a href="{{ route('aprobar_siniestro', $siniestro->id) }}"
+                                            class="btn btn-primary">Aprobar</a>
                                     @endif
                                 @endif
+                                @if ($siniestro->estado == 'Espera')
+                                    @if (auth()->user()->perito)
+                                        <a href="{{ route('revisar_siniestro', $siniestro) }}"
+                                            class="btn btn-primary">revisar</a>
+                                    @endif
+                                @endif
+                                @if ($siniestro->estado == 'negado' || $siniestro->estado == 'aprobado')
+                                    @if (auth()->user()->perito || auth()->user()->adminsitrador)
+                                        <a href="{{ route('re_evaluar_siniestro', $siniestro->id) }}"
+                                            class="btn btn-primary">Re_evaluar</a>
+                                    @endif
+                                @endif
+                                @if ($siniestro->estado == 'aprobado' && auth()->user()->cliente)
+                                    {{-- pagar --}}
+                                @endif
+                                @if ($siniestro->estado == 'pagado')
+                                {{-- Comprobante --}}
+                            @endif
                             </td>
                         </tr>
                     @endif
