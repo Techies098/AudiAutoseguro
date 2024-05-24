@@ -27,12 +27,12 @@ class ListaContratos extends Component
 
         return Contrato::where('' . $this->id . '', 'like', '%' . trim($this->buscar) . '%')
             ->orderBy('' . $this->id . '', 'asc')
-            ->paginate(25);
+            ->paginate(10);
     }
 
     private function obtenerContratos()
     {
-        return Contrato::orderBy('' . $this->id . '', 'asc')
-            ->paginate(25);
+        return Contrato::orderBy('' . $this->id . '', 'desc')
+            ->paginate(10);
     }
 }
