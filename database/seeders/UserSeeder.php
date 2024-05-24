@@ -38,6 +38,7 @@ class UserSeeder extends Seeder
             'user_id' => 2
         ]);
 
+        //Vendedor:
         User::factory()->create([
             'name' => 'Usuario Vendedor ',
             'email' => 'vendedor@example.com',
@@ -45,10 +46,11 @@ class UserSeeder extends Seeder
             'password' => bcrypt('00000000'), //8 veces 0
         ])->assignRole('vendedor');
 
-        Cliente::create([
+        Vendedor::create([
             'user_id' => 3
         ]);
 
+        //Perito:
         User::factory()->create([
             'name' => 'Usuario Perito',
             'email' => 'perito@example.com',
@@ -56,7 +58,7 @@ class UserSeeder extends Seeder
             'password' => bcrypt('00000000'), //8 veces 0
         ])->assignRole('perito');
 
-        Cliente::create([
+        Perito::create([
             'user_id' => 4
         ]);
 
@@ -94,7 +96,7 @@ class UserSeeder extends Seeder
             'password' => bcrypt('00000000'), //8 veces 0
         ])->assignRole('perito');
 
-        Vendedor::create([
+        Perito::create([
             'user_id' => 7
         ]);
 
