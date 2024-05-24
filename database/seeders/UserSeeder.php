@@ -38,6 +38,7 @@ class UserSeeder extends Seeder
             'user_id' => 2
         ]);
 
+        //Vendedor:
         User::factory()->create([
             'name' => 'Usuario Vendedor ',
             'email' => 'vendedor@example.com',
@@ -49,6 +50,7 @@ class UserSeeder extends Seeder
             'user_id' => 3
         ]);
 
+        //Perito:
         User::factory()->create([
             'name' => 'Usuario Perito',
             'email' => 'perito@example.com',

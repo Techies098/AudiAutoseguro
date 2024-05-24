@@ -43,4 +43,10 @@ class Contrato extends Model
     {
         return $this->belongsTo(Vendedor::class);
     }
+  
+    public function cuotas()
+    {
+        return $this->hasMany(Cuota::class);
+    }
+
 }

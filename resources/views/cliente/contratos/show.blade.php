@@ -48,16 +48,6 @@
                             <div>
                                 <p class="text-sm font-semibold text-gray-700">Costo prima</p>
                                 <p class="pb-2 text-lg font-semibold text-gray-900">{{ $contrato->costoprima }} $</p>
-                                <form action="{{ route('paypal') }}" method="post">
-                                    @csrf
-                                    <input type="hidden" name="price" value="{{ $contrato->costoprima }}">
-                                    <input type="hidden" name="product_name" value="Seguro {{ $contrato->seguro->nombre }}">
-                                    <input type="hidden" name="quantity" value="1">
-                                    <button class="text-white bg-gradient-to-r from-green-400 via-green-500 to-green-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-300 dark:focus:ring-green-800 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2" 
-                                        type="submit"> 
-                                        Pagar con PayPal
-                                    </button>
-                                </form>
                             </div>
                             <div>
                                 <p class="text-sm font-semibold text-gray-700">Costo franquicia</p>
@@ -80,6 +70,7 @@
                                 <p class="text-lg font-semibold text-gray-900">{{ $contrato->updated_at }}</p>
                             </div>
                         </div>
+                        @include('cliente.contratos.tabla-cuotas')
                     </div>
                 </div>
             </div>
