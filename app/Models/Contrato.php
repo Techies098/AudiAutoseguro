@@ -38,4 +38,9 @@ class Contrato extends Model
         return $this->hasMany(Siniestro::class);
     }
 
+    public function cuotas()
+    {
+        return $this->hasMany(Cuota::class);
+    }
+
 }

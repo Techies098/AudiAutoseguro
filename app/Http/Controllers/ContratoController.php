@@ -10,6 +10,7 @@ use App\Models\Seguro;
 use App\Models\Cliente;
 use App\Models\Vendedor;
 use App\Models\Administrador;
+use App\Models\Cuota;
 use Illuminate\Support\Facades\Auth;
 use Barryvdh\DomPDF\Facade\Pdf as PDF;
 
@@ -79,6 +80,15 @@ class ContratoController extends Controller
         //dd($request);
         $contrato = Contrato::create($request->all());
         //dd($contrato);
+
+        for ($i = 1; $i <= $contrato->nro_cuotas; $i++) {
+            $cuota = new Cuota();
+            $cuota->numero = $i;
+            $cuota->monto = $contrato->costoprima / $contrato->nro_cuotas;
+            $cuota->fecha_por_pagar = date('Y-m-d', strtotime($contrato->vigenciainicio . ' + ' . $i-1 . ' month'));
+            $cuota->contrato_id = $contrato->id;
+            $cuota->save();
+        }
 
         return redirect()->route('administrador/contratos.index')
             ->with('msj_ok', 'Creado el contrato con ID: ' . $contrato->id);
@@ -150,6 +160,18 @@ class ContratoController extends Controller
         ]);
 
         $request->merge(['estado' => 'Inactivo']);
+
+        if($contrato->nro_cuotas != $request->nro_cuotas){
+            Cuota::where('contrato_id', $contrato->id)->delete();
+            for ($i = 1; $i <= $request->nro_cuotas; $i++) {
+                $cuota = new Cuota();
+                $cuota->numero = $i;
+                $cuota->monto = $request->costoprima / $request->nro_cuotas;
+                $cuota->fecha_por_pagar = date('Y-m-d', strtotime($request->vigenciainicio . ' + ' . $i-1 . ' month'));
+                $cuota->contrato_id = $contrato->id;
+                $cuota->save();
+            }
+        }
 
         $contrato->update($request->all());
 
