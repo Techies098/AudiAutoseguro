@@ -48,7 +48,7 @@ class SiniestroController extends Controller
         ]);
         if ($siniestro) {
             return redirect()->route('inicio')
-                ->with('msj_ok', 'Creado: ' . $siniestro->id);
+                ->with('msj_ok', 'Siniestro creado id: ' . $siniestro->id);
         } else {
             return redirect()->route('incio')
                 ->with('msj_error', 'Hubo un error al crear el siniestro.');
