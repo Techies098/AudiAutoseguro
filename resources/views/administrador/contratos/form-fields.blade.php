@@ -28,15 +28,19 @@
 
     <div class="col-md-5">
         <label for="seguro_id" class="form-label">Seguro</label>
-        <select name="seguro_id" id="seguro_id" class="form-control">
-            <option value="" disabled selected>Seleccionar Seguro</option>
-            @foreach ($seguros as $seguro)
-                <option value="{{ $seguro->id }}"
-                    {{ old('seguro_id', $contrato->seguro_id) == $seguro->id ? 'selected' : '' }}>
-                    {{ $seguro->nombre }}
-                </option>
-            @endforeach
-        </select>
+        <div class="input-group">
+            <select name="seguro_id" id="seguro_id" class="form-control">
+                <option value="" disabled selected>Seleccionar Seguro</option>
+                @foreach ($seguros as $seguro)
+                    <option value="{{ $seguro->id }}"
+                        {{ old('seguro_id', $contrato->seguro_id) == $seguro->id ? 'selected' : '' }}>
+                        {{ $seguro->nombre }}
+                    </option>
+                @endforeach
+            </select>
+            <a class="btn btn-outline-secondary" name="btnseguro_ver" id="btnseguro_ver"
+                data-bs-target="#staticBackdrop">Ver</a>
+        </div>
     </div>
 
     <div class="col-md-4">
@@ -174,6 +178,7 @@
 
                 if (selectedVehiculo) {
                     vehiculoInfo.innerHTML = `
+                    <p><strong>Vehiculo</strong></p>
                     <p><strong>Marca:</strong> ${selectedVehiculo.marca}</p>
                     <p><strong>Modelo:</strong> ${selectedVehiculo.modelo}</p>
                     <p><strong>Clase:</strong> ${selectedVehiculo.clase}</p>
@@ -183,8 +188,9 @@
                     <p><strong>Año:</strong> ${selectedVehiculo.anio}</p>
                     <p><strong>Valor Comercial:</strong> ${selectedVehiculo.valor_comercial}</p>
                     <br>
-                    <p><strong>Año:</strong> ${selectedVehiculo->cliente->user.name}</p>
-                `
+                    <p><strong>Propietario</strong></p>
+                    <p><strong>Nombre:</strong> ${selectedVehiculo.modelo}</p>
+                `;
                 }
             });
         });
