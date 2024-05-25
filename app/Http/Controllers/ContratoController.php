@@ -11,6 +11,8 @@ use App\Models\Seguro;
 use App\Models\Cliente;
 use App\Models\Vendedor;
 use App\Models\Administrador;
+use App\Models\User;
+use App\Models\Cobertura;
 use App\Models\Cuota;
 use Illuminate\Support\Facades\Auth;
 use Barryvdh\DomPDF\Facade\Pdf as PDF;
@@ -57,12 +59,19 @@ class ContratoController extends Controller
         // Recuperar datos necesarios para el formulario de creación
         $vehiculos = Vehiculo::all();
         $seguros = Seguro::all();
+        $clientes = Cliente::all();
+        $coberturas = Cobertura::all();
+        $usuarios = User::select('id', 'name', 'telefono', 'direccion', 'email')->get();
+        //dd($coberturas);
 
         // Pasar los datos recuperados a la vista
         return view('administrador.contratos.create', [
             'contrato' => new Contrato(),
             'seguros' => $seguros,
             'vehiculos' => $vehiculos,
+            'clientes' => $clientes,
+            'usuarios' => $usuarios,
+            'coberturas' => $coberturas,
             'vendedor' => $vendedor ?? null/*, // Puede ser null si no es un vendedor
             'administrador' => $administrador ?? null // Puede ser null si no es un administrador*/
         ]);
@@ -96,7 +105,7 @@ class ContratoController extends Controller
             $cuota = new Cuota();
             $cuota->numero = $i;
             $cuota->monto = $contrato->costoprima / $contrato->nro_cuotas;
-            $cuota->fecha_por_pagar = date('Y-m-d', strtotime($contrato->vigenciainicio . ' + ' . $i-1 . ' month'));
+            $cuota->fecha_por_pagar = date('Y-m-d', strtotime($contrato->vigenciainicio . ' + ' . $i - 1 . ' month'));
             $cuota->contrato_id = $contrato->id;
             $cuota->save();
         }
@@ -160,12 +169,17 @@ class ContratoController extends Controller
 
         $vehiculos = Vehiculo::all();
         $seguros = Seguro::all();
+        $clientes = Cliente::all();
+        $usuarios = User::select('id', 'name', 'telefono', 'direccion', 'email')->get();
+        //dd($usuarios);
 
         return view('administrador.contratos.edit', [
             //'vendedor' => $vendedor,
             'contrato' => $contrato,
             'seguros' => $seguros,
             'vehiculos' => $vehiculos,
+            'clientes' => $clientes,
+            'usuarios' => $usuarios,
             'vendedor' => $vendedor ?? null/*, // Puede ser null si no es un vendedor
             'administrador' => $administrador ?? null // Puede ser null si no es un administrador*/
         ]);
@@ -191,13 +205,13 @@ class ContratoController extends Controller
 
         //$request->merge(['estado' => 'Inactivo']);
 
-        if($contrato->nro_cuotas != $request->nro_cuotas){
+        if ($contrato->nro_cuotas != $request->nro_cuotas) {
             Cuota::where('contrato_id', $contrato->id)->delete();
             for ($i = 1; $i <= $request->nro_cuotas; $i++) {
                 $cuota = new Cuota();
                 $cuota->numero = $i;
                 $cuota->monto = $request->costoprima / $request->nro_cuotas;
-                $cuota->fecha_por_pagar = date('Y-m-d', strtotime($request->vigenciainicio . ' + ' . $i-1 . ' month'));
+                $cuota->fecha_por_pagar = date('Y-m-d', strtotime($request->vigenciainicio . ' + ' . $i - 1 . ' month'));
                 $cuota->contrato_id = $contrato->id;
                 $cuota->save();
             }
@@ -257,5 +271,22 @@ class ContratoController extends Controller
             'cliente' => $cliente
         ]);
         return $pdf->stream();
+    }
+
+    public function getCoberturasClausulas($seguroId)
+    {
+        // Obtén el seguro junto con sus coberturas y cláusulas
+        $seguro = Seguro::with(['coberturas', 'clausulas'])->find($seguroId);
+        dd($seguro);
+        if ($seguro) {
+            // Retorna las coberturas y cláusulas del seguro en formato JSON
+            return response()->json([
+                'coberturas' => $seguro->cobertura,
+                'clausulas' => $seguro->clausula
+            ]);
+        } else {
+            // Retorna un mensaje de error si el seguro no se encuentra
+            return response()->json(['message' => 'Seguro no encontrado'], 404);
+        }
     }
 }

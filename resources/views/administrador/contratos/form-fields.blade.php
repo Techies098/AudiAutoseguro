@@ -38,8 +38,8 @@
                     </option>
                 @endforeach
             </select>
-            <a class="btn btn-outline-secondary" name="btnseguro_ver" id="btnseguro_ver"
-                data-bs-target="#staticBackdrop">Ver</a>
+            <button type="button" class="btn btn-outline-secondary" name="btnseguro_ver" id="btnseguro_ver"
+                data-bs-toggle="modal" data-bs-target="#staticBackdrop" disabled>Ver</button>
         </div>
     </div>
 
@@ -112,7 +112,7 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="staticBackdropLabel">Informacion del Vehiculo y Propietario</h1>
+                    <h1 class="modal-title fs-5" id="staticBackdropLabel">INFORMACION</h1>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body" id="vehiculoInfo">
@@ -133,11 +133,15 @@
             var seguroSelect = document.getElementById('seguro_id');
             var primaInput = document.getElementById('costoprima');
 
-            var verBtn = document.getElementById('btnvehiculo_ver');
-            var vehiculoInfo = document.getElementById('vehiculoInfo');
+            var verBtnv = document.getElementById('btnvehiculo_ver');
+            var verBtns = document.getElementById('btnseguro_ver');
+            var vehiculoInfo = document.getElementById('vehiculoInfo'); //modal
 
             var vehiculos = {!! json_encode($vehiculos) !!}; // Obtener los vehiculos desde DB
             var seguros = {!! json_encode($seguros) !!}; // Obtener los seguros desde DB
+            var clientes = {!! json_encode($clientes) !!}; // Obtener los cliente desde DB
+            var usuarios = {!! json_encode($usuarios) !!}; // Obtener los usuarios desde DB
+            var coberturas = {!! json_encode($coberturas) !!}; // Obtener los coberturas desde DB
 
             // Función para calcular el costo de la prima
             function calcularPrima() {
@@ -146,6 +150,9 @@
 
                 var selectedVehiculo = vehiculos.find(vehiculo => vehiculo.id == selectedVehiculoId);
                 var selectedSeguro = seguros.find(seguro => seguro.id == selectedSeguroId);
+
+                /*var selectedCliente = clientes.find(cliente => cliente.id == selectedVehiculo.cliente_id);
+                var selectedUsuario = usuarios.find(usuario => usuario.id == selectedCliente.user_id);*/
 
                 if (selectedVehiculo && selectedSeguro) {
                     //primaInput.value = selectedVehiculo.valor_comercial * selectedSeguro.precio_prima;
@@ -159,26 +166,34 @@
             // Event listener para el cambio en el campo de selección del vehículo
             vehiculoSelect.addEventListener('change', function() {
                 if (vehiculoSelect.value) {
-                    verBtn.disabled = false; // Habilitar el botón Ver
+                    verBtnv.disabled = false; // Habilitar el botón Ver
                 } else {
-                    verBtn.disabled = true; // Deshabilitar el botón Ver
+                    verBtnv.disabled = true; // Deshabilitar el botón Ver
                 }
                 calcularPrima(); // Calcular la prima cuando se cambia el vehículo
             });
 
             // Event listener para el cambio en el campo de selección del seguro
             seguroSelect.addEventListener('change', function() {
+                if (seguroSelect.value) {
+                    verBtns.disabled = false; // Habilitar el botón Ver
+                } else {
+                    verBtns.disabled = true; // Deshabilitar el botón Ver
+                }
                 calcularPrima(); // Calcular la prima cuando se cambia el seguro
             });
 
-            // Event listener para el botón Ver
-            verBtn.addEventListener('click', function() {
+            // Event listener para el botón Ver Vehiculo
+            verBtnv.addEventListener('click', function() {
                 var selectedVehiculoId = vehiculoSelect.value;
                 var selectedVehiculo = vehiculos.find(vehiculo => vehiculo.id == selectedVehiculoId);
 
+                var selectedCliente = clientes.find(cliente => cliente.id == selectedVehiculo.cliente_id);
+                var selectedUsuario = usuarios.find(usuario => usuario.id == selectedCliente.user_id);
+
                 if (selectedVehiculo) {
                     vehiculoInfo.innerHTML = `
-                    <p><strong>Vehiculo</strong></p>
+                    <p><strong>VEHÍCULO</strong></p>
                     <p><strong>Marca:</strong> ${selectedVehiculo.marca}</p>
                     <p><strong>Modelo:</strong> ${selectedVehiculo.modelo}</p>
                     <p><strong>Clase:</strong> ${selectedVehiculo.clase}</p>
@@ -188,9 +203,53 @@
                     <p><strong>Año:</strong> ${selectedVehiculo.anio}</p>
                     <p><strong>Valor Comercial:</strong> ${selectedVehiculo.valor_comercial}</p>
                     <br>
-                    <p><strong>Propietario</strong></p>
-                    <p><strong>Nombre:</strong> ${selectedVehiculo.modelo}</p>
+                    <p><strong>PROPIETARIO</strong></p>
+                    <p><strong>Nombre:</strong> ${selectedUsuario.name}</p>
+                    <p><strong>Direccion:</strong> ${selectedUsuario.direccion}</p>
+                    <p><strong>Email:</strong> ${selectedUsuario.email}</p>
+                    <p><strong>Telefono:</strong> ${selectedUsuario.telefono}</p>
                 `;
+                }
+            });
+
+            // Event listener para el botón Ver Seguro
+            verBtns.addEventListener('click', function() {
+                var selectedSeguroId = seguroSelect.value;
+                var selectedSeguro = seguros.find(seguro => seguro.id == selectedSeguroId);
+
+                /*var selectedCoberturas = selectedSeguro.with(coberturas);*/
+                ///cliente/contratos/${selectedSeguroId}/coberturas-clausulas
+
+                if (selectedSeguro) {
+
+                    fetch(`cliente/contratos/${selectedSeguroId}/coberturas-clausulas`)
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.message) {
+                                vehiculoInfo.innerHTML = `<p>${data.message}</p>`;
+                            } else {
+                                var coberturasHtml = data.coberturas.map(cobertura => `
+                                <p><strong>Cobertura:</strong> ${cobertura.nombre}</p>
+                                <p><strong>Descripción:</strong> ${cobertura.descripcion}</p>
+                                `).join('');
+
+                                var clausulasHtml = data.clausulas.map(clausula => `
+                                <p><strong>Cláusula:</strong> ${clausula.nombre}</p>
+                                <p><strong>Descripción:</strong> ${clausula.descripcion}</p>
+                                `).join('');
+
+                                vehiculoInfo.innerHTML = `
+                                <p><strong>SEGURO</strong></p>
+                                <p><strong>Nombre:</strong> ${selectedSeguro.nombre}</p>
+                                <p><strong>Descripción:</strong> ${selectedSeguro.descripcion}</p>
+                                <p><strong>Precio Prima:</strong> ${selectedSeguro.precio_prima}</p>
+                                ${coberturasHtml}
+                                ${clausulasHtml}
+                                `;
+                            }
+                        })
+                        .catch(error => console.error('Error al obtener las coberturas y cláusulas:',
+                            error));
                 }
             });
         });
