@@ -1,5 +1,5 @@
 <div class="row g-3">
-    <div class="col-md-4">
+    <div class="col-md-2">
         <label for="vendedor_id" class="form-label">
             <h1 class="font-bold">{{ $vendedor == null ? '' : $vendedor->user->name }}</h1>
         </label>
@@ -7,20 +7,26 @@
             value="{{ old('vendedor_id', $vendedor == null ? '' : $vendedor->id) }}" readonly>
     </div>
 
-    <div class="col-md-4">
+    <div class="col-md-5">
         <label for="vehiculo_id" class="form-label">Vehículo</label>
-        <select name="vehiculo_id" id="vehiculo_id" class="form-control">
-            <option value="" disabled selected>Seleccionar Vehículo</option>
-            @foreach ($vehiculos as $vehiculo)
-                <option value="{{ $vehiculo->id }}"
-                    {{ old('vehiculo_id', $contrato->vehiculo_id) == $vehiculo->id ? 'selected' : '' }}>
-                    {{ $vehiculo->id }} - {{ $vehiculo->marca }} {{ $vehiculo->modelo }} ({{ $vehiculo->placa }})
-                </option>
-            @endforeach
-        </select>
+        <div class="input-group">
+            <select name="vehiculo_id" id="vehiculo_id" class="form-control">
+                <option value="" disabled selected>Seleccionar Vehículo</option>
+                @foreach ($vehiculos as $vehiculo)
+                    <option value="{{ $vehiculo->id }}"
+                        {{ old('vehiculo_id', $contrato->vehiculo_id) == $vehiculo->id ? 'selected' : '' }}>
+                        {{ $vehiculo->id }} - {{ $vehiculo->marca }} {{ $vehiculo->modelo }} ({{ $vehiculo->placa }})
+                    </option>
+                @endforeach
+            </select>
+            <button type="button" class="btn btn-outline-secondary" name="btnvehiculo_ver" id="btnvehiculo_ver"
+                data-bs-toggle="modal" data-bs-target="#staticBackdrop" disabled>Ver</button>
+            <!--<button type="button" class="btn btn-outline-secondary" name="btnvehiculo_ver" id="btnvehiculo_ver"
+                data-bs-toggle="modal" data-bs-target="#staticBackdrop">+</button>-->
+        </div>
     </div>
 
-    <div class="col-md-4">
+    <div class="col-md-5">
         <label for="seguro_id" class="form-label">Seguro</label>
         <select name="seguro_id" id="seguro_id" class="form-control">
             <option value="" disabled selected>Seleccionar Seguro</option>
@@ -91,10 +97,28 @@
         @enderror
     </div>
 
-
-
     <div class="col-12">
         <button type="submit" class="btn btn-primary">Guardar</button>
+    </div>
+
+
+    <!-- Modal -->
+    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+        aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="staticBackdropLabel">Informacion del Vehiculo y Propietario</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" id="vehiculoInfo">
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Cerrar</button>
+                </div>
+            </div>
+        </div>
     </div>
 
     <!-- JavaScript - DOM -->
@@ -104,6 +128,10 @@
             var vehiculoSelect = document.getElementById('vehiculo_id');
             var seguroSelect = document.getElementById('seguro_id');
             var primaInput = document.getElementById('costoprima');
+
+            var verBtn = document.getElementById('btnvehiculo_ver');
+            var vehiculoInfo = document.getElementById('vehiculoInfo');
+
             var vehiculos = {!! json_encode($vehiculos) !!}; // Obtener los vehiculos desde DB
             var seguros = {!! json_encode($seguros) !!}; // Obtener los seguros desde DB
 
@@ -126,12 +154,38 @@
 
             // Event listener para el cambio en el campo de selección del vehículo
             vehiculoSelect.addEventListener('change', function() {
+                if (vehiculoSelect.value) {
+                    verBtn.disabled = false; // Habilitar el botón Ver
+                } else {
+                    verBtn.disabled = true; // Deshabilitar el botón Ver
+                }
                 calcularPrima(); // Calcular la prima cuando se cambia el vehículo
             });
 
             // Event listener para el cambio en el campo de selección del seguro
             seguroSelect.addEventListener('change', function() {
                 calcularPrima(); // Calcular la prima cuando se cambia el seguro
+            });
+
+            // Event listener para el botón Ver
+            verBtn.addEventListener('click', function() {
+                var selectedVehiculoId = vehiculoSelect.value;
+                var selectedVehiculo = vehiculos.find(vehiculo => vehiculo.id == selectedVehiculoId);
+
+                if (selectedVehiculo) {
+                    vehiculoInfo.innerHTML = `
+                    <p><strong>Marca:</strong> ${selectedVehiculo.marca}</p>
+                    <p><strong>Modelo:</strong> ${selectedVehiculo.modelo}</p>
+                    <p><strong>Clase:</strong> ${selectedVehiculo.clase}</p>
+                    <p><strong>Color:</strong> ${selectedVehiculo.color}</p>
+                    <p><strong>Placa:</strong> ${selectedVehiculo.placa}</p>
+                    <p><strong>Chasis:</strong> ${selectedVehiculo.chasis}</p>
+                    <p><strong>Año:</strong> ${selectedVehiculo.anio}</p>
+                    <p><strong>Valor Comercial:</strong> ${selectedVehiculo.valor_comercial}</p>
+                    <br>
+                    <p><strong>Año:</strong> ${selectedVehiculo->cliente->user.name}</p>
+                `
+                }
             });
         });
     </script>
