@@ -60,7 +60,7 @@ class ContratoController extends Controller
         $vehiculos = Vehiculo::all();
         $seguros = Seguro::all();
         $clientes = Cliente::all();
-        $coberturas = Cobertura::all();
+        //$coberturas = Cobertura::all();
         $usuarios = User::select('id', 'name', 'telefono', 'direccion', 'email')->get();
         //dd($coberturas);
 
@@ -71,7 +71,7 @@ class ContratoController extends Controller
             'vehiculos' => $vehiculos,
             'clientes' => $clientes,
             'usuarios' => $usuarios,
-            'coberturas' => $coberturas,
+            //'coberturas' => $coberturas,
             'vendedor' => $vendedor ?? null/*, // Puede ser null si no es un vendedor
             'administrador' => $administrador ?? null // Puede ser null si no es un administrador*/
         ]);
@@ -170,6 +170,7 @@ class ContratoController extends Controller
         $vehiculos = Vehiculo::all();
         $seguros = Seguro::all();
         $clientes = Cliente::all();
+        //$coberturas = Cobertura::all();
         $usuarios = User::select('id', 'name', 'telefono', 'direccion', 'email')->get();
         //dd($usuarios);
 
@@ -180,6 +181,7 @@ class ContratoController extends Controller
             'vehiculos' => $vehiculos,
             'clientes' => $clientes,
             'usuarios' => $usuarios,
+            //'coberturas' => $coberturas,
             'vendedor' => $vendedor ?? null/*, // Puede ser null si no es un vendedor
             'administrador' => $administrador ?? null // Puede ser null si no es un administrador*/
         ]);
@@ -275,9 +277,10 @@ class ContratoController extends Controller
 
     public function getCoberturasClausulas($seguroId)
     {
+        //dd($seguroId);
         // Obtén el seguro junto con sus coberturas y cláusulas
-        $seguro = Seguro::with(['coberturas', 'clausulas'])->find($seguroId);
-        dd($seguro);
+        /*$seguro = Seguro::with(['coberturas', 'clausulas'])->find($seguroId);
+        //dd($seguro);
         if ($seguro) {
             // Retorna las coberturas y cláusulas del seguro en formato JSON
             return response()->json([
@@ -287,6 +290,18 @@ class ContratoController extends Controller
         } else {
             // Retorna un mensaje de error si el seguro no se encuentra
             return response()->json(['message' => 'Seguro no encontrado'], 404);
-        }
+        }*/
+
+        // Obtén el seguro junto con sus coberturas y cláusulas
+        $seguro = Seguro::find($seguroId);
+        $coberturas = $seguro->cobertura;
+        $clausulas = $seguro->clausula;
+        //dd($seguro);
+
+        // Retorna las coberturas y cláusulas del seguro en formato JSON
+        return response()->json([
+            'coberturas' => $coberturas,
+            'clausulas' => $clausulas
+        ]);
     }
 }

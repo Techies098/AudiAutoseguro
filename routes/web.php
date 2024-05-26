@@ -50,7 +50,7 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']
     Route::resource('/administrador/contratos', ContratoController::class)->parameters(['contratos' => 'contrato'])->names('administrador/contratos');
     Route::get('/cliente/{cliente}/contratos', [ClienteController::class, 'contratos'])->name('cliente.contratos.index'); //Vista del cliente
     Route::get('/cliente/contratos/{contrato}', [ClienteController::class, 'show'])->name('cliente.contratos.show'); //Vista de cliente, admin y vendedor
-    Route::get('/cliente/contratos/{id}/coberturas-clausulas', [ClienteController::class, 'getCoberturasClausulas']); //get coberturas y clausulas
+    Route::get('/administrador/contratos/{id}/coberturas-clausulas', [ContratoController::class, 'getCoberturasClausulas'])->name('contratos.cobertura-clausulas'); //get coberturas y clausulas
 
     //Pagos:
     Route::post('paypal', [PaypalController::class, 'paypal'])->name('paypal');

@@ -141,7 +141,7 @@
             var seguros = {!! json_encode($seguros) !!}; // Obtener los seguros desde DB
             var clientes = {!! json_encode($clientes) !!}; // Obtener los cliente desde DB
             var usuarios = {!! json_encode($usuarios) !!}; // Obtener los usuarios desde DB
-            var coberturas = {!! json_encode($coberturas) !!}; // Obtener los coberturas desde DB
+            //var coberturas = {!! json_encode($coberturas) !!}; // Obtener los coberturas desde DB
 
             // Función para calcular el costo de la prima
             function calcularPrima() {
@@ -193,7 +193,7 @@
 
                 if (selectedVehiculo) {
                     vehiculoInfo.innerHTML = `
-                    <p><strong>VEHÍCULO</strong></p>
+                    <p><strong>VEHÍCULO</strong></p><hr>
                     <p><strong>Marca:</strong> ${selectedVehiculo.marca}</p>
                     <p><strong>Modelo:</strong> ${selectedVehiculo.modelo}</p>
                     <p><strong>Clase:</strong> ${selectedVehiculo.clase}</p>
@@ -202,8 +202,7 @@
                     <p><strong>Chasis:</strong> ${selectedVehiculo.chasis}</p>
                     <p><strong>Año:</strong> ${selectedVehiculo.anio}</p>
                     <p><strong>Valor Comercial:</strong> ${selectedVehiculo.valor_comercial}</p>
-                    <br>
-                    <p><strong>PROPIETARIO</strong></p>
+                    <br><p><strong>PROPIETARIO</strong></p><hr>
                     <p><strong>Nombre:</strong> ${selectedUsuario.name}</p>
                     <p><strong>Direccion:</strong> ${selectedUsuario.direccion}</p>
                     <p><strong>Email:</strong> ${selectedUsuario.email}</p>
@@ -219,31 +218,43 @@
 
                 /*var selectedCoberturas = selectedSeguro.with(coberturas);*/
                 ///cliente/contratos/${selectedSeguroId}/coberturas-clausulas
+                //vehiculoInfo.innerHTML = ``;
 
                 if (selectedSeguro) {
 
-                    fetch(`cliente/contratos/${selectedSeguroId}/coberturas-clausulas`)
-                        .then(response => response.json())
+                    fetch(`/administrador/contratos/${selectedSeguroId}/coberturas-clausulas`)
+                        .then(response => {
+                            // Verifica que la respuesta sea JSON
+                            if (!response.ok) {
+                                throw new Error('Network response was not ok ' + response.statusText);
+                            }
+                            return response.json(); // Intenta parsear la respuesta como JSON
+                        })
                         .then(data => {
                             if (data.message) {
                                 vehiculoInfo.innerHTML = `<p>${data.message}</p>`;
                             } else {
-                                var coberturasHtml = data.coberturas.map(cobertura => `
-                                <p><strong>Cobertura:</strong> ${cobertura.nombre}</p>
-                                <p><strong>Descripción:</strong> ${cobertura.descripcion}</p>
+                                var coberturasHtml = data.coberturas.map((cobertura, index) => `
+                                <li><strong>Sección ${index + 1}</strong> 
+                                    ${cobertura.nombre} 
+                                    ${cobertura.cubre !==null ? '(al ' + cobertura.cubre + '%)':''} 
+                                    ${cobertura.sujeto_a_franquicia == 'Si' ? 'sujeto a franquicia' : ''} 
+                                    ${cobertura.limite_cobertura !==null ? 'hasta USD ' + cobertura.limite_cobertura : ''}</li>
+                                
                                 `).join('');
 
                                 var clausulasHtml = data.clausulas.map(clausula => `
-                                <p><strong>Cláusula:</strong> ${clausula.nombre}</p>
-                                <p><strong>Descripción:</strong> ${clausula.descripcion}</p>
+                                <li><strong></strong> ${clausula.detalle}</li>
                                 `).join('');
 
                                 vehiculoInfo.innerHTML = `
-                                <p><strong>SEGURO</strong></p>
+                                <p><strong>SEGURO</strong></p><hr>
                                 <p><strong>Nombre:</strong> ${selectedSeguro.nombre}</p>
                                 <p><strong>Descripción:</strong> ${selectedSeguro.descripcion}</p>
                                 <p><strong>Precio Prima:</strong> ${selectedSeguro.precio_prima}</p>
+                                <br><p><strong>COBERTURAS</strong></p><hr>
                                 ${coberturasHtml}
+                                <br><p><strong>CLAUSULAS</strong></p><hr>
                                 ${clausulasHtml}
                                 `;
                             }
