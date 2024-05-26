@@ -141,7 +141,7 @@
             var seguros = {!! json_encode($seguros) !!}; // Obtener los seguros desde DB
             var clientes = {!! json_encode($clientes) !!}; // Obtener los cliente desde DB
             var usuarios = {!! json_encode($usuarios) !!}; // Obtener los usuarios desde DB
-            //var coberturas = {!! json_encode($coberturas) !!}; // Obtener los coberturas desde DB
+            var coberturas = {!! json_encode($coberturas) !!}; // Obtener los coberturas desde DB
 
             // Función para calcular el costo de la prima
             function calcularPrima() {

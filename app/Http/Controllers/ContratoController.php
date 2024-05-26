@@ -60,7 +60,7 @@ class ContratoController extends Controller
         $vehiculos = Vehiculo::all();
         $seguros = Seguro::all();
         $clientes = Cliente::all();
-        //$coberturas = Cobertura::all();
+        $coberturas = Cobertura::all();
         $usuarios = User::select('id', 'name', 'telefono', 'direccion', 'email')->get();
         //dd($coberturas);
 
@@ -71,7 +71,7 @@ class ContratoController extends Controller
             'vehiculos' => $vehiculos,
             'clientes' => $clientes,
             'usuarios' => $usuarios,
-            //'coberturas' => $coberturas,
+            'coberturas' => $coberturas,
             'vendedor' => $vendedor ?? null/*, // Puede ser null si no es un vendedor
             'administrador' => $administrador ?? null // Puede ser null si no es un administrador*/
         ]);
@@ -124,6 +124,7 @@ class ContratoController extends Controller
         $vehiculo = Vehiculo::find($contrato->vehiculo_id);
         $cliente = Cliente::find($vehiculo->cliente_id)->user;
 
+        $cuotas = $contrato->cuotas;
         //dd($cliente);
 
         $seguro = Seguro::find($contrato->seguro_id);
@@ -135,6 +136,7 @@ class ContratoController extends Controller
             'vehiculo' => $vehiculo,
             'coberturas' => $coberturas,
             'clausulas' => $clausulas,
+            'cuotas' => $cuotas,
             'cliente' => $cliente
         ]);
     }
@@ -170,7 +172,7 @@ class ContratoController extends Controller
         $vehiculos = Vehiculo::all();
         $seguros = Seguro::all();
         $clientes = Cliente::all();
-        //$coberturas = Cobertura::all();
+        $coberturas = Cobertura::all();
         $usuarios = User::select('id', 'name', 'telefono', 'direccion', 'email')->get();
         //dd($usuarios);
 
@@ -181,7 +183,7 @@ class ContratoController extends Controller
             'vehiculos' => $vehiculos,
             'clientes' => $clientes,
             'usuarios' => $usuarios,
-            //'coberturas' => $coberturas,
+            'coberturas' => $coberturas,
             'vendedor' => $vendedor ?? null/*, // Puede ser null si no es un vendedor
             'administrador' => $administrador ?? null // Puede ser null si no es un administrador*/
         ]);
@@ -257,8 +259,9 @@ class ContratoController extends Controller
 
         $vehiculo = Vehiculo::find($contrato->vehiculo_id);
         $cliente = Cliente::find($vehiculo->cliente_id)->user;
+        $cuotas = $contrato->cuotas;
 
-        //dd($cliente);
+        //dd($cuotas);
 
         $seguro = Seguro::find($contrato->seguro_id);
         $coberturas = $seguro->cobertura;
@@ -270,6 +273,7 @@ class ContratoController extends Controller
             'vehiculo' => $vehiculo,
             'coberturas' => $coberturas,
             'clausulas' => $clausulas,
+            'cuotas' => $cuotas,
             'cliente' => $cliente
         ]);
         return $pdf->stream();
