@@ -10,7 +10,8 @@ use App\Models\Clausula;
 
 class SeguroController extends Controller
 {
-    public function __construct() {
+    public function __construct()
+    {
         $this->middleware('can:administrador.seguros.index')->only('index');
         $this->middleware('can:administrador.seguros.create')->only('create', 'store');
         $this->middleware('can:administrador.seguros.edit')->only('edit', 'update');
@@ -30,19 +31,19 @@ class SeguroController extends Controller
      */
     public function create()
     {
-        return view('Administrador.seguros.create',['seguro' => new Seguro()]);
+        return view('Administrador.seguros.create', ['seguro' => new Seguro()]);
         //
     }
 
 
-public function relacionarSeguro($id)
-{
-    $seguro = Seguro::findOrFail($id);
-    $coberturas = Cobertura::all(); 
-    $clausulas = Clausula::all(); 
+    public function relacionarSeguro($id)
+    {
+        $seguro = Seguro::findOrFail($id);
+        $coberturas = Cobertura::all();
+        $clausulas = Clausula::all();
 
-    return view('administrador.seguros.relacionar', compact('seguro', 'coberturas', 'clausulas'));
-}
+        return view('administrador.seguros.relacionar', compact('seguro', 'coberturas', 'clausulas'));
+    }
 
     /**
      * Store a newly created resource in storage.
@@ -102,7 +103,7 @@ public function relacionarSeguro($id)
     public function destroy(Seguro $seguro)
     {
         $seguro->delete();
-        return redirect()->route('administrador/seguros.index')->with('success','Seguro eliminado exitosamente'); 
+        return redirect()->route('administrador/seguros.index')->with('success', 'Seguro eliminado exitosamente');
         //
     }
     public function guardarRelacion(Request $request)
@@ -113,19 +114,18 @@ public function relacionarSeguro($id)
             'clausulas' => 'required|array',
             'coberturas' => 'required|array',
         ]);
-    
+
         // Encuentra el seguro por su nombre
         $seguro = Seguro::where('nombre', $request->nombre)->first();
-    
+
         if ($seguro) {
             // Sincroniza las cláusulas y coberturas relacionadas con el seguro
             $seguro->clausula()->sync($request->clausulas);
             $seguro->cobertura()->sync($request->coberturas);
-    
+
             return redirect()->route('administrador/seguros.index')->with('success', 'Relaciones guardadas exitosamente.');
         } else {
             return redirect()->back()->with('error', 'El seguro especificado no existe.');
         }
     }
 }
-

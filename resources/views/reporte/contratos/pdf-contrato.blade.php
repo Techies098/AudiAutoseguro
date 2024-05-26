@@ -304,72 +304,21 @@
         <table class="table table-bordered">
             <thead>
                 <tr>
+                    <th>Nro Contrato</th>
                     <th>Codigo/Cuota</th>
                     <th>Monto</th>
                     <th>Fecha Vencimiento</th>
                 </tr>
             </thead>
             <tbody>
-                <tr>
-                    <td>01</td>
-                    <td>26.49</td>
-                    <td>09/04/2023</td>
-                </tr>
-                <tr>
-                    <td>02</td>
-                    <td>26.50</td>
-                    <td>09/05/2023</td>
-                </tr>
-                <tr>
-                    <td>03</td>
-                    <td>26.50</td>
-                    <td>09/06/2023</td>
-                </tr>
-                <tr>
-                    <td>04</td>
-                    <td>26.50</td>
-                    <td>09/07/2023</td>
-                </tr>
-                <tr>
-                    <td>05</td>
-                    <td>26.50</td>
-                    <td>09/08/2023</td>
-                </tr>
-                <tr>
-                    <td>06</td>
-                    <td>26.50</td>
-                    <td>09/09/2023</td>
-                </tr>
-                <tr>
-                    <td>07</td>
-                    <td>26.50</td>
-                    <td>09/10/2023</td>
-                </tr>
-                <tr>
-                    <td>08</td>
-                    <td>26.50</td>
-                    <td>09/11/2023</td>
-                </tr>
-                <tr>
-                    <td>09</td>
-                    <td>26.50</td>
-                    <td>09/12/2023</td>
-                </tr>
-                <tr>
-                    <td>10</td>
-                    <td>26.50</td>
-                    <td>09/01/2024</td>
-                </tr>
-                <tr>
-                    <td>11</td>
-                    <td>26.50</td>
-                    <td>09/02/2024</td>
-                </tr>
-                <tr>
-                    <td>12</td>
-                    <td>26.50</td>
-                    <td>09/03/2024</td>
-                </tr>
+                @foreach ($cuotas as $cuota)
+                    <tr>
+                        <td>{{ $cuota->contrato_id }}</td>
+                        <td>{{ $cuota->numero }}</td>
+                        <td>{{ $cuota->monto }} </td>
+                        <td>{{ $cuota->fecha_por_pagar }} </td>
+                    </tr>
+                @endforeach
             </tbody>
         </table>
     </div>
