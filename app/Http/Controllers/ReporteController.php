@@ -14,7 +14,8 @@ class ReporteController extends Controller
 {
     public function indexReporte()
     {
-        return view('reporte.dinamicos.index-reportes');
+        $vehiculos = Vehiculo::paginate(5);
+        return view('reporte.dinamicos.index-reportes', compact('vehiculos'));
     }
 
     public function reporteDinamico(Request $request)
@@ -31,7 +32,7 @@ class ReporteController extends Controller
 
         $vehiculos = $vehiculos->get();
 
-        $pdf = PDF::loadView('reporte.dinamico.pdf', compact('vehiculos'))->setPaper('a4', 'landscape');
+        $pdf = PDF::loadView('reporte.dinamicos.pdf', compact('vehiculos'))->setPaper('a4', 'landscape');
         return $pdf->stream();
     }
 }

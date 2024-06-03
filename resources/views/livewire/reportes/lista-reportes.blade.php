@@ -1,12 +1,9 @@
 <div>
     {{-- Knowing others is intelligence; knowing yourself is true wisdom. --}}
     <div class="container">
-        <form class="row g-3" action="{{ route('pdf-vehiculo') }}" method="POST" target="_blank">
+        <form class="row g-3" action="{{ route('pdf-dinamico') }}" method="POST" target="_blank">
             @csrf
-            <!--<div class="col-md-6">
-                <label class="form-label">Cliente:</label>
-                <input wire:model="name" type="text" class="form-control" placeholder="Nombre completo">
-            </div>-->
+
             <div class="col-md-3">
                 <label for="fechaIni" class="form-label">Desde fecha:</label>
                 <input wire:model="fechaIni" class="form-control" type="date" name="fechaIni" id="fechaIni">

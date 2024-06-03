@@ -17,7 +17,7 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 
     <script>
-        if(navigator.serviceWorker){
+        if (navigator.serviceWorker) {
             navigator.serviceWorker.register('/sw.js')
         }
     </script>
