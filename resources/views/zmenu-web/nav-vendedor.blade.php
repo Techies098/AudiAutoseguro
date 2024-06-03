@@ -1,5 +1,4 @@
 @if (Auth::user()->hasRole('vendedor'))
-
     <!-- Gestionar Seguros -->
     <div class="hidden sm:flex sm:items-center sm:ml-6">
         <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
@@ -48,7 +47,9 @@
             <x-nav-link class="dropdown-item" href="{{ route('administrador/contratos.index') }}" :active="request()->routeIs('administrador/contratos.index')">
                 {{ __('Contrato') }}
             </x-nav-link>
+            <x-nav-link class="dropdown-item" href="{{ route('reporte-dinamico') }}" :active="request()->routeIs('reporte/dinamicos.index-reportes')">
+                {{ __('Reporte') }}
+            </x-nav-link>
         </ul>
     </div>
-    
 @endif

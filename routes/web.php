@@ -14,6 +14,7 @@ use App\Http\Controllers\SiniestroController;
 use App\Http\Controllers\CotizacionController;
 use App\Http\Controllers\TallerController;
 use App\Http\Controllers\PaypalController;
+use App\Http\Controllers\ReporteController;
 
 // Rutas que requieren autenticación y verificación
 Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified'])->group(function () {
@@ -61,6 +62,9 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']
     Route::get('/administrador/reporte-vehiculo', [VehiculoController::class, 'reportev'])->name('reporte-vehiculo');
     Route::post('/administrador/pdf-vehiculo', [VehiculoController::class, 'generarReporte'])->name('pdf-vehiculo');
     Route::get('/administrador/pdf-contrato/{id}', [ContratoController::class, 'contrato'])->name('pdf-contrato');
+    //Rutas de reportes dinamicos:
+    Route::get('/administrador/reporte-dinamico', [ReporteController::class, 'indexReporte'])->name('reporte-dinamico');
+    Route::post('/administrador/pdf-dinamico', [ReporteController::class, 'reporteDinamico'])->name('pdf-dinamico');
 
     //Siniestros:
     Route::resource('/personal/siniestros', SiniestroController::class)->parameters(['siniestros' => 'siniestro'])->names('personal/siniestros');
