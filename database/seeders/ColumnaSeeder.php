@@ -18,12 +18,12 @@ class ColumnaSeeder extends Seeder
         //otra opcion 'relaciones' => json_encode(['contratos']) // Convierte el array en JSON
         Tabla::create([
             'nombre' => 'contratos',
-            'relaciones' => ['seguros', 'venderores', 'vehiculos']
+            'relaciones' => json_encode(['seguros', 'venderores', 'vehiculos'])
         ]);
 
         Tabla::create([
             'nombre' => 'seguros',
-            'relaciones' => ['contratos']
+            'relaciones' => json_encode(['contratos'])
         ]);
 
         // Poblando la tabla, Columnas

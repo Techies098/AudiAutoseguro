@@ -10,6 +10,20 @@
             <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
                 <div class="p-6 text-gray-900">
                     <div>
+                        <style>
+                            .selected-tables,
+                            .selected-columns {
+                                border: 1px solid #ccc;
+                                padding: 10px;
+                                margin-top: 10px;
+                            }
+
+                            .selected-columns span {
+                                display: inline-block;
+                                margin-right: 10px;
+                                cursor: pointer;
+                            }
+                        </style>
                         {{-- Knowing others is intelligence; knowing yourself is true wisdom. --}}
                         <div class="container">
                             <form class="row g-3" action="{{ route('pdf-dinamico') }}" method="POST" target="_blank">
@@ -17,12 +31,24 @@
 
                                 <div>
                                     <label for="tables">Tablas:</label>
-                                    <select name="tables[]" multiple>
-                                        <option value="table1">Table 1</option>
-                                        <option value="table2">Table 2</option>
-                                        <!-- Agrega más opciones según sea necesario -->
+                                    <select id="tables" name="tables[]" multiple onchange="updateColumns()">
+                                        @foreach ($tablas as $tabla)
+                                            <option value="{{ $tabla->nombre }}">{{ $tabla->nombre }}</option>
+                                        @endforeach
                                     </select>
                                 </div>
+
+                                <div>
+                                    <label for="" class="form-label"> Tabla Seleccionada:</label>
+                                    <div class="selected-tables" id="selectedTables"></div>
+                                </div>
+
+                                <div>
+                                    <label for="" class="form-label"> Columnas:</label>
+                                    <div class="selected-columns" id="selectedColumns"></div>
+                                </div>
+
+                                <input type="hidden" name="selected_columns" id="selected_columns">
 
                                 <div class="col-md-3">
                                     <label for="fechaIni" class="form-label">Desde fecha:</label>
@@ -41,6 +67,42 @@
 
                                 </div>
                             </form>
+
+
+                            <script>
+                                let columns = @json($columnas);
+
+                                function updateColumns() {
+                                    let selectedTables = document.getElementById('tables');
+                                    let selectedTablesDiv = document.getElementById('selectedTables');
+                                    let selectedColumnsDiv = document.getElementById('selectedColumns');
+                                    let selectedColumnsInput = document.getElementById('selected_columns');
+
+                                    selectedTablesDiv.innerHTML = '';
+                                    selectedColumnsDiv.innerHTML = '';
+
+                                    for (let option of selectedTables.options) {
+                                        if (option.selected) {
+                                            let tableName = option.value;
+                                            let tableDiv = document.createElement('div');
+                                            tableDiv.innerHTML = `<strong>${tableName}</strong>`;
+                                            selectedTablesDiv.appendChild(tableDiv);
+
+                                            let columnsDiv = document.createElement('div');
+                                            columnsDiv.innerHTML = columns[tableName].map(col =>
+                                                `<span onclick="removeColumn(this)" data-table="${tableName}" data-column="${col.nombre}">${tableName}.${col.nombre} X</span>`
+                                            ).join('');
+                                            selectedColumnsDiv.appendChild(columnsDiv);
+                                        }
+                                    }
+                                }
+
+                                function removeColumn(span) {
+                                    span.parentNode.removeChild(span);
+                                }
+                            </script>
+
+
                         </div>
 
                         <div class="col-md-12 py-3">
