@@ -61,7 +61,7 @@ class ReporteController extends Controller
 
     public function reporteDinamico(Request $request)
     {
-        dd($request->input('selected_columns'));
+        //dd($request->input('selected_columns'));
 
         $tables = $request->input('tables'); //tablas
         $selectedColumns = explode(',', $request->input('selected_columns'));

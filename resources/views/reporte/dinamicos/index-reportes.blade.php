@@ -81,6 +81,8 @@
                                     selectedTablesDiv.innerHTML = '';
                                     selectedColumnsDiv.innerHTML = '';
 
+                                    let selectedColumnsArray = [];
+
                                     for (let option of selectedTables.options) {
                                         if (option.selected) {
                                             let tableName = option.value;
@@ -89,16 +91,21 @@
                                             selectedTablesDiv.appendChild(tableDiv);
 
                                             let columnsDiv = document.createElement('div');
-                                            columnsDiv.innerHTML = columns[tableName].map(col =>
-                                                `<span onclick="removeColumn(this)" data-table="${tableName}" data-column="${col.nombre}">${tableName}.${col.nombre} X</span>`
-                                            ).join('');
+                                            columns[tableName].forEach(col => {
+                                                let columnName = `${tableName}.${col.name}`;
+                                                selectedColumnsArray.push(columnName);
+                                                columnsDiv.innerHTML +=
+                                                    `<span onclick="removeColumn(this)" data-table="${tableName}" data-column="${col.nombre}">${columnName} X</span>`;
+                                            });
                                             selectedColumnsDiv.appendChild(columnsDiv);
                                         }
                                     }
+                                    selectedColumnsInput.value = selectedColumnsArray.join(',');
                                 }
 
                                 function removeColumn(span) {
                                     span.parentNode.removeChild(span);
+                                    updateColumns();
                                 }
                             </script>
 
