@@ -157,5 +157,9 @@ class RoleSeeder extends Seeder
         Permission::create([
             'name' => 'pdf-contrato', 'description' => 'Genera contrato' //genera un contrato en formato pdf de
         ])->syncRoles([$roleAdministrador, $roleVendedor]);
+
+        Permission::create([
+            'name' => 'contratos.cobertura-clausulas', 'description' => 'Get Coberturas y Clausulas' //Devuelve las coberturas y clausulas de un seguro
+        ])->syncRoles([$roleAdministrador, $roleVendedor]);
     }
 }

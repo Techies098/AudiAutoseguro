@@ -7,6 +7,9 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 use Laravel\Fortify\Contracts\CreatesNewUsers;
 use Laravel\Jetstream\Jetstream;
+use Illuminate\Database\Seeder;
+use App\Models\Cliente;
+
 
 class CreateNewUser implements CreatesNewUsers
 {
@@ -22,20 +25,18 @@ class CreateNewUser implements CreatesNewUsers
         Validator::make($input, [
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'telefono' =>['required','integer'],
             'password' => $this->passwordRules(),
             'terms' => Jetstream::hasTermsAndPrivacyPolicyFeature() ? ['accepted', 'required'] : '',
         ])->validate();
-        
-        // Aquí está la función User::create(), creando un nuevo usuario en la base de datos.
-        $user = User::create([
+
+         $user = User::create([
             'name' => $input['name'],
             'email' => $input['email'],
+            'telefono' => $input['telefono'],
             'password' => Hash::make($input['password']),
-        ]);
-
-        // Asignar el rol con ID 2 al usuario
-        $user->assignRole(1); // Suponiendo que tengas un método "assignRole" en tu modelo de usuario para asignar roles.
-
+        ])->assignRole('cliente');
+        Cliente::create(['user_id' => $user->id]);
         return $user;
     }
 }
