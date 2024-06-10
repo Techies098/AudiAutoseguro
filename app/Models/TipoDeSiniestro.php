@@ -9,6 +9,9 @@ class TipoDeSiniestro extends Model
 {
     use HasFactory;
     protected $fillable = ['name'];
+    public function siniestros()    {
+        return $this->hasMany(Siniestro::class);
+    }
 
 
 }
