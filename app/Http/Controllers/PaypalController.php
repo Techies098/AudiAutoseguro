@@ -7,6 +7,8 @@ use App\Models\Cuota;
 use Illuminate\Http\Request;
 use Srmklive\PayPal\Services\PayPal as PayPalClient;
 use App\Models\Payment;
+use App\Models\Vehiculo;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class PaypalController extends Controller
 {
@@ -14,7 +16,7 @@ class PaypalController extends Controller
     {
         $contrato = Contrato::find($request->contrato_id);
         $cuota = Cuota::find($request->cuota_id);
-        
+
         $provider = new PayPalClient;
         $provider->setApiCredentials(config('paypal'));
         $provider->getAccessToken();
@@ -34,9 +36,9 @@ class PaypalController extends Controller
             ]
         ]);
         //dd($response);
-        if(isset($response['id']) && $response['id'] != null) {
-            foreach($response['links'] as $link) {
-                if($link['rel'] == 'approve') {
+        if (isset($response['id']) && $response['id'] != null) {
+            foreach ($response['links'] as $link) {
+                if ($link['rel'] == 'approve') {
                     session()->put('product_name', $contrato->seguro->nombre);
                     session()->put('quantity', 1);
                     session()->put('contrato_id', $contrato->id);
@@ -56,9 +58,9 @@ class PaypalController extends Controller
         $provider->setApiCredentials(config('paypal'));
         $provider->getAccessToken();
         $response = $provider->capturePaymentOrder($request->token);
-        //dd($response);
-        if(isset($response['status']) && $response['status'] == 'COMPLETED') {
-            
+        // dd($response);
+        if (isset($response['status']) && $response['status'] == 'COMPLETED') {
+
             // Insert data into database
             $payment = new Payment;
             $payment->payment_id = $response['id'];
@@ -80,24 +82,42 @@ class PaypalController extends Controller
             $cuota->estado = "Pagada";
             $cuota->save();
 
-            // return "Payment is successful";
-            return redirect()->route('cliente.contratos.show', session()->get('contrato_id'))
-                ->with('msj_ok', 'Pago realizado con éxito');
+            // Prepare data for the PDF
+            $data = [
+                'payment' => $payment,
+                'contrato' => Contrato::find(session()->get('contrato_id')),
+                'cuota' => Cuota::find(session()->get('cuota_id'))
+            ];
 
-            unset($_SESSION['product_name']);
-            unset($_SESSION['quantity']);
-            unset($_SESSION['contrato_id']);
-            unset($_SESSION['cuota_id']);
-            unset($_SESSION['numero_cuota']);
+            // Generate the PDF
+            $pdf = PDF::loadView('cliente.contratos.comprobante', compact('data'));
+            $pdfOutput = $pdf->output();
+
+            // Store the PDF in a temporary file
+            $pdfFilePath = storage_path('app/public/comprobante.pdf');
+            file_put_contents($pdfFilePath, $pdfOutput);
+
+            // Redirect to contratos.show and include a link to open the PDF in a new tab
+            return redirect()->route('cliente.contratos.show', session()->get('contrato_id'))
+                ->with('msj_ok', 'Pago realizado con éxito. <a href="' . url('storage/comprobante.pdf') . '" target="_blank" class="btn btn-primary">Ver Comprobante</a>');
             
+            // Clear the session data
+            session()->forget(['product_name', 'quantity', 'contrato_id', 'cuota_id', 'numero_cuota']);
 
         } else {
             return redirect()->route('cancel');
         }
     }
+
     public function cancel()
     {
         return "Payment is cancelled.";
     }
+
+    // private function generarComprobante($idCuota, $idContrato, $idPago, $idCliente){
+    //     $pdf = PDF::loadView('pdf.comprobante', $data);
+    //     $pdf->setPaper('a4', 'portrait');
+    //     $pdf->stream('comprobante.pdf');
+    // }
 
 }
