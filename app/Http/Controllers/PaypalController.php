@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Mail\ComprobantePagoContrato;
 use App\Models\Contrato;
 use App\Models\Cuota;
 use Illuminate\Http\Request;
@@ -9,6 +10,7 @@ use Srmklive\PayPal\Services\PayPal as PayPalClient;
 use App\Models\Payment;
 use App\Models\Vehiculo;
 use Barryvdh\DomPDF\Facade\Pdf;
+use Illuminate\Support\Facades\Mail;
 
 class PaypalController extends Controller
 {
@@ -93,6 +95,9 @@ class PaypalController extends Controller
             $pdf = PDF::loadView('cliente.contratos.comprobante', compact('data'));
             $pdfOutput = $pdf->output();
 
+             //Send email with the PDF attached:
+             Mail::to(auth()->user()->email)->send(new ComprobantePagoContrato($pdfOutput, $data));
+
             // Store the PDF in a temporary file
             $pdfFilePath = storage_path('app/public/comprobante.pdf');
             file_put_contents($pdfFilePath, $pdfOutput);
@@ -113,11 +118,5 @@ class PaypalController extends Controller
     {
         return "Payment is cancelled.";
     }
-
-    // private function generarComprobante($idCuota, $idContrato, $idPago, $idCliente){
-    //     $pdf = PDF::loadView('pdf.comprobante', $data);
-    //     $pdf->setPaper('a4', 'portrait');
-    //     $pdf->stream('comprobante.pdf');
-    // }
 
 }

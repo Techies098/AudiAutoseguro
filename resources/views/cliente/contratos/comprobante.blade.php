@@ -72,8 +72,6 @@
             <p>Comprobante N.º: {{ $data['payment']['payment_id'] }}</p>
             <p>Fecha: {{ $data['payment']['created_at'] }}</p>
         </div>
-        {{-- <a href="{{ route('cliente.contratos.index') }}">Volver</a> --}}
-        {{-- <button>Volver</button> --}}
     </div>
 
 </body>
