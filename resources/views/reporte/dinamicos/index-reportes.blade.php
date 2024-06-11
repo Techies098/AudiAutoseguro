@@ -58,7 +58,27 @@
                                     <label for="fechaFin" class="form-label">Hasta Fecha:</label>
                                     <input class="form-control" type="date" name="fechaFin" id="fechaFin">
                                 </div>
-                                <div>
+
+                                <!---->
+
+                                <div class="col-md-8">
+                                    <label for="titulo" class="form-label">Titulo:</label>
+                                    <input type="text" class="form-control" id="titulo" name="titulo"
+                                        value="REPORTE DE VEHÍCULOS ASEGURADOS"
+                                        placeholder="REPORTE DE VEHÍCULOS ASEGURADOS"
+                                        oninput="this.value = this.value.toUpperCase()">
+                                </div>
+                                <div class="mb-3 col-md-12">
+                                    <label for="descripcion" class="form-label">Descripcion:</label>
+                                    <input type="text" class="form-control" id="descripcion" name="descripcion"
+                                        value="Este es un informe de los vehículos asegurados en nuestro sistema. A continuación se muestra una lista de los vehículos junto con sus detalles:"
+                                        placeholder="Este es un informe de los vehículos asegurados en nuestro sistema. A continuación se muestra una lista de los vehículos junto con sus detalles:">
+                                </div>
+
+
+                                <!---->
+
+                                <div class="mb-3">
                                     <div class="col-12">
                                         <button class="btn btn-primary col-sm-2" type="button">Ver</button>
                                         <button class="btn btn-warning ms-4 col-sm-2" type="submit">Generar

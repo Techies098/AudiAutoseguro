@@ -66,8 +66,17 @@ class ReporteController extends Controller
         //dd($request->input('selected_columns'));
 
         $tables = $request->input('tables'); //tablas
+
+        if (!$tables) {
+            //return redirect()->route('reporte-dinamico')->with('error', 'Tiene que seleccionar una tabla');
+            return redirect()->back()->with('error', 'Tiene que seleccionar una tabla');
+        }
+        //dd($tables);
         $selectedColumns = explode(',', $request->input('selected_columns'));
-        //dd($selectedColumns);
+
+        $titulo = $request->input('titulo');
+        $descripcion = $request->input('descripcion');
+        //dd($titulo, $descripcion);
 
         $columnas = array_map(function ($value) {
             return substr($value, strpos($value, '.') + 1);
@@ -100,14 +109,8 @@ class ReporteController extends Controller
         }
 
         $vehiculos = Vehiculo::all(); ///quitar despues
-        //dd($datos2, $vehiculos);
-        //dd($datos);
-        //dd($datos, $selectedColumns);
-        /*$pdf = PDF::loadView('reporte.dinamicos.pdf', compact('datos', 'selectedColumns', 'vehiculos'));
 
-        return $pdf->download('report.pdf');*/
-
-        $pdf = PDF::loadView('reporte.dinamicos.pdf', compact('datos2', 'columnas', 'vehiculos'))->setPaper('a4', 'landscape');
+        $pdf = PDF::loadView('reporte.dinamicos.pdf', compact('datos2', 'columnas', 'vehiculos', 'titulo', 'descripcion'))->setPaper('a4', 'landscape');
         return $pdf->stream();
     }
 

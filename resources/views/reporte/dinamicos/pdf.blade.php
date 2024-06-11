@@ -123,16 +123,15 @@
 
         <p class="text-center mb-1"><strong>AUTO SEGURO</strong></p>
         <p class="text-center mb-1">Fecha: <strong>{{ date('d-m-Y') }}</strong></p>
-        <h5 class="text-center">REPORTE DE VEHÍCULOS ASEGURADOS</h5>
+        <h5 class="text-center">{{ $titulo }}</h5>
 
         <div class="mb-3">
             <p>
-                Este es un informe de los vehículos asegurados en nuestro sistema. A continuación
-                se muestra una lista de los vehículos junto con sus detalles:
+                {{ $descripcion }}
             </p>
         </div>
 
-        <p>Total de vehículos asegurados: {{ $vehiculos->count() }}</p>
+        <!--<p>Total de vehículos asegurados: {{ $vehiculos->count() }}</p>-->
         <br>
         <table class="table table-bordered">
             <thead>

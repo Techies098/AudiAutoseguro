@@ -26,5 +26,11 @@ class TablaSeeder extends Seeder
             'columna' => json_encode(['id', 'nombre', 'descripcion', 'precio_prima', 'created_at']),
             'relacion' => json_encode(['contratos'])
         ]);
+
+        Tabla::create([
+            'nombre' => 'vehiculos',
+            'columna' => json_encode(['id', 'cliente_id', 'marca', 'modelo', 'clase', 'color', 'placa', 'chasis', 'motor', 'traccion', 'anio', 'uso', 'nro_asientos', 'combustible', 'valor_comercial', 'created_at']),
+            'relacion' => json_encode(['clientes'])
+        ]);
     }
 }
