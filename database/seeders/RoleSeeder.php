@@ -161,5 +161,9 @@ class RoleSeeder extends Seeder
         Permission::create([
             'name' => 'contratos.cobertura-clausulas', 'description' => 'Get Coberturas y Clausulas' //Devuelve las coberturas y clausulas de un seguro
         ])->syncRoles([$roleAdministrador, $roleVendedor]);
+        //siniestro
+        Permission::create([
+            'name' => 'personal.siniestros.index', 'description' => 'Ver listado de siniestros'
+        ])->syncRoles([$roleAdministrador,$roleCliente,$rolePerito]);
     }
 }
