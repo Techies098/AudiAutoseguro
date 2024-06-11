@@ -70,14 +70,6 @@
                                         <div class="alert alert-danger">{{ $message }}</div>
                                     @enderror
                                 </div>
-                                <div class="w-full mb-3">
-                                    <label for="url_informe" class="form-label">Informe</label>
-                                    <input type="text" class="form-control" id="url_informe" name="url_informe"
-                                    value="{{ old('url_informe', $siniestro->url_informe) }}">
-                                    @error('url_informe')
-                                        <div class="alert alert-danger">{{ $message }}</div>
-                                    @enderror
-                                </div>
                                 <button type="submit" class="btn btn-primary">Terminar revision</button>
                             </div>
                         </div>
@@ -97,7 +89,7 @@
             document.getElementById('maps-link').href = mapsLink;
             // Mostrar el enlace
             document.getElementById('maps-link').style.display = 'block';
-            // Mostrar la ubicación en el campo de entrada (opcional)
+            // Mostrar la ubicación en el campo de entrada
             document.getElementById('ubicacion').value = mapsLink;
         });
     });
