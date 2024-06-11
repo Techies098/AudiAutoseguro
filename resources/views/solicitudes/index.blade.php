@@ -124,7 +124,7 @@
                                     @foreach ($aprobadas as $solicitud)
                                     <tr>
                                         <td>{{ $solicitud->id }}</td>
-                                        <td>{{ $solicitud->cliente->name }}</td>
+                                        <td>{{ $solicitud->user->name }}</td>
                                         <td>{{ $solicitud->seguro->nombre }}</td>
                                         <td>{{ $solicitud->estado }}</td>
                                         <td>{{ $solicitud->fecha }}</td>
