@@ -12,6 +12,4 @@ class TipoDeSiniestro extends Model
     public function siniestros()    {
         return $this->hasMany(Siniestro::class);
     }
-
-
 }

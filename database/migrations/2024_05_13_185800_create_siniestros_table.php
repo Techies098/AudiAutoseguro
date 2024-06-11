@@ -19,9 +19,8 @@ return new class extends Migration
             $table->double('monto_siniestro', 15, 2)->nullable();
             $table->double('porcentaje_danio', 5, 2)->nullable();
             $table->double('porcentajeCulpabilidad', 5, 2)->nullable();
-            $table->string('tipo')->nullable();
             $table->string('ubicacion');
-            $table->string('url_informe')->nullable();
+            $table->foreignId('tipo_de_siniestro_id')->constrained('tipo_de_siniestros');
             $table->foreignId('contrato_id')->constrained('contratos');
             $table->foreignId('perito_id')->nullable()->constrained('peritos');
             $table->foreignId('administrador_id')->nullable()->constrained('administradores');
