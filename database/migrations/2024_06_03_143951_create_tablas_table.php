@@ -15,7 +15,8 @@ return new class extends Migration
             $table->id();
 
             $table->string('nombre');
-            $table->json('relaciones');
+            $table->json('columna');
+            $table->json('relacion');
 
             $table->timestamps();
         });

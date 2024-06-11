@@ -137,44 +137,21 @@
         <table class="table table-bordered">
             <thead>
                 <tr>
-                    <th>Cliente</th>
-                    <th>Marca</th>
-                    <th>Modelo</th>
-                    <th>Clase</th>
-                    <th>Color</th>
-                    <th>Placa</th>
-                    <th>Chasis</th>
-                    <th>Motor</th>
-                    <th>Traccion</th>
-                    <th>Año</th>
-                    <th>Uso</th>
-                    <th>Nro Asientos</th>
-                    <th>Combustible</th>
-                    <th>Valor Comercial</th>
-                    <th>Fecha</th>
+                    @foreach ($columnas as $columna)
+                        <th>{{ $columna }}</th>
+                    @endforeach
                 </tr>
             </thead>
             <tbody>
 
-                @foreach ($vehiculos as $vehiculo)
+                @foreach ($datos2 as $dato)
                     <tr>
-                        <td>{{ $vehiculo->cliente_id }}</td>
-                        <td>{{ $vehiculo->marca }} </td>
-                        <td>{{ $vehiculo->modelo }} </td>
-                        <td>{{ $vehiculo->clase }} </td>
-                        <td>{{ $vehiculo->color }} </td>
-                        <td>{{ $vehiculo->placa }} </td>
-                        <td>{{ $vehiculo->chasis }} </td>
-                        <td>{{ $vehiculo->motor }} </td>
-                        <td>{{ $vehiculo->traccion }} </td>
-                        <td>{{ $vehiculo->anio }} </td>
-                        <td>{{ $vehiculo->uso }} </td>
-                        <td>{{ $vehiculo->nro_asientos }} </td>
-                        <td>{{ $vehiculo->combustible }} </td>
-                        <td>{{ $vehiculo->valor_comercial }} </td>
-                        <td>{{ date('d-m-Y', strtotime($vehiculo->created_at)) }} </td>
+                        @foreach ($columnas as $columna)
+                            <td>{{ $dato->$columna }}</td>
+                        @endforeach
                     </tr>
                 @endforeach
+
             </tbody>
         </table>
     </div>

@@ -68,11 +68,15 @@
                                 </div>
                             </form>
 
-
                             <script>
-                                let columns = @json($columnas);
+                                let tables = @json($tablas);
+                                let selectedColumnsArray = [];
 
                                 function updateColumns() {
+
+                                    // Vaciar el array de columnas seleccionadas
+                                    selectedColumnsArray = [];
+
                                     let selectedTables = document.getElementById('tables');
                                     let selectedTablesDiv = document.getElementById('selectedTables');
                                     let selectedColumnsDiv = document.getElementById('selectedColumns');
@@ -80,8 +84,6 @@
 
                                     selectedTablesDiv.innerHTML = '';
                                     selectedColumnsDiv.innerHTML = '';
-
-                                    let selectedColumnsArray = [];
 
                                     for (let option of selectedTables.options) {
                                         if (option.selected) {
@@ -91,11 +93,16 @@
                                             selectedTablesDiv.appendChild(tableDiv);
 
                                             let columnsDiv = document.createElement('div');
-                                            columns[tableName].forEach(col => {
-                                                let columnName = `${tableName}.${col.name}`;
-                                                selectedColumnsArray.push(columnName);
+                                            let table = tables.find(table => table.nombre === tableName);
+                                            let columns = JSON.parse(table.columna);
+                                            columns.forEach(col => {
+                                                let columnName = `${tableName}.${col}`;
+                                                if (!selectedColumnsArray.includes(columnName)) {
+                                                    selectedColumnsArray.push(columnName);
+                                                }
+
                                                 columnsDiv.innerHTML +=
-                                                    `<span onclick="removeColumn(this)" data-table="${tableName}" data-column="${col.nombre}">${columnName} X</span>`;
+                                                    `<span onclick="removeColumn('${columnName}')" data-table="${tableName}" data-column="${col}">${columnName} X</span>`;
                                             });
                                             selectedColumnsDiv.appendChild(columnsDiv);
                                         }
@@ -103,9 +110,21 @@
                                     selectedColumnsInput.value = selectedColumnsArray.join(',');
                                 }
 
-                                function removeColumn(span) {
-                                    span.parentNode.removeChild(span);
-                                    updateColumns();
+                                function removeColumn(columnName) {
+                                    selectedColumnsArray = selectedColumnsArray.filter(col => col !== columnName);
+                                    updateSelectedColumnsDiv();
+                                    document.getElementById('selected_columns').value = selectedColumnsArray.join(',');
+                                }
+
+                                function updateSelectedColumnsDiv() {
+                                    let selectedColumnsDiv = document.getElementById('selectedColumns');
+                                    selectedColumnsDiv.innerHTML = '';
+
+                                    selectedColumnsArray.forEach(col => {
+                                        let [tableName, columnName] = col.split('.');
+                                        selectedColumnsDiv.innerHTML +=
+                                            `<span onclick="removeColumn('${col}')" data-table="${tableName}" data-column="${columnName}">${col} X</span>`;
+                                    });
                                 }
                             </script>
 

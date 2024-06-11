@@ -11,11 +11,7 @@ class Tabla extends Model
 
     protected $fillable = [
         'nombre',
-        'relaciones'
+        'columna',
+        'relacion'
     ];
-
-    public function columnas()
-    {
-        return $this->hasMany(Columna::class);
-    }
 }
