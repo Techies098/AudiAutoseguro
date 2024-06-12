@@ -22,7 +22,7 @@ return new class extends Migration
 
             $table->foreign('contrato_id')->references('id')->on('contratos')
                 ->onUpdate('cascade')->onDelete('cascade');
-            $table->unique(['numero', 'contrato_id']);
+            // $table->unique(['numero', 'contrato_id']);
             
             $table->timestamps();
         });
