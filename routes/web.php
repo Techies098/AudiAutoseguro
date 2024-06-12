@@ -12,6 +12,7 @@ use App\Http\Controllers\VehiculoController;
 use App\Http\Controllers\CoberturaController;
 use App\Http\Controllers\SiniestroController;
 use App\Http\Controllers\CotizacionController;
+use App\Http\Controllers\PagoController;
 use App\Http\Controllers\TallerController;
 use App\Http\Controllers\PaypalController;
 
@@ -56,6 +57,11 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']
     Route::post('paypal', [PaypalController::class, 'paypal'])->name('paypal');
     Route::get('success', [PaypalController::class, 'success'])->name('success');
     Route::get('cancel', [PaypalController::class, 'cancel'])->name('cancel');
+
+    Route::post('pago_paypal', [PagoController::class, 'paypal'])->name('pago_paypal');
+    Route::get('pago_success', [PagoController::class, 'success'])->name('pago_success');
+    Route::get('pago_cancel', [PagoController::class, 'cancel'])->name('pago_cancel');
+
 
     //Rutas de reportes:
     Route::get('/administrador/reporte-vehiculo', [VehiculoController::class, 'reportev'])->name('reporte-vehiculo');

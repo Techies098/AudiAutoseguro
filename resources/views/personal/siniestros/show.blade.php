@@ -29,6 +29,7 @@
                                 <p class="card-text"><strong>Contrato:</strong> {{ $siniestro->contrato->id. '- '.$siniestro->contrato->seguro->nombre ?? 'No disponible' }}</p>
                                 <p class="card-text"><strong>Administrador:</strong> {{ $siniestro->administrador->user->name ?? 'No disponible' }}</p>
                                 <p class="card-text"><strong>Perito:</strong> {{ $siniestro->perito->user->name ?? 'No disponible' }}</p>
+                                @include('personal.siniestros.pagar-franquicia')
                             </div>
                             <div class="card">
                             <div class="card-header">

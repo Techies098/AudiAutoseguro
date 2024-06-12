@@ -61,7 +61,9 @@
                                     @endif
                                 @endif
                                 @if ($siniestro->estado == 'aprobado' && auth()->user()->cliente)
-                                    {{-- pagar --}}
+                                    {{-- <button class="btn btn-secondary">
+                                        Pagar franquicia
+                                    </button> --}}
                                 @endif
                                 @if ($siniestro->estado == 'pagado')
                                 {{-- Comprobante --}}
