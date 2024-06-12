@@ -36,7 +36,10 @@
                             <td>{{ $siniestro->detalle }}</td>
                             <td>{{ $siniestro->estado }} </td>
                             <td>{{ $siniestro->created_at }} </td>
-                            <td>{{ $siniestro->ubicacion }} </td>
+                            <td class="">
+                                <a href="{{ $siniestro->ubicacion }}" target="_blank"
+                                    >{{ $siniestro->ubicacion }}</a>
+                            </td>
                             <td>{{-- ESTADOS : aprobado,negado,espera,pagado --}}
                                 <a href="{{ route('personal/siniestros.show', $siniestro->id) }}"
                                     class="btn btn-primary">ver</a>

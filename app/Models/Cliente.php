@@ -20,4 +20,5 @@ class Cliente extends Model
     {
         return $this->hasMany(Vehiculo::class);
     }
+
 }

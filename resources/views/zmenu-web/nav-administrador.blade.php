@@ -15,6 +15,12 @@
             <x-nav-link class="dropdown-item" href="{{ route('administrador/clausulas.index') }}" :active="request()->routeIs('administrador/clausulas.index')">
                 {{ __('Clausulas') }}
             </x-nav-link>
+            <x-nav-link class="dropdown-item" href="{{ route('solicitudes.index') }}" :active="request()->routeIs('solicitudes.index')">
+                {{ __('Solicitudes') }}
+            </x-nav-link>
+            <x-nav-link class="dropdown-item" href="{{ route('solicitudes.mis') }}" :active="request()->routeIs('solicitudes.mis')">
+                {{ __('Mis solicitudes') }}
+            </x-nav-link>
         </ul>
     </div>
 

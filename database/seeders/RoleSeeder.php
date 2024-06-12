@@ -166,5 +166,10 @@ class RoleSeeder extends Seeder
         Permission::create([
             'name' => 'reporte-dinamico', 'description' => 'Reporte Dinamico'
         ])->syncRoles([$roleAdministrador, $roleVendedor]);
+        //siniestro
+        Permission::create([
+            'name' => 'personal.siniestros.index', 'description' => 'Ver listado de siniestros'
+        ])->syncRoles([$roleAdministrador,$roleCliente,$rolePerito]);
+
     }
 }
