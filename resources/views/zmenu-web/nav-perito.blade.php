@@ -21,6 +21,9 @@
             <x-nav-link class="dropdown-item" href="{{ route('solicitudes.mis') }}" :active="request()->routeIs('solicitudes.mis')">
                 {{ __('Mis solicitudes') }}
             </x-nav-link>
+            <x-nav-link class="dropdown-item" href="{{ route('solicitudes.vendedor') }}" :active="request()->routeIs('solicitudes.vendedor')">
+                {{ __('Solicitudes Asignadas') }}
+            </x-nav-link>
         </ul>
     </div>
 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
