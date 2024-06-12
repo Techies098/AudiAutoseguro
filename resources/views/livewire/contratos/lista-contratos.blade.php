@@ -67,7 +67,7 @@
                                     <a href="{{ route('administrador/contratos.edit', $contrato) }}"
                                         class="btn btn-primary btn-sm">Editar</a>
                                 @endcan
-                                <a href="{{ route('administrador/contratos.edit', $contrato) }}"
+                                <a href="{{ route('contrato.correo', $contrato->id) }}"
                                     class="btn btn-info btn-sm">Enviar</a>
                                 <!--<form action="{{ route('administrador/contratos.destroy', $contrato) }}" method="POST"
                                     class="d-inline">
