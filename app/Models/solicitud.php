@@ -11,6 +11,7 @@ class Solicitud extends Model
 
     protected $fillable = [
         'user_id',
+        'vendedor_id',
         'seguro_id',
         'estado',
         'hora',
@@ -49,5 +50,9 @@ class Solicitud extends Model
     public function scopeDenegada($query)
     {
         return $query->where('estado', 'denegada');
+    }
+    public function vendedor()
+    {
+        return $this->belongsTo(User::class, 'vendedor_id');
     }
 }

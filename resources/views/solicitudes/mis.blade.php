@@ -27,6 +27,7 @@
                                 <thead class="table-dark">
                                     <tr>
                                         <th scope="col">Cliente</th>
+                                        <th scope="col">Vendedor <br>asignado</th>
                                         <th scope="col">Seguro</th>
                                         <th scope="col">Estado</th>
                                         <th scope="col">Fecha</th>
@@ -39,16 +40,20 @@
                                     @foreach ($misSolicitudes as $solicitud)
                                     <tr>
                                         <td>{{ $solicitud->user->name }}</td>
+                                        <td>{{ optional($solicitud->vendedor)->name }}</td>
                                         <td>{{ $solicitud->seguro->nombre }}</td>
                                         <td>{{ $solicitud->estado }}</td>
                                         <td>{{ $solicitud->fecha }}</td>
                                         <td>{{ $solicitud->hora }}</td>
                                         <td>
+                                            @if ($solicitud->estado != 'aprobada')
                                             <form action="{{ route('solicitudes.destroy', $solicitud) }}" method="POST" class="d-inline">
                                                 @csrf
                                                 @method('DELETE')
                                                 <button type="submit" onclick="return confirm('¿Eliminar Solicitud del {{ $solicitud->seguro->nombre }}?')" class="btn btn-danger">Eliminar</button>
                                             </form>
+                                            @endif
+                                                <a href="{{ route('solicitudes.show', $solicitud->id) }}" class="btn btn-primary">Ver Detalles</a>
                                         </td>
                                     </tr>
                                     @endforeach

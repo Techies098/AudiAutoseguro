@@ -48,9 +48,11 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']
 
     //Solicitud Seguro
     Route::resource('solicitudes', SolicitudController::class)->parameters(['solicitudes' => 'solicitud'])->names('solicitudes');
+    Route::get('/vendedor', [SolicitudController::class, 'solicitudesVendedor'])->name('solicitudes.vendedor');
 
     Route::get('mis-solicitudes', [SolicitudController::class, 'misSolicitudes'])->name('solicitudes.mis');
     Route::patch('solicitudes/{solicitud}/estado', [SolicitudController::class, 'cambiarEstado'])->name('solicitudes.cambiarEstado');
+
 
     //Contratos:
     Route::resource('/administrador/contratos', ContratoController::class)->parameters(['contratos' => 'contrato'])->names('administrador/contratos');

@@ -1,8 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
-        <a href="{{route('solicitudes.create')}}" class="float-right btn btn-primary col-sm-2 ">Nuevo Solicitud</a>
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Solicitudes') }}
+            {{ __('Solicitudes Asignadas') }}
         </h2>
     </x-slot>
 
