@@ -11,11 +11,16 @@
             <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
                 <div class="p-6 text-gray-900">
 
-                    <form class="row g-3">
+                    <form action="{{ route('enviar.correo') }}" method="POST" enctype="multipart/form-data"
+                        class="row g-3">
+                        @csrf
+
                         <div class="col-md-12">
                             <label for="email" class="form-label">Email:</label>
                             <input type="email" class="form-control" name="email" id="email"
                                 value="{{ $correoCliente }}" placeholder="{{ $correoCliente }}">
+                            <input type="hidden" class="form-control" name="idcontrato" id="idcontrato"
+                                value="{{ $idcontrato }}">
                         </div>
                         <div class="col-12">
                             <label for="mensaje" class="form-label">Mensaje:</label>

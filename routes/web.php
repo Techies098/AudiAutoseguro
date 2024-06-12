@@ -64,6 +64,7 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']
     Route::get('/administrador/contratos/{id}/coberturas-clausulas', [ContratoController::class, 'getCoberturasClausulas'])->name('contratos.cobertura-clausulas'); //get coberturas y clausulas
     //Contratos: {Ruta para el envio de correo}
     Route::get('/administrador/correo/{id}', [CorreoController::class, 'correo'])->name('contrato.correo');
+    Route::post('/administrador/enviar_correo', [CorreoController::class, 'enviarCorreo'])->name('enviar.correo');
 
 
     //Pagos:
