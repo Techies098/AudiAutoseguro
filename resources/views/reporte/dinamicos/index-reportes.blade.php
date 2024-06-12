@@ -80,8 +80,9 @@
 
                                 <div class="mb-3">
                                     <div class="col-12">
-                                        <button class="btn btn-primary col-sm-2" type="button">Ver</button>
-                                        <button class="btn btn-warning ms-4 col-sm-2" type="submit">Generar
+                                        <!--<button class="btn btn-primary ms-4 col-sm-2" type="button">Ver</button>-->
+                                        <button class="btn btn-warning col-sm-2" type="submit" id="btn-generar-reporte"
+                                            disabled>Generar
                                             reporte</button>
                                     </div>
 
@@ -128,6 +129,8 @@
                                         }
                                     }
                                     selectedColumnsInput.value = selectedColumnsArray.join(',');
+
+                                    document.getElementById('btn-generar-reporte').disabled = false;
                                 }
 
                                 function removeColumn(columnName) {
@@ -149,56 +152,6 @@
                             </script>
 
 
-                        </div>
-
-                        <div class="col-md-12 py-3">
-                            <hr>
-                            <div class="table-responsive">
-                                <table class="table table-striped text-sm" style="font-size: 13px;">
-                                    <thead>
-                                        <tr>
-                                            <th scope="col">CLIENTE</th>
-                                            <th scope="col">MARCA</th>
-                                            <th scope="col">MODELO</th>
-                                            <th scope="col">CLASE</th>
-                                            <th scope="col">COLOR</th>
-                                            <th scope="col">PLACA</th>
-                                            <th scope="col">CHASIS</th>
-                                            <th scope="col">MOTOR</th>
-                                            <th scope="col">TRACCION</th>
-                                            <th scope="col">AÑO</th>
-                                            <th scope="col">USO</th>
-                                            <th scope="col">Nro ASIENTOS</th>
-                                            <th scope="col">COMBUSTIBLE</th>
-                                            <th scope="col">VALOR</th>
-                                            <th scope="col">FECHA</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-
-                                        @foreach ($vehiculos as $fila => $vehiculo)
-                                            <tr>
-                                                <td>{{ $vehiculo->cliente_id }}</td>
-                                                <td>{{ $vehiculo->marca }} </td>
-                                                <td>{{ $vehiculo->modelo }} </td>
-                                                <td>{{ $vehiculo->clase }} </td>
-                                                <td>{{ $vehiculo->color }} </td>
-                                                <td>{{ $vehiculo->placa }} </td>
-                                                <td>{{ $vehiculo->chasis }} </td>
-                                                <td>{{ $vehiculo->motor }} </td>
-                                                <td>{{ $vehiculo->traccion }} </td>
-                                                <td>{{ $vehiculo->anio }} </td>
-                                                <td>{{ $vehiculo->uso }} </td>
-                                                <td>{{ $vehiculo->nro_asientos }} </td>
-                                                <td>{{ $vehiculo->combustible }} </td>
-                                                <td>{{ $vehiculo->valor_comercial }} </td>
-                                                <td>{{ date('d-m-Y', strtotime($vehiculo->created_at)) }} </td>
-                                            </tr>
-                                        @endforeach
-                                    </tbody>
-                                </table>
-                            </div>
-                            {{ $vehiculos->links() }}
                         </div>
 
                     </div>

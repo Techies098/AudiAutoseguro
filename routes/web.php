@@ -65,7 +65,6 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']
     //Rutas de reportes dinamicos:
     Route::get('/administrador/reporte-dinamico', [ReporteController::class, 'indexReporte'])->name('reporte-dinamico');
     Route::post('/administrador/pdf-dinamico', [ReporteController::class, 'reporteDinamico'])->name('pdf-dinamico');
-
     //Siniestros:
     Route::resource('/personal/siniestros', SiniestroController::class)->parameters(['siniestros' => 'siniestro'])->names('personal/siniestros');
 
