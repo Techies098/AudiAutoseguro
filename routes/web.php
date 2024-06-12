@@ -1,22 +1,23 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\PagoController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\PaypalController;
 use App\Http\Controllers\SeguroController;
+use App\Http\Controllers\TallerController;
 use App\Http\Controllers\ClienteController;
 use App\Http\Controllers\PermisoController;
+use App\Http\Controllers\ReporteController;
 use App\Http\Controllers\BitacoraController;
 use App\Http\Controllers\ClausulaController;
 use App\Http\Controllers\ContratoController;
+use App\Http\Controllers\PersonalController;
 use App\Http\Controllers\VehiculoController;
 use App\Http\Controllers\CoberturaController;
 use App\Http\Controllers\SiniestroController;
-use App\Http\Controllers\CotizacionController;
-use App\Http\Controllers\PagoController;
-use App\Http\Controllers\TallerController;
-use App\Http\Controllers\PaypalController;
-use App\Http\Controllers\ReporteController;
 use App\Http\Controllers\SolicitudController;
+use App\Http\Controllers\CotizacionController;
 
 // Rutas que requieren autenticación y verificación
 Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified'])->group(function () {
@@ -35,6 +36,8 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']
     Route::resource('/administrador/clausulas', ClausulaController::class)->parameters(['clausulas' => 'clausula'])->names('administrador/clausulas');
 
     Route::resource('/administrador/clientes', ClienteController::class)->parameters(['clientes' => 'cliente'])->names('personal/clientes');
+    Route::resource('/administrador/personal', PersonalController::class)->parameters(['personals' => 'personal'])->names('administrador/personal');
+
 
     Route::resource('/administrador/coberturas', CoberturaController::class)->parameters(['coberturas' => 'cobertura'])->names('administrador/coberturas');
 
