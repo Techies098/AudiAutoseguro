@@ -17,6 +17,7 @@ use App\Http\Controllers\TallerController;
 use App\Http\Controllers\PaypalController;
 use App\Http\Controllers\ReporteController;
 use App\Http\Controllers\SolicitudController;
+use App\Http\Controllers\CorreoController;
 
 // Rutas que requieren autenticación y verificación
 Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified'])->group(function () {
@@ -61,6 +62,9 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']
     Route::get('/cliente/{cliente}/contratos', [ClienteController::class, 'contratos'])->name('cliente.contratos.index'); //Vista del cliente
     Route::get('/cliente/contratos/{contrato}', [ClienteController::class, 'show'])->name('cliente.contratos.show'); //Vista de cliente, admin y vendedor
     Route::get('/administrador/contratos/{id}/coberturas-clausulas', [ContratoController::class, 'getCoberturasClausulas'])->name('contratos.cobertura-clausulas'); //get coberturas y clausulas
+    //Contratos: {Ruta para el envio de correo}
+    Route::get('/administrador/correo/{id}', [CorreoController::class, 'correo'])->name('contrato.correo');
+
 
     //Pagos:
     Route::post('paypal', [PaypalController::class, 'paypal'])->name('paypal');
