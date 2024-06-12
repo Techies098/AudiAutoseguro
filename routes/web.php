@@ -12,6 +12,7 @@ use App\Http\Controllers\VehiculoController;
 use App\Http\Controllers\CoberturaController;
 use App\Http\Controllers\SiniestroController;
 use App\Http\Controllers\CotizacionController;
+use App\Http\Controllers\DanoMenorClienteController;
 use App\Http\Controllers\PagoController;
 use App\Http\Controllers\TallerController;
 use App\Http\Controllers\PaypalController;
@@ -91,6 +92,11 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']
     Route::get('/revisar-siniestro/{id}', [SiniestroController::class, 'revisar'])->name('revisar_siniestro')
         ->middleware('auth:sanctum', 'verified');
     Route::put('/ruta/{id}',  [SiniestroController::class, 'update'])->name('personal.siniestros.update');
+
+    //Dano Menor
+    Route::resource('/cliente/dano-menor', DanoMenorClienteController::class)->names('cliente.dano-menor');
+    
+
 });
 
 // Rutas públicas
