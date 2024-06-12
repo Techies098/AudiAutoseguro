@@ -34,34 +34,48 @@
                     @if ($siniestro)
                         <tr>
                             <td>{{ $siniestro->detalle }}</td>
-                            <td>{{ $siniestro->estado }} </td>
+                            <td>
+                                @if ($siniestro->estado === 'aprobado')
+                                    <span style="color: green;">{{ $siniestro->estado }}</span>
+                                @elseif ($siniestro->estado === 'negado')
+                                    <span style="color: red;">{{ $siniestro->estado }}</span>
+                                @else
+                                    {{ $siniestro->estado }}
+                                @endif
+                            </td>
                             <td>{{ $siniestro->created_at }} </td>
-                            <td class="">
-                                <a href="{{ $siniestro->ubicacion }}" target="_blank"
-                                    >{{ $siniestro->ubicacion }}</a>
+                            <td>
+                                @if (Str::startsWith($siniestro->ubicacion, 'https'))
+                                    <a href="{{ $siniestro->ubicacion }}" target="_blank"
+                                        class="text-blue-500 hover:text-blue-700">
+                                        {{ $siniestro->ubicacion }}
+                                    </a>
+                                @else
+                                    {{ $siniestro->ubicacion }}
+                                @endif
                             </td>
                             <td>{{-- ESTADOS : aprobado,negado,espera,pagado --}}
-                                <a href="{{ route('personal/siniestros.show', $siniestro->id) }}"
-                                    class="btn btn-primary">ver</a>
+                                <a href="{{ route('personal/siniestros.show', $siniestro->id) }}" class="btn btn-info">
+                                    Ver </a>
                                 @if ($siniestro->estado == 'revisado')
-                                    @if (auth()->user()->administrador || auth()->user()->perito)
+                                    @can('personal.siniestros.calificar')
                                         <a href="{{ route('denegar_siniestro', $siniestro->id) }}"
-                                            class="btn btn-primary">Denegar</a>
+                                            class="btn btn-danger">Negar</a>
                                         <a href="{{ route('aprobar_siniestro', $siniestro->id) }}"
-                                            class="btn btn-primary">Aprobar</a>
-                                    @endif
+                                            class="btn btn-success">Aprobar</a>
+                                    @endcan
                                 @endif
                                 @if ($siniestro->estado == 'Espera')
-                                    @if (auth()->user()->perito)
+                                    @can('personal.siniestros.revisar')
                                         <a href="{{ route('revisar_siniestro', $siniestro) }}"
                                             class="btn btn-primary">revisar</a>
-                                    @endif
+                                    @endcan
                                 @endif
                                 @if ($siniestro->estado == 'negado' || $siniestro->estado == 'aprobado')
-                                    @if (auth()->user()->perito || auth()->user()->adminsitrador)
+                                    @can('personal.siniestros.calificar')
                                         <a href="{{ route('re_evaluar_siniestro', $siniestro->id) }}"
                                             class="btn btn-primary">Re_evaluar</a>
-                                    @endif
+                                    @endcan
                                 @endif
                                 @if ($siniestro->estado == 'aprobado' && auth()->user()->cliente)
                                     {{-- <button class="btn btn-secondary">
@@ -69,8 +83,8 @@
                                     </button> --}}
                                 @endif
                                 @if ($siniestro->estado == 'pagado')
-                                {{-- Comprobante --}}
-                            @endif
+                                    {{-- Comprobante --}}
+                                @endif
                             </td>
                         </tr>
                     @endif
