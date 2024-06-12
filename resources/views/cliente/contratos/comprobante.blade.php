@@ -60,8 +60,12 @@
         </div>
         <div class="payment-details">
             <p>Número de contrato: {{ $data['cuota']['contrato_id'] }}</p>
-            <p>Número de cuota: {{ $data['cuota']['numero'] }}</p>
-            <p>Cuotas totales: {{ $data['contrato']['nro_cuotas'] }}</p>
+            @if(session()->get('tipo_pago') == "Prima")
+                <p>Número de cuota: {{ $data['cuota']['numero'] }}</p>
+                <p>Cuotas totales: {{ $data['contrato']['nro_cuotas'] }}</p>
+            @else
+                <p>Número de pago: {{ $data['cuota']['numero'] }}</p>
+            @endif
             <p>Cliente: {{ auth()->user()->name }}</p>
             <p>Dirección: {{ auth()->user()->direccion }}</p>
             <p>Correo: {{ auth()->user()->email }}</p>

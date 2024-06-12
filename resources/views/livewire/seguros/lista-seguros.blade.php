@@ -21,9 +21,7 @@
                         <th scope="col">Precio Prima</th>
                         <th scope="col">Coberturas</th>
                         <th scope="col">Clausulas</th>
-                        @can('administrador.seguros.relacionar')
                         <th scope="col">Acciones</th>
-                        @endcan
                     </tr>
                 </thead>
                 <tbody>
@@ -46,7 +44,6 @@
                                 @endforeach
                             </ul>
                         </td>
-                        @can('administrador.seguros.edit', $seguro)
                         <td>
                             @can('administrador.seguros.relacionar', $seguro)
                             <a href="{{ route('administrador.seguros.relacionar', $seguro->id) }}" class="btn btn-primary">Relacionar</a>
@@ -64,8 +61,12 @@
                                 <button type="submit" onclick="return confirm('¿Eliminar Seguro {{ $seguro->nombre }}?')" class="btn btn-danger">Eliminar</button>
                             </form>
                             @endcan
+                            <form action="{{ route('solicitudes.store') }}" method="POST" onsubmit="return confirm('¿Está seguro de solicitar este seguro?')">
+                                @csrf
+                                <input type="hidden" name="seguro_id" value="{{ $seguro->id }}">
+                                <button type="submit" class="btn btn-primary">Solicitar</button>
+                            </form>
                         </td>
-                        @endcan
                     </tr>
                     @endforeach
                 </tbody>

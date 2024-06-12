@@ -37,6 +37,10 @@ class Seguro extends Model
     {
         return $this->hasMany(Contrato::class);
     }
+    public function solicitud()
+    {
+        return $this->hasMany(solicitud::class);
+    }
 
 
 }

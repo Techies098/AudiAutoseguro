@@ -283,5 +283,17 @@ class UserSeeder extends Seeder
         Vendedor::create([
             'user_id' => 22
         ]);
+
+        User::factory()->create([
+            'name' => 'Benjamin Romero',
+            'email' => 'imin.arc@gmail.com',
+            'direccion' => 'La Guardia',
+            'telefono' => '76316283',
+            'password' => bcrypt('00000000'), //8 veces 0
+        ])->assignRole('cliente');
+
+        Cliente::create([
+            'user_id' => 23
+        ]);
     }
 }

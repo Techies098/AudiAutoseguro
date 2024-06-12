@@ -12,8 +12,11 @@ use App\Http\Controllers\VehiculoController;
 use App\Http\Controllers\CoberturaController;
 use App\Http\Controllers\SiniestroController;
 use App\Http\Controllers\CotizacionController;
+use App\Http\Controllers\PagoController;
 use App\Http\Controllers\TallerController;
 use App\Http\Controllers\PaypalController;
+use App\Http\Controllers\ReporteController;
+use App\Http\Controllers\SolicitudController;
 
 // Rutas que requieren autenticación y verificación
 Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified'])->group(function () {
@@ -45,6 +48,13 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']
     Route::get('/administrador/seguros/{id}/relacionar', [SeguroController::class, 'relacionarSeguro'])->name('administrador.seguros.relacionar');
     Route::post('/guardar-relacion', [SeguroController::class, 'guardarRelacion'])->name('guardar.relacion');
 
+    //Solicitud Seguro
+    Route::resource('solicitudes', SolicitudController::class)->parameters(['solicitudes' => 'solicitud'])->names('solicitudes');
+    Route::get('/vendedor', [SolicitudController::class, 'solicitudesVendedor'])->name('solicitudes.vendedor');
+
+    Route::get('mis-solicitudes', [SolicitudController::class, 'misSolicitudes'])->name('solicitudes.mis');
+    Route::patch('solicitudes/{solicitud}/estado', [SolicitudController::class, 'cambiarEstado'])->name('solicitudes.cambiarEstado');
+
 
     //Contratos:
     Route::resource('/administrador/contratos', ContratoController::class)->parameters(['contratos' => 'contrato'])->names('administrador/contratos');
@@ -57,11 +67,18 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']
     Route::get('success', [PaypalController::class, 'success'])->name('success');
     Route::get('cancel', [PaypalController::class, 'cancel'])->name('cancel');
 
+    Route::post('pago_paypal', [PagoController::class, 'paypal'])->name('pago_paypal');
+    Route::get('pago_success', [PagoController::class, 'success'])->name('pago_success');
+    Route::get('pago_cancel', [PagoController::class, 'cancel'])->name('pago_cancel');
+
+
     //Rutas de reportes:
     Route::get('/administrador/reporte-vehiculo', [VehiculoController::class, 'reportev'])->name('reporte-vehiculo');
     Route::post('/administrador/pdf-vehiculo', [VehiculoController::class, 'generarReporte'])->name('pdf-vehiculo');
     Route::get('/administrador/pdf-contrato/{id}', [ContratoController::class, 'contrato'])->name('pdf-contrato');
-
+    //Rutas de reportes dinamicos:
+    Route::get('/administrador/reporte-dinamico', [ReporteController::class, 'indexReporte'])->name('reporte-dinamico');
+    Route::post('/administrador/pdf-dinamico', [ReporteController::class, 'reporteDinamico'])->name('pdf-dinamico');
     //Siniestros:
     Route::resource('/personal/siniestros', SiniestroController::class)->parameters(['siniestros' => 'siniestro'])
     ->names('personal/siniestros');
