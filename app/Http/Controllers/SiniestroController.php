@@ -29,12 +29,13 @@ class SiniestroController extends Controller
     }
     public function reportar()
     {
+        $tiposDeSiniestro = TipoDeSiniestro::all();
         $user=auth()->user();
         if ($user->cliente) {
             $clienteId = auth()->user()->cliente->id; // Accede al ID del cliente relacionado
             $vehiculos = Vehiculo::where('cliente_id', $clienteId)->get();
             $contratos = Contrato::where('vigenciafin', '>', now())->get();
-        return view('personal.siniestros.reportar', compact('vehiculos', 'contratos'));
+        return view('personal.siniestros.reportar', compact('vehiculos', 'contratos','tiposDeSiniestro'));
         }else{
             return redirect()->route('personal/siniestros.index')
                 ->with('msj_ok', 'No tienes permisos para reportar siniestro');
@@ -52,7 +53,7 @@ class SiniestroController extends Controller
         $siniestro = Siniestro::create([
             'contrato_id' => $request->contrato_id,
             'ubicacion' => $request->ubicacion,
-            'tipo' => $request->tipo,
+            'tipo_de_siniestro_id' => $request->tipo,
         ]);
         if ($siniestro) {
             return redirect()->route('inicio')

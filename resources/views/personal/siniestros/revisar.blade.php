@@ -29,7 +29,7 @@
                                     @enderror
                                 </div>
                                 <div class="flex items-center m-1">
-                                    <button id="ubicar-btn" class="btn btn-primary" type="button">Ubicar</button>
+                                    <button id="ubicar-btn" class="btn btn-secondary" type="button">Ubicar</button>
                                     <a id="maps-link" href="#" class="hidden m-1 text-blue-950" target="_blank">Ver en Google Maps</a>
                                 </div>
                                 <div class="mb-3">

@@ -19,6 +19,8 @@ class Siniestro extends Model
         'porcentaje_danio',
         'porcentajeCulpabilidad',
         'ubicacion',
+        "tipo_de_siniestro_id",
+        "perito_id",
     ];
     public function tipoDeSiniestro()    {
         return $this->belongsTo(TipoDeSiniestro::class);

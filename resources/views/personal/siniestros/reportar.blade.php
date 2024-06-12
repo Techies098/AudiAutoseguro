@@ -36,12 +36,19 @@
                                 @enderror
                             </div>
                             <div class="flex items-center m-1">
-                                <button id="ubicar-btn" class="btn btn-primary" type="button">Ubicar</button>
+                                <button id="ubicar-btn" class="btn btn-secondary" type="button">Ubicar</button>
                                 <a id="maps-link" href="#" class="hidden m-1 text-blue-950" target="_blank">Ver en Google Maps</a>
                             </div>
                             <div class="mb-3">
-                                <label for="tipo" class="form-label">tipo de accidente </label>
-                                <input type="text" class="form-control" id="tipo" name="tipo">
+                                <label for="tipo" class="form-label">Tipo de accidente</label>
+                                <select wire:model="selectedTipoDeSiniestro" id="tipo" name="tipo" class="form-control">
+                                    <option value="">Selecciona un tipo de siniestro</option>
+                                    @foreach ($tiposDeSiniestro as $tipo)
+                                        <option value="{{ $tipo->id }}" >
+                                            {{ $tipo->name }}
+                                        </option>
+                                    @endforeach
+                                </select>
                                 @error('tipo')
                                     <div class="alert alert-danger">{{ $message }}</div>
                                 @enderror
