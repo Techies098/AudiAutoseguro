@@ -22,6 +22,7 @@ class DatabaseSeeder extends Seeder
             ContratoSeeder::class,
             SiniestroSeeder::class,
             TallerSeeder::class,
+            TablaSeeder::class,
 
         ]);
     }

@@ -65,6 +65,9 @@
             <x-nav-link class="dropdown-item" href="{{ route('administrador/talleres.index') }}" :active="request()->routeIs('administrador/talleres.index')">
                 {{ __('Taller') }}
             </x-nav-link>
+            <x-nav-link class="dropdown-item" href="{{ route('reporte-dinamico') }}" :active="request()->routeIs('reporte/dinamicos.index-reportes')">
+                {{ __('Reporte') }}
+            </x-nav-link>
         </ul>
     </div>
 @endif
