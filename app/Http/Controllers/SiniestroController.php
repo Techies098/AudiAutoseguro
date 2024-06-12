@@ -6,13 +6,21 @@ use App\Models\Contrato;
 use App\Models\Vehiculo;
 use App\Models\Siniestro;
 use Illuminate\Http\Request;
+use App\Models\TipoDeSiniestro;
+use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;
 
 class SiniestroController extends Controller
 {
+    public function __construct() {
+        $this->middleware('can:personal.siniestros.index')->only('index');
+        $this->middleware('can:personal.siniestros.reportar')->only('reportar', 'store');
+        $this->middleware('can:personal.siniestros.revisar')->only('revisar', 'update');
+        $this->middleware('can:personal.siniestros.calificar')->only('Aprobar', 'denegar','re_evaluar');
+    }
     public function index()
     {
-        return view('Personal.siniestros.index');
+        return view('personal.siniestros.index');
     }
 
     public function create()
@@ -26,7 +34,7 @@ class SiniestroController extends Controller
             $clienteId = auth()->user()->cliente->id; // Accede al ID del cliente relacionado
             $vehiculos = Vehiculo::where('cliente_id', $clienteId)->get();
             $contratos = Contrato::where('vigenciafin', '>', now())->get();
-        return view('Personal.siniestros.reportar', compact('vehiculos', 'contratos'));
+        return view('personal.siniestros.reportar', compact('vehiculos', 'contratos'));
         }else{
             return redirect()->route('personal/siniestros.index')
                 ->with('msj_ok', 'No tienes permisos para reportar siniestro');
@@ -92,14 +100,17 @@ class SiniestroController extends Controller
         // Obtén el siniestro por su ID
         $siniestro = Siniestro::findOrFail($id);
         // Envía el siniestro a la vista
-        return view('Personal/siniestros.show', compact('siniestro'));
+        return view('personal/siniestros.show', compact('siniestro'));
     }
     public function revisar(string $id)
+    // {
+    //     $siniestro = Siniestro::findOrFail($id);
+    //     return view('personal.siniestros.revisar', compact('siniestro'));
+    // }
     {
-        // Obtén el siniestro por su ID
         $siniestro = Siniestro::findOrFail($id);
-        // Envía el siniestro a la vista
-        return view('Personal.siniestros.revisar', compact('siniestro'));
+        $tiposDeSiniestro = TipoDeSiniestro::all();
+        return view('personal.siniestros.revisar', compact('siniestro', 'tiposDeSiniestro'));
     }
 
 

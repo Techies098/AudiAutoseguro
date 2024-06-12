@@ -63,8 +63,8 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']
     Route::get('/administrador/pdf-contrato/{id}', [ContratoController::class, 'contrato'])->name('pdf-contrato');
 
     //Siniestros:
-    Route::resource('/personal/siniestros', SiniestroController::class)->parameters(['siniestros' => 'siniestro'])->names('personal/siniestros');
-
+    Route::resource('/personal/siniestros', SiniestroController::class)->parameters(['siniestros' => 'siniestro'])
+    ->names('personal/siniestros');
     Route::get('/reportar-siniestro', [SiniestroController::class, 'reportar'])->name('reportar_siniestro')
         ->middleware('auth:sanctum', 'verified');
     Route::get('/aprobar-siniestro/{id}', [SiniestroController::class, 'aprobar'])->name('aprobar_siniestro')
