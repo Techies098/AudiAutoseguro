@@ -19,6 +19,7 @@
                                     @error('detalle')
                                         <div class="alert alert-danger">{{ $message }}</div>
                                     @enderror
+                                    <small class="text-muted">Ingresa un texto.</small>
                                 </div>
                                 <div class="mb-3">
                                     <label for="ubicacion" class="form-label">Ubicacion </label>
@@ -33,15 +34,22 @@
                                 </div>
                                 <div class="mb-3">
                                     <label for="tipo" class="form-label">Tipo de accidente</label>
-                                    <input type="text" class="form-control" id="tipo" name="tipo" value="{{ old('tipo', $siniestro->tipo) }}">
+                                    <select wire:model="selectedTipoDeSiniestro" id="tipo" name="tipo" class="form-control">
+                                        <option value="">Selecciona un tipo de siniestro</option>
+                                        @foreach ($tiposDeSiniestro as $tipo)
+                                            <option value="{{ $tipo->id }}" @if ($tipo->id == $siniestro->tipoDeSiniestro->id) selected @endif>
+                                                {{ $tipo->name }}
+                                            </option>
+                                        @endforeach
+                                    </select>
                                     @error('tipo')
                                         <div class="alert alert-danger">{{ $message }}</div>
                                     @enderror
                                 </div>
-
                                 <div class="mb-3">
                                     <label for="estado_ebriedad" class="form-label">Estado de ebriedad </label>
                                     <input type="text" class="form-control" id="estado_ebriedad" name="estado_ebriedad" value="{{ old('estado_ebriedad', $siniestro->estado_ebriedad) }}">
+                                    <small class="text-muted">Ingresa un texto.</small>
                                     @error('estado_ebriedad')
                                         <div class="alert alert-danger">{{ $message }}</div>
                                     @enderror
@@ -50,6 +58,7 @@
                                     <label for="monto_siniestro" class="form-label">Monto Siniestro</label>
                                     <input type="number" class="form-control" id="monto_siniestro" name="monto_siniestro" step="0.01"
                                     value="{{ old('monto_siniestro', $siniestro->monto_siniestro) }}">
+                                    <small class="text-muted">Ingresa un monto (por ejemplo, 555.5).</small>
                                     @error('monto_siniestro')
                                         <div class="alert alert-danger">{{ $message }}</div>
                                     @enderror
@@ -57,15 +66,18 @@
                                 <div class="mb-3">
                                     <label for="porcentaje_danio" class="form-label">Porcentaje de daño</label>
                                     <input type="number" class="form-control" id="porcentaje_danio" name="porcentaje_danio" step="0.001"
-                                    value="{{ old('porcentaje_danio', $siniestro->porcentaje_danio) }}">
+                                           value="{{ old('porcentaje_danio', $siniestro->porcentaje_danio) }}">
+                                    <small class="text-muted">Ingresa un número decimal (por ejemplo, 0.123).</small>
                                     @error('porcentaje_danio')
                                         <div class="alert alert-danger">{{ $message }}</div>
                                     @enderror
                                 </div>
+
                                 <div class="mb-3">
                                     <label for="porcentajeCulpabilidad" class="form-label">Porcentaje de Culpabilidad</label>
                                     <input type="number" class="form-control" id="porcentajeCulpabilidad" name="porcentajeCulpabilidad"
                                     step="0.001" value="{{ old('porcentajeCulpabilidad', $siniestro->porcentajeCulpabilidad) }}">
+                                    <small class="text-muted">Ingresa un número decimal (por ejemplo, 0.123).</small>
                                     @error('porcentajeCulpabilidad')
                                         <div class="alert alert-danger">{{ $message }}</div>
                                     @enderror
