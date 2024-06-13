@@ -170,6 +170,14 @@ class RoleSeeder extends Seeder
         Permission::create([
             'name' => 'personal.siniestros.index', 'description' => 'Ver listado de siniestros'
         ])->syncRoles([$roleAdministrador,$roleCliente,$rolePerito]);
-
+        Permission::create([
+            'name' => 'personal.siniestros.reportar', 'description' => 'reportar nuevo siniestro'
+        ])->syncRoles([$roleCliente]);
+        Permission::create([
+            'name' => 'personal.siniestros.revisar', 'description' => 'revisar reporte de siniestro'
+        ])->syncRoles([$rolePerito]);
+        Permission::create([
+            'name' => 'personal.siniestros.calificar', 'description' => 'aprueba o niega la cobertura de un siniestro'
+        ])->syncRoles([$rolePerito,$roleAdministrador]);
     }
 }

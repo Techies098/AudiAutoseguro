@@ -11,17 +11,18 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('solicituds', function (Blueprint $table) {
+        Schema::create('solicitud_auxes', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('vendedor_id')->nullable();
-            $table->unsignedBigInteger('seguro_id')->nullable();
+            $table->unsignedBigInteger('auxilio_id')->nullable();
             $table->string('estado');
             $table->time('hora');
             $table->date('fecha');
+            $table->string('ubicacion');
             $table->foreign('user_id')->references('id')->on('users')->onUpdate('cascade')->onDelete('cascade');
             $table->foreign('vendedor_id')->references('id')->on('users')->onUpdate('cascade')->onDelete('cascade');
-            $table->foreign('seguro_id')->references('id')->on('seguros')->onUpdate('cascade')->onDelete('cascade');
+            $table->foreign('auxilio_id')->references('id')->on('auxilios')->onUpdate('cascade')->onDelete('cascade');
 
             $table->timestamps();
         });
@@ -32,6 +33,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('solicituds');
+        Schema::dropIfExists('solicitud_auxes');
     }
 };

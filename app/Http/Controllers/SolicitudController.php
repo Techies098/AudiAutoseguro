@@ -44,10 +44,17 @@ class SolicitudController extends Controller
         ]);
 
         $solicitud->estado = $request->estado;
+
+        // Si el estado es "en progreso", establecer el vendedor_id
+        if ($request->estado == 'en progreso') {
+            $solicitud->vendedor_id = Auth::id();
+        }
+
         $solicitud->save();
 
         return redirect()->back()->with('success', 'Estado de la solicitud actualizado correctamente.');
     }
+
 
     public function create()
     {
@@ -95,7 +102,15 @@ class SolicitudController extends Controller
 
     public function show(Solicitud $solicitud)
     {
-        return view('solicitudes.show', compact('solicitud'));
+        // Cargar los datos del seguro, coberturas, cláusulas y los datos del cliente
+        $seguro = $solicitud->seguro;
+        $coberturas = $seguro->coberturas;
+        $clausulas = $seguro->clausulas;
+        $cliente = $solicitud->user;
+        $vendedor = $solicitud->vendedor;
+
+
+        return view('solicitudes.show', compact('solicitud', 'seguro', 'coberturas', 'clausulas', 'cliente','vendedor'));
     }
 
     public function edit(Solicitud $solicitud)
@@ -123,5 +138,36 @@ class SolicitudController extends Controller
         $solicitud->delete();
     
         return redirect()->route('solicitudes.mis')->with('success', 'Solicitud eliminada correctamente.');
+    }
+    public function solicitudesVendedor()
+    {
+        // Obtener el ID del vendedor autenticado
+        $vendedorId = Auth::id();
+    
+        // Obtener las solicitudes pendientes asignadas al vendedor autenticado
+        $pendientes = Solicitud::where('vendedor_id', $vendedorId)
+                                ->pendiente()
+                                ->with('user')
+                                ->get();
+    
+        // Obtener las solicitudes en progreso asignadas al vendedor autenticado
+        $enProgreso = Solicitud::where('vendedor_id', $vendedorId)
+                               ->enProgreso()
+                               ->with('user')
+                               ->get();
+    
+        // Obtener las solicitudes aprobadas asignadas al vendedor autenticado
+        $aprobadas = Solicitud::where('vendedor_id', $vendedorId)
+                              ->aprobada()
+                              ->with('user')
+                              ->get();
+    
+        // Obtener las solicitudes denegadas asignadas al vendedor autenticado
+        $denegadas = Solicitud::where('vendedor_id', $vendedorId)
+                              ->denegada()
+                              ->with('user')
+                              ->get();
+    
+        return view('solicitudes.vendedor', compact('pendientes', 'enProgreso', 'aprobadas', 'denegadas'));
     }
 }
