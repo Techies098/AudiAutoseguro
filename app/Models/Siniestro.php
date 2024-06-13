@@ -18,10 +18,13 @@ class Siniestro extends Model
         'monto_siniestro',
         'porcentaje_danio',
         'porcentajeCulpabilidad',
-        'tipo',
         'ubicacion',
-        'url_informe',
+        "tipo_de_siniestro_id",
+        "perito_id",
     ];
+    public function tipoDeSiniestro()    {
+        return $this->belongsTo(TipoDeSiniestro::class);
+    }
     public function contrato()    {
         return $this->belongsTo(Contrato::class);
     }

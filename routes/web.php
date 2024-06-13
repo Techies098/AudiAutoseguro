@@ -2,21 +2,26 @@
 
 use App\Http\Controllers\AuxilioController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\PagoController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\PaypalController;
 use App\Http\Controllers\SeguroController;
+use App\Http\Controllers\TallerController;
 use App\Http\Controllers\ClienteController;
 use App\Http\Controllers\PermisoController;
+use App\Http\Controllers\ReporteController;
 use App\Http\Controllers\BitacoraController;
 use App\Http\Controllers\ClausulaController;
 use App\Http\Controllers\ContratoController;
+use App\Http\Controllers\PersonalController;
 use App\Http\Controllers\VehiculoController;
 use App\Http\Controllers\CoberturaController;
 use App\Http\Controllers\SiniestroController;
-use App\Http\Controllers\CotizacionController;
-use App\Http\Controllers\TallerController;
-use App\Http\Controllers\PaypalController;
 use App\Http\Controllers\SolicitudController;
 use App\Http\Controllers\SolicitudAuxController;
+use App\Http\Controllers\CorreoController;
+use App\Http\Controllers\CotizacionController;
+
 
 // Rutas que requieren autenticación y verificación
 Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified'])->group(function () {
@@ -35,6 +40,8 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']
     Route::resource('/administrador/clausulas', ClausulaController::class)->parameters(['clausulas' => 'clausula'])->names('administrador/clausulas');
 
     Route::resource('/administrador/clientes', ClienteController::class)->parameters(['clientes' => 'cliente'])->names('personal/clientes');
+    Route::resource('/administrador/personal', PersonalController::class)->parameters(['personals' => 'personal'])->names('administrador/personal');
+
 
     Route::resource('/administrador/coberturas', CoberturaController::class)->parameters(['coberturas' => 'cobertura'])->names('administrador/coberturas');
 
@@ -81,20 +88,31 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']
     Route::get('/cliente/{cliente}/contratos', [ClienteController::class, 'contratos'])->name('cliente.contratos.index'); //Vista del cliente
     Route::get('/cliente/contratos/{contrato}', [ClienteController::class, 'show'])->name('cliente.contratos.show'); //Vista de cliente, admin y vendedor
     Route::get('/administrador/contratos/{id}/coberturas-clausulas', [ContratoController::class, 'getCoberturasClausulas'])->name('contratos.cobertura-clausulas'); //get coberturas y clausulas
+    //Contratos: {Ruta para el envio de correo}
+    Route::get('/administrador/correo/{id}', [CorreoController::class, 'correo'])->name('contrato.correo');
+    Route::post('/administrador/enviar_correo', [CorreoController::class, 'enviarCorreo'])->name('enviar.correo');
+
 
     //Pagos:
     Route::post('paypal', [PaypalController::class, 'paypal'])->name('paypal');
     Route::get('success', [PaypalController::class, 'success'])->name('success');
     Route::get('cancel', [PaypalController::class, 'cancel'])->name('cancel');
 
+    Route::post('pago_paypal', [PagoController::class, 'paypal'])->name('pago_paypal');
+    Route::get('pago_success', [PagoController::class, 'success'])->name('pago_success');
+    Route::get('pago_cancel', [PagoController::class, 'cancel'])->name('pago_cancel');
+
+
     //Rutas de reportes:
     Route::get('/administrador/reporte-vehiculo', [VehiculoController::class, 'reportev'])->name('reporte-vehiculo');
     Route::post('/administrador/pdf-vehiculo', [VehiculoController::class, 'generarReporte'])->name('pdf-vehiculo');
     Route::get('/administrador/pdf-contrato/{id}', [ContratoController::class, 'contrato'])->name('pdf-contrato');
-
+    //Rutas de reportes dinamicos:
+    Route::get('/administrador/reporte-dinamico', [ReporteController::class, 'indexReporte'])->name('reporte-dinamico');
+    Route::post('/administrador/pdf-dinamico', [ReporteController::class, 'reporteDinamico'])->name('pdf-dinamico');
     //Siniestros:
-    Route::resource('/personal/siniestros', SiniestroController::class)->parameters(['siniestros' => 'siniestro'])->names('personal/siniestros');
-
+    Route::resource('/personal/siniestros', SiniestroController::class)->parameters(['siniestros' => 'siniestro'])
+    ->names('personal/siniestros');
     Route::get('/reportar-siniestro', [SiniestroController::class, 'reportar'])->name('reportar_siniestro')
         ->middleware('auth:sanctum', 'verified');
     Route::get('/aprobar-siniestro/{id}', [SiniestroController::class, 'aprobar'])->name('aprobar_siniestro')

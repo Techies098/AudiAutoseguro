@@ -2,22 +2,24 @@
 
 namespace App\Http\Controllers;
 
-use App\Mail\ComprobantePagoContrato;
 use App\Models\Contrato;
-use App\Models\Cuota;
 use Illuminate\Http\Request;
-use Srmklive\PayPal\Services\PayPal as PayPalClient;
 use App\Models\Payment;
-use App\Models\Vehiculo;
+use App\Mail\ComprobantePagoContrato;
+use App\Models\Cuota;
+use App\Models\Siniestro;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Support\Facades\Mail;
+use Srmklive\PayPal\Services\PayPal as PayPalClient;
 
-class PaypalController extends Controller
+class PagoController extends Controller
 {
     public function paypal(Request $request)
     {
         $contrato = Contrato::find($request->contrato_id);
-        $cuota = Cuota::find($request->cuota_id);
+        $product_name = $request->product_name;
+        $tipo_pago = $request->tipo_pago;
+        $monto = $request->monto;
 
         $provider = new PayPalClient;
         $provider->setApiCredentials(config('paypal'));
@@ -32,7 +34,7 @@ class PaypalController extends Controller
                 [
                     "amount" => [
                         "currency_code" => "USD",
-                        "value" => $cuota->monto
+                        "value" => $monto
                     ]
                 ]
             ]
@@ -41,12 +43,12 @@ class PaypalController extends Controller
         if (isset($response['id']) && $response['id'] != null) {
             foreach ($response['links'] as $link) {
                 if ($link['rel'] == 'approve') {
-                    session()->put('product_name', $contrato->seguro->nombre);
+                    session()->put('product_name', $product_name);
                     session()->put('quantity', 1);
-                    session()->put('tipo_pago', "Prima");
                     session()->put('contrato_id', $contrato->id);
-                    session()->put('cuota_id', $cuota->id);
-                    session()->put('numero_cuota', $cuota->numero);
+                    session()->put('tipo_pago', $tipo_pago);
+                    session()->put('monto', $monto);
+                    session()->put('siniestro_id', $request->siniestro_id);
                     return redirect()->away($link['href']);
                 }
             }
@@ -57,23 +59,33 @@ class PaypalController extends Controller
 
     public function success(Request $request)
     {
-        // return session()->get('tipo_pago');
-        if(session()->get('tipo_pago') != "Prima"){
-            return redirect()->route('pago_success', ['token' => $request->token]);
-        }
-
         $provider = new PayPalClient;
         $provider->setApiCredentials(config('paypal'));
         $provider->getAccessToken();
         $response = $provider->capturePaymentOrder($request->token);
         // dd($response);
         if (isset($response['status']) && $response['status'] == 'COMPLETED') {
+    
+            $cuota = new Cuota();
+            $cuota->numero = 1;
+            $cuota->monto = session()->get('monto');
+            $cuota->fecha_por_pagar = now();
+            $cuota->fecha_pagada = now();
+            $cuota->estado = "Pagada";
+            $cuota->contrato_id = session()->get('contrato_id');
+            $cuota->save();
+
+            if(session()->get('tipo_pago') == "Franquicia"){
+                $siniestro = Siniestro::find(session()->get('siniestro_id'));
+                $siniestro->estado = "pagado";
+                $siniestro->save();
+            }
 
             // Insert data into database
             $payment = new Payment;
             $payment->payment_id = $response['id'];
-            $payment->cuota_id = session()->get('cuota_id');
-            $payment->tipo = "Prima";
+            $payment->cuota_id = $cuota->id;
+            $payment->tipo = session()->get('tipo_pago');
             $payment->product_name = session()->get('product_name');
             $payment->quantity = session()->get('quantity');
             $payment->amount = $response['purchase_units'][0]['payments']['captures'][0]['amount']['value'];
@@ -84,25 +96,19 @@ class PaypalController extends Controller
             $payment->payment_method = "PayPal";
             $payment->save();
 
-            // Update cuota
-            $cuota = Cuota::find(session()->get('cuota_id'));
-            $cuota->fecha_pagada = now();
-            $cuota->estado = "Pagada";
-            $cuota->save();
-
             // Prepare data for the PDF
             $data = [
                 'payment' => $payment,
                 'contrato' => Contrato::find(session()->get('contrato_id')),
-                'cuota' => Cuota::find(session()->get('cuota_id'))
+                'cuota' => $cuota
             ];
 
             // Generate the PDF
             $pdf = PDF::loadView('cliente.contratos.comprobante', compact('data'));
             $pdfOutput = $pdf->output();
 
-             //Send email with the PDF attached:
-             Mail::to(auth()->user()->email)->send(new ComprobantePagoContrato($pdfOutput, $data));
+            //Send email with the PDF attached:
+            Mail::to(auth()->user()->email)->send(new ComprobantePagoContrato($pdfOutput, $data));
 
             // Store the PDF in a temporary file
             $pdfFilePath = storage_path('app/public/comprobante.pdf');
@@ -113,7 +119,7 @@ class PaypalController extends Controller
                 ->with('msj_ok', 'Pago realizado con éxito. <a href="' . url('storage/comprobante.pdf') . '" target="_blank" class="btn btn-primary">Ver Comprobante</a>');
             
             // Clear the session data
-            session()->forget(['product_name', 'quantity', 'contrato_id', 'cuota_id', 'numero_cuota']);
+            session()->forget(['product_name', 'quantity', 'contrato_id', 'tipo_pago', 'monto']);
 
         } else {
             return redirect()->route('cancel');
@@ -124,5 +130,4 @@ class PaypalController extends Controller
     {
         return "Payment is cancelled.";
     }
-
 }

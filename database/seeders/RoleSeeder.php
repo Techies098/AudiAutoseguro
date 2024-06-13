@@ -161,5 +161,23 @@ class RoleSeeder extends Seeder
         Permission::create([
             'name' => 'contratos.cobertura-clausulas', 'description' => 'Get Coberturas y Clausulas' //Devuelve las coberturas y clausulas de un seguro
         ])->syncRoles([$roleAdministrador, $roleVendedor]);
+
+        //Reporte Dinamico:
+        Permission::create([
+            'name' => 'reporte-dinamico', 'description' => 'Reporte Dinamico'
+        ])->syncRoles([$roleAdministrador, $roleVendedor]);
+        //siniestro
+        Permission::create([
+            'name' => 'personal.siniestros.index', 'description' => 'Ver listado de siniestros'
+        ])->syncRoles([$roleAdministrador,$roleCliente,$rolePerito]);
+        Permission::create([
+            'name' => 'personal.siniestros.reportar', 'description' => 'reportar nuevo siniestro'
+        ])->syncRoles([$roleCliente]);
+        Permission::create([
+            'name' => 'personal.siniestros.revisar', 'description' => 'revisar reporte de siniestro'
+        ])->syncRoles([$rolePerito]);
+        Permission::create([
+            'name' => 'personal.siniestros.calificar', 'description' => 'aprueba o niega la cobertura de un siniestro'
+        ])->syncRoles([$rolePerito,$roleAdministrador]);
     }
 }

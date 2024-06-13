@@ -5,7 +5,7 @@
             aria-expanded="false">
             Gestion de seguros
         </a>
-        <ul class="dropdown-menu bg-white p-2" aria-labelledby="navbarDropdown">
+        <ul class="p-2 bg-white dropdown-menu" aria-labelledby="navbarDropdown">
             <x-nav-link class="dropdown-item" href="{{ route('administrador/seguros.index') }}" :active="request()->routeIs('administrador/seguros.index')">
                 {{ __('Seguros') }}
             </x-nav-link>
@@ -33,12 +33,15 @@
             aria-expanded="false">
             Gestion de usuarios
         </a>
-        <ul class="dropdown-menu bg-white p-2" aria-labelledby="navbarDropdown">
+        <ul class="p-2 bg-white dropdown-menu" aria-labelledby="navbarDropdown">
             <x-nav-link class="dropdown-item" href="{{ route('administrador/usuarios.index') }}" :active="request()->routeIs('administrador/usuarios.index')">
                 {{ __('Usuarios') }}
             </x-nav-link>
             <x-nav-link class="dropdown-item" href="{{ route('personal/clientes.index') }}" :active="request()->routeIs('administrador/clientes.index')">
                 {{ __('Clientes') }}
+            </x-nav-link>
+            <x-nav-link class="dropdown-item" href="{{ route('administrador/personal.index') }}" :active="request()->routeIs('administrador/clientes.index')">
+                {{ __('Personal') }}
             </x-nav-link>
             <x-nav-link class="dropdown-item" href="{{ route('administrador.bitacoras.index') }}" :active="request()->routeIs('administrador.bitacoras.index')">
                 {{ __('Bitacora') }}
@@ -52,7 +55,7 @@
             aria-expanded="false">
             Gestion de vehiculos
         </a>
-        <ul class="dropdown-menu bg-white p-2" aria-labelledby="navbarDropdown">
+        <ul class="p-2 bg-white dropdown-menu" aria-labelledby="navbarDropdown">
             <x-nav-link class="dropdown-item" href="{{ route('administrador/vehiculos.index') }}" :active="request()->routeIs('administrador/vehiculos.index')">
                 {{ __('Vehiculos') }}
             </x-nav-link>
@@ -68,6 +71,7 @@
             <x-nav-link class="dropdown-item" href="{{ route('administrador/talleres.index') }}" :active="request()->routeIs('administrador/talleres.index')">
                 {{ __('Taller') }}
             </x-nav-link>
+
             <x-nav-link class="dropdown-item" href="{{ route('auxilios.index') }}" :active="request()->routeIs('auxilios.index')">
                 {{ __('Auxilio mecanico') }}
             </x-nav-link>
@@ -79,6 +83,10 @@
             </x-nav-link>
             <x-nav-link class="dropdown-item" href="{{ route('solicitudesA.vendedor') }}" :active="request()->routeIs('solicitudesA.vendedor')">
                 {{ __('Solicitudes Asignadas') }}
+
+            <x-nav-link class="dropdown-item" href="{{ route('reporte-dinamico') }}" :active="request()->routeIs('reporte/dinamicos.index-reportes')">
+                {{ __('Reporte') }}
+
             </x-nav-link>
         </ul>
     </div>

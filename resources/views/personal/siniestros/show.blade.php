@@ -16,19 +16,19 @@
                             </div>
                             <div class="card-body">
                                 <p class="card-text"><strong>Detalle:</strong> {{ $siniestro->detalle ?? 'No disponible' }}</p>
-                                <p class="card-text"><strong>Tipo:</strong> {{ $siniestro->tipo ?? 'No disponible' }}</p>
+                                <p class="card-text"><strong>Tipo:</strong> {{ $siniestro->tipoDeSiniestro->name ?? 'No disponible' }}</p>
                                 <p class="card-text"><strong>Estado:</strong> {{ $siniestro->estado ?? 'No disponible' }}</p>
                                 <p class="card-text"><strong>Estado de Ebriedad:</strong> {{ $siniestro->estado_ebriedad ?? 'No disponible' }}</p>
                                 <p class="card-text"><strong>Monto Siniestro:</strong> {{ $siniestro->monto_siniestro ?? 'No disponible' }}</p>
                                 <p class="card-text"><strong>Porcentaje de Daño:</strong> {{ $siniestro->porcentaje_danio ?? 'No disponible' }}</p>
                                 <p class="card-text"><strong>Porcentaje Culpabilidad:</strong> {{ $siniestro->porcentaje_culpabilidad ?? 'No disponible' }}</p>
                                 <p class="card-text"><strong>Ubicación:</strong> {{ $siniestro->ubicacion ?? 'No disponible' }}</p>
-                                <p class="card-text"><strong>Informe:</strong> {{ $siniestro->url_informe ?? 'No disponible' }}</p>
                                 <p class="card-text"><strong>Fecha de Creación:</strong> {{ $siniestro->created_at ?? 'No disponible' }}</p>
                                 <p class="card-text"><strong>Fecha de Actualización:</strong> {{ $siniestro->updated_at ?? 'No disponible' }}</p>
                                 <p class="card-text"><strong>Contrato:</strong> {{ $siniestro->contrato->id. '- '.$siniestro->contrato->seguro->nombre ?? 'No disponible' }}</p>
                                 <p class="card-text"><strong>Administrador:</strong> {{ $siniestro->administrador->user->name ?? 'No disponible' }}</p>
                                 <p class="card-text"><strong>Perito:</strong> {{ $siniestro->perito->user->name ?? 'No disponible' }}</p>
+                                @include('personal.siniestros.pagar-franquicia')
                             </div>
                             <div class="card">
                             <div class="card-header">

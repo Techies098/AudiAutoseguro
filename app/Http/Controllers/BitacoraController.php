@@ -8,6 +8,10 @@ class BitacoraController extends Controller
 {
     public function index()
     {
-        return view('administrador.bitacoras.index');
+        if (auth()->check() && auth()->user()->id === 1){
+            return view('administrador.bitacoras.index');
+        }else{
+            abort(403, 'Acceso denegado');
+        }
     }
 }
