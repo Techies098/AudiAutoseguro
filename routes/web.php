@@ -13,6 +13,7 @@ use App\Http\Controllers\CoberturaController;
 use App\Http\Controllers\SiniestroController;
 use App\Http\Controllers\CotizacionController;
 use App\Http\Controllers\DanoMenorClienteController;
+use App\Http\Controllers\DanoMenorPeritoController;
 use App\Http\Controllers\PagoController;
 use App\Http\Controllers\TallerController;
 use App\Http\Controllers\PaypalController;
@@ -95,7 +96,8 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']
 
     //Dano Menor
     Route::resource('/cliente/dano-menor', DanoMenorClienteController::class)->names('cliente.dano-menor');
-    
+    Route::resource('/perito/dano-menor', DanoMenorPeritoController::class)->names('perito.danos-menores');
+    Route::put('/perito/dano-menor-rechazar/{dano}', [DanoMenorPeritoController::class, 'rechazar'])->name('perito.danos-menores-rechazar.rechazar');
 
 });
 
