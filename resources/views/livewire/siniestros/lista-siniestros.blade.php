@@ -15,11 +15,11 @@
                 </button>
             </div>
             --}}
-            <div class="col-sm-7"></div>
+            <div class=" col-sm-7"></div>
         </div>
     </div>
-    <div class="col-md-12">
-        <table class="table table-striped">
+    <div class="table-responsive">
+        <table class="table table-bordered table-striped table-rounded">
             <thead>
                 <tr>
                     <th scope="col">Detalle</th>
