@@ -24,4 +24,17 @@
             {{ __('Siniestro') }}
         </x-nav-link>
     </div>
+    <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+            <x-nav-link class="dropdown-item" href="{{ route('auxilios.index') }}" :active="request()->routeIs('auxilios.index')">
+                {{ __('Auxilio mecanico') }}
+            </x-nav-link>
+    </div>
+    <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+        <x-nav-link class="dropdown-item" href="{{ route('solicitudesA.mis') }}" :active="request()->routeIs('solicitudesA.mis')">
+            {{ __('Mis Solicitudes Auxilio mecanico') }}
+        </x-nav-link>
+    </div>
+
+
+
 @endif

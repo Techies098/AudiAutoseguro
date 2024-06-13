@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AuxilioController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PagoController;
 use App\Http\Controllers\UserController;
@@ -17,8 +18,10 @@ use App\Http\Controllers\VehiculoController;
 use App\Http\Controllers\CoberturaController;
 use App\Http\Controllers\SiniestroController;
 use App\Http\Controllers\SolicitudController;
+use App\Http\Controllers\SolicitudAuxController;
 use App\Http\Controllers\CorreoController;
 use App\Http\Controllers\CotizacionController;
+
 
 // Rutas que requieren autenticación y verificación
 Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified'])->group(function () {
@@ -59,7 +62,27 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']
     Route::get('mis-solicitudes', [SolicitudController::class, 'misSolicitudes'])->name('solicitudes.mis');
     Route::patch('solicitudes/{solicitud}/estado', [SolicitudController::class, 'cambiarEstado'])->name('solicitudes.cambiarEstado');
 
+    //Auxilio mecanico
+    Route::resource('auxlilios', AuxilioController::class)->parameters(['auxilios' => 'auxilio'])->names('auxilios');
 
+    //Solicitud Auxilio mecanico
+
+    Route::prefix('auxilios/solicitudes')->group(function () {
+        Route::get('/', [SolicitudAuxController::class, 'index'])->name('solicitudesA.index');
+        Route::get('/mis', [SolicitudAuxController::class, 'misSolicitudes'])->name('solicitudesA.mis');
+        Route::get('/create', [SolicitudAuxController::class, 'create'])->name('solicitudesA.create');
+        Route::post('/', [SolicitudAuxController::class, 'store'])->name('solicitudesA.store');
+        Route::get('/{solicitud}/edit', [SolicitudAuxController::class, 'edit'])->name('solicitudesA.edit');
+        Route::put('/{solicitud}', [SolicitudAuxController::class, 'update'])->name('solicitudesA.update');
+        Route::delete('/{solicitud}', [SolicitudAuxController::class, 'destroy'])->name('solicitudesA.destroy');
+        Route::put('/{solicitud}/cambiarEstado', [SolicitudAuxController::class, 'cambiarEstado'])->name('solicitudesA.cambiarEstado');
+        Route::get('/vendedor', [SolicitudAuxController::class, 'solicitudesVendedor'])->name('solicitudesA.vendedor');
+        Route::get('/{solicitud}', [SolicitudAuxController::class, 'show'])->name('solicitudesA.show');
+    });
+    
+    // Ruta pública sin middleware de autenticación
+    Route::get('auxilios/solicitudes/{solicitud}', [SolicitudAuxController::class, 'show'])->name('solicitudesA.show');
+    
     //Contratos:
     Route::resource('/administrador/contratos', ContratoController::class)->parameters(['contratos' => 'contrato'])->names('administrador/contratos');
     Route::get('/cliente/{cliente}/contratos', [ClienteController::class, 'contratos'])->name('cliente.contratos.index'); //Vista del cliente
