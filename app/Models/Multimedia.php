@@ -5,21 +5,15 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Taller extends Model
+class Multimedia extends Model
 {
     use HasFactory;
 
-    protected $fillable = [
-
-        'nombre',
-        'direccion',
-        'telefono',
-        'estado'
-
-    ];
+    protected $fillable = ['url', 'tipo', 'dano_menor_id'];
 
     public function danoMenor()
     {
-        return $this->hasMany(DanoMenor::class);
+        return $this->belongsTo(DanoMenor::class);
     }
+    
 }

@@ -49,4 +49,9 @@ class Contrato extends Model
         return $this->hasMany(Cuota::class);
     }
 
+    public function danoMenor()
+    {
+        return $this->hasMany(DanoMenor::class);
+    }
+
 }

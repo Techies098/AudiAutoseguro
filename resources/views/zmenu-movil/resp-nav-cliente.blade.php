@@ -16,6 +16,11 @@
         </x-responsive-nav-link>
     </div>
     <div class="pt-2 pb-3 space-y-1">
+        <x-responsive-nav-link :href="route('cliente.dano-menor.index')" :active="request()->routeIs('cliente.dano-menor.index')">
+            {{ __('Daños menores') }}
+        </x-responsive-nav-link>
+    </div>
+    <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
         <x-responsive-nav-link class="dropdown-item" href="{{ route('personal/siniestros.index') }}" :active="request()->routeIs('Personal/siniestros.index')">
             {{ __('Siniestro') }}
         </x-responsive-nav-link>

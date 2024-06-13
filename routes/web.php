@@ -17,6 +17,12 @@ use App\Http\Controllers\PersonalController;
 use App\Http\Controllers\VehiculoController;
 use App\Http\Controllers\CoberturaController;
 use App\Http\Controllers\SiniestroController;
+use App\Http\Controllers\DanoMenorClienteController;
+use App\Http\Controllers\DanoMenorPeritoController;
+use App\Http\Controllers\PagoController;
+use App\Http\Controllers\TallerController;
+use App\Http\Controllers\PaypalController;
+use App\Http\Controllers\ReporteController;
 use App\Http\Controllers\SolicitudController;
 use App\Http\Controllers\SolicitudAuxController;
 use App\Http\Controllers\CorreoController;
@@ -124,6 +130,12 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']
     Route::get('/revisar-siniestro/{id}', [SiniestroController::class, 'revisar'])->name('revisar_siniestro')
         ->middleware('auth:sanctum', 'verified');
     Route::put('/ruta/{id}',  [SiniestroController::class, 'update'])->name('personal.siniestros.update');
+
+    //Dano Menor
+    Route::resource('/cliente/dano-menor', DanoMenorClienteController::class)->names('cliente.dano-menor');
+    Route::resource('/perito/dano-menor', DanoMenorPeritoController::class)->names('perito.danos-menores');
+    Route::put('/perito/dano-menor-rechazar/{dano}', [DanoMenorPeritoController::class, 'rechazar'])->name('perito.danos-menores-rechazar.rechazar');
+
 });
 
 // Rutas públicas

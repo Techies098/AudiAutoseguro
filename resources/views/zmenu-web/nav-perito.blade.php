@@ -26,9 +26,20 @@
             </x-nav-link>
         </ul>
     </div>
-<div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-    <x-nav-link class="dropdown-item" href="{{ route('personal/siniestros.index') }}" :active="request()->routeIs('Personal/siniestros.index')">
-        {{ __('Siniestro') }}
-    </x-nav-link>
-</div>
+
+    <!-- Gestionar Seguros -->
+    <div class="hidden sm:flex sm:items-center sm:ml-6">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown"
+            aria-expanded="false">
+            Siniestros
+        </a>
+        <ul class="dropdown-menu bg-white p-2" aria-labelledby="navbarDropdown">
+            <x-nav-link class="dropdown-item" href="{{ route('personal/siniestros.index') }}" :active="request()->routeIs('Personal/siniestros.index')">
+                {{ __('Siniestros') }}
+            </x-nav-link>
+            <x-nav-link class="dropdown-item" href="{{ route('perito.danos-menores.index') }}" :active="request()->routeIs('perito.danos-menores.index')">
+                {{ __('Daños menores') }}
+            </x-nav-link>
+        </ul>
+    </div>
 @endif
