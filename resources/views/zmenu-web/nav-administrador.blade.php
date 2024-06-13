@@ -83,6 +83,7 @@
             </x-nav-link>
             <x-nav-link class="dropdown-item" href="{{ route('solicitudesA.vendedor') }}" :active="request()->routeIs('solicitudesA.vendedor')">
                 {{ __('Solicitudes Asignadas') }}
+            </x-nav-link>
 
             <x-nav-link class="dropdown-item" href="{{ route('reporte-dinamico') }}" :active="request()->routeIs('reporte/dinamicos.index-reportes')">
                 {{ __('Reporte') }}
