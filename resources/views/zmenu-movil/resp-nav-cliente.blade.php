@@ -20,9 +20,9 @@
             {{ __('Daños menores') }}
         </x-responsive-nav-link>
     </div>
-    <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-        <x-responsive-nav-link class="dropdown-item" href="{{ route('personal/siniestros.index') }}" :active="request()->routeIs('Personal/siniestros.index')">
-            {{ __('Siniestro') }}
+    <div class="pt-2 pb-3 space-y-1">
+        <x-responsive-nav-link class="dropdown-item" href="{{ route('personal/siniestros.index') }}" :active="request()->routeIs('personal/siniestros.index')">
+            {{ __('Siniestros') }}
         </x-responsive-nav-link>
     </div>
     <div class="pt-2 pb-3 space-y-1">
