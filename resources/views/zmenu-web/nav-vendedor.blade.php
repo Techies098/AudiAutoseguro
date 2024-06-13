@@ -57,6 +57,9 @@
             <x-nav-link class="dropdown-item" href="{{ route('administrador/contratos.index') }}" :active="request()->routeIs('administrador/contratos.index')">
                 {{ __('Contrato') }}
             </x-nav-link>
+            <x-nav-link class="dropdown-item" href="{{ route('auxilios.index') }}" :active="request()->routeIs('auxilios.index')">
+                {{ __('Auxilio mecanico') }}
+            </x-nav-link>
         </ul>
     </div>
     
