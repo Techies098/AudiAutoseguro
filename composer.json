@@ -12,6 +12,7 @@
         "laravel/sanctum": "^4.0",
         "laravel/tinker": "^2.9",
         "livewire/livewire": "^3.4",
+        "spatie/laravel-backup": "^8.8",
         "spatie/laravel-permission": "^6.4",
         "srmklive/paypal": "~3.0"
     },
