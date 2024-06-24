@@ -33,6 +33,7 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']
 
     Route::resource('/administrador/bitacoras', BitacoraController::class)->parameters(['bitacoras' => 'bitacora'])->names('administrador.bitacoras');
     Route::get('/backup', 'BackupController@createBackup')->name('backup.create');
+    Route::get('/restore', 'BackupController@restoreBackup')->name('backup.restore');
 
 
     Route::resource('/administrador/usuarios', UserController::class)->parameters(['usuarios' => 'user'])->names('administrador/usuarios');

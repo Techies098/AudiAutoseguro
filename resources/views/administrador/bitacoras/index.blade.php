@@ -1,6 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
-        <a href="{{ route('backup.create') }}" class="float-right btn btn-primary col-sm-2 ">Hacer Backup</a>
+        <a href="{{ route('backup.restore') }}" class="float-right m-2 btn btn-primary col-sm-2 ">Restaurar Backup</a>
+        <a href="{{ route('backup.create') }}" class="float-right m-2 btn btn-primary col-sm-2">Hacer Backup</a>
        <h2 class="text-xl font-semibold leading-tight text-gray-800">
             {{ __('Bitacora') }}
         </h2>
