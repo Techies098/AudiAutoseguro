@@ -1,7 +1,8 @@
 <?php
 
 return [
-
+    //para restaurar el backupp mediante comandos
+    //php artisan backup:restore --backup=latest --connection=mysql --password=$DB_PASSWORD --reset
     'backup' => [
         /*
          * The name of this application. You can use this name to monitor

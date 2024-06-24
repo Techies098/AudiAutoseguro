@@ -32,6 +32,8 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']
     })->name('dashboard');
 
     Route::resource('/administrador/bitacoras', BitacoraController::class)->parameters(['bitacoras' => 'bitacora'])->names('administrador.bitacoras');
+    Route::get('/backup', 'BackupController@createBackup')->name('backup.create');
+
 
     Route::resource('/administrador/usuarios', UserController::class)->parameters(['usuarios' => 'user'])->names('administrador/usuarios');
     Route::get('/administrador/permisos/{user}', [PermisoController::class, 'show'])->name('administrador/permisos.show');
@@ -81,10 +83,10 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']
         Route::get('/vendedor', [SolicitudAuxController::class, 'solicitudesVendedor'])->name('solicitudesA.vendedor');
         Route::get('/{solicitud}', [SolicitudAuxController::class, 'show'])->name('solicitudesA.show');
     });
-    
+
     // Ruta pública sin middleware de autenticación
     Route::get('auxilios/solicitudes/{solicitud}', [SolicitudAuxController::class, 'show'])->name('solicitudesA.show');
-    
+
     //Contratos:
     Route::resource('/administrador/contratos', ContratoController::class)->parameters(['contratos' => 'contrato'])->names('administrador/contratos');
     Route::get('/cliente/{cliente}/contratos', [ClienteController::class, 'contratos'])->name('cliente.contratos.index'); //Vista del cliente
