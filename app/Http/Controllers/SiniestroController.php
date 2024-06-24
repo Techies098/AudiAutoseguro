@@ -56,10 +56,10 @@ class SiniestroController extends Controller
             'tipo_de_siniestro_id' => $request->tipo,
         ]);
         if ($siniestro) {
-            return redirect()->route('inicio')
+            return redirect()->route('personal/siniestros.index')
                 ->with('msj_ok', 'Siniestro creado id: ' . $siniestro->id);
         } else {
-            return redirect()->route('incio')
+            return redirect()->route('personal/siniestros.index')
                 ->with('msj_error', 'Hubo un error al crear el siniestro.');
         }
     }

@@ -5,21 +5,16 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Taller extends Model
+class Auxilio extends Model
 {
     use HasFactory;
-
     protected $fillable = [
-
         'nombre',
-        'direccion',
-        'telefono',
-        'estado'
-
+        'descripcion',
+        'precio',
     ];
-
-    public function danoMenor()
+    public function solicitudAux()
     {
-        return $this->hasMany(DanoMenor::class);
+        return $this->hasMany(solicitudAux::class);
     }
 }
