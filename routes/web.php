@@ -1,12 +1,15 @@
 <?php
 
-use App\Http\Controllers\AuxilioController;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Artisan;
 use App\Http\Controllers\PagoController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\BackupController;
+use App\Http\Controllers\CorreoController;
 use App\Http\Controllers\PaypalController;
 use App\Http\Controllers\SeguroController;
 use App\Http\Controllers\TallerController;
+use App\Http\Controllers\AuxilioController;
 use App\Http\Controllers\ClienteController;
 use App\Http\Controllers\PermisoController;
 use App\Http\Controllers\ReporteController;
@@ -17,12 +20,11 @@ use App\Http\Controllers\PersonalController;
 use App\Http\Controllers\VehiculoController;
 use App\Http\Controllers\CoberturaController;
 use App\Http\Controllers\SiniestroController;
-use App\Http\Controllers\DanoMenorClienteController;
-use App\Http\Controllers\DanoMenorPeritoController;
 use App\Http\Controllers\SolicitudController;
-use App\Http\Controllers\SolicitudAuxController;
-use App\Http\Controllers\CorreoController;
 use App\Http\Controllers\CotizacionController;
+use App\Http\Controllers\SolicitudAuxController;
+use App\Http\Controllers\DanoMenorPeritoController;
+use App\Http\Controllers\DanoMenorClienteController;
 
 
 // Rutas que requieren autenticación y verificación
@@ -33,7 +35,7 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']
 
     Route::resource('/administrador/bitacoras', BitacoraController::class)->parameters(['bitacoras' => 'bitacora'])->names('administrador.bitacoras');
     Route::get('/backup', 'BackupController@createBackup')->name('backup.create');
-    Route::get('/restore', 'BackupController@restoreBackup')->name('backup.restore');
+    Route::get('/restore', [BackupController::class, 'restoreBackup'])->name('backup.restore');
 
 
     Route::resource('/administrador/usuarios', UserController::class)->parameters(['usuarios' => 'user'])->names('administrador/usuarios');
